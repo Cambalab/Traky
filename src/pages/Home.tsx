@@ -5,12 +5,15 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonContent,
-  IonHeader,
   IonMenuButton,
-  IonPage,
-  IonTitle,
-  IonToolbar
+  IonContent, 
+  IonHeader,
+  IonPage, 
+  IonTitle, 
+  IonToolbar, 
+  IonList, 
+  IonItem, 
+  IonLabel
 } from '@ionic/react';
 
 import React from 'react';
@@ -38,6 +41,11 @@ const Home: React.FC = () => {
             </p>
           </IonCardContent>
         </IonCard>
+        <IonList>
+          <IonItem routerLink="/home/list">
+            <IonLabel>My hours</IonLabel>
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonPage>
   );
