@@ -1,4 +1,18 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonButtons,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from '@ionic/react';
+
 import React from 'react';
 
 const Home: React.FC = () => {
@@ -6,18 +20,24 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Ionic Blank</IonTitle>
+          <IonButtons>
+            <IonMenuButton />
+          </IonButtons>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
-        The world is your oyster.
-        <p>
-          If you get lost, the{' '}
-          <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/">
-            docs
-          </a>{' '}
-          will be your guide.
-        </p>
+      <IonContent>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardSubtitle>HOME</IonCardSubtitle>
+            <IonCardTitle>CamApp Traky</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <p>
+              App para loguear tus actividades de acuerdo al tiempo invertido
+            </p>
+          </IonCardContent>
+        </IonCard>
       </IonContent>
     </IonPage>
   );
