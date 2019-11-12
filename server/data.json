@@ -16,9 +16,49 @@
       "id": 1,
       "groupId": 1,
       "userId": 1,
-      "description": "Hour Example",
-      "spent_time": 5,
+      "description": "Cooperative management work",
+      "spent_time": 2,
       "timestamp": "11/11/2019"
+    },
+   {
+      "id": 1,
+      "groupId": 1,
+      "userId": 1,
+      "description": "Work on development",
+      "spent_time": 5,
+      "timestamp": "12/11/2019"
+    },
+   {
+      "id": 1,
+      "groupId": 1,
+      "userId": 1,
+      "description": "Work on development",
+      "spent_time": 5,
+      "timestamp": "12/11/2019"
+    },
+   {
+      "id": 1,
+      "groupId": 1,
+      "userId": 1,
+      "description": "Work on development",
+      "spent_time": 4,
+      "timestamp": "13/11/2019"
+    },
+   {
+      "id": 1,
+      "groupId": 1,
+      "userId": 1,
+      "description": "Work on development",
+      "spent_time": 3,
+      "timestamp": "14/11/2019"
+    },
+   {
+      "id": 1,
+      "groupId": 1,
+      "userId": 1,
+      "description": "Work on development",
+      "spent_time": 7,
+      "timestamp": "15/11/2019"
     }
   ],
   "groups": [
