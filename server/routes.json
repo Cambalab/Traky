@@ -1,0 +1,6 @@
+{
+  "/api/*": "/$1",
+  "/users/:id/hours": "/hours?userId=:id",
+  "/groups/:userId": "/groups",
+  "/signin": "/users"
+}
