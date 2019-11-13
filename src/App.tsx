@@ -10,6 +10,7 @@ import Menu from './components/Menu';
 import Home from './pages/Home';
 
 import { home } from 'ionicons/icons';
+import { timer } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -29,12 +30,18 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import LogHourForm from "./components/LogHourForm/LogHourForm";
 
 const appPages: AppPage[] = [
   {
     title: 'Home',
     url: '/home',
     icon: home
+  },
+  {
+    title: 'Log Hour',
+    url: '/log',
+    icon: timer
   }
 ];
 
@@ -45,6 +52,7 @@ const App: React.FC = () => (
         <Menu appPages={appPages} />
         <IonRouterOutlet id="main">
           <Route path="/home" component={Home} exact={true} />
+          <Route path="/log" component={LogHourForm} exact={true} />
           <Route path="/" render={() => <Redirect to="/home" exact={true} />} />
         </IonRouterOutlet>
       </IonSplitPane>
