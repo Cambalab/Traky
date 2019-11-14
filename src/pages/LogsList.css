@@ -1,0 +1,44 @@
+.item-card {
+  border-color: #00c79a;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.list-header__toolbar {
+  background-color: #00c79a;
+}
+
+.list-header__title {
+  color: white;
+  text-align: center;
+  padding-left: 0;
+}
+
+.item-card__container {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.item-card__date {
+  padding-left: 0;
+}
+
+.item-card__description {
+  text-align: left;
+  width: 50%;
+  align-self: center;
+}
+
+.item-card__description--mobile {
+}
+
+.item-card__hour {
+  color: #00c79a;
+  align-self: center;
+  font-size: 30px;
+}
+
+.item-card__date {
+  align-self: center;
+}

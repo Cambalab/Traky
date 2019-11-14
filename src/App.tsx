@@ -9,6 +9,8 @@ import Menu from "./components/Menu";
 import Home from "./pages/Home";
 import LogsList from "./pages/LogsList";
 
+import LogHourForm from "./components/LogHourForm/LogHourForm";
+
 import { home, list, timer } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
@@ -27,9 +29,9 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-/* Theme variables */
+/* Theme variables and global styles */
 import "./theme/variables.css";
-import LogHourForm from "./components/LogHourForm/LogHourForm";
+import "./styles/global.scss";
 
 const appPages: AppPage[] = [
   {
