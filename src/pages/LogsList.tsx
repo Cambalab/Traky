@@ -3,12 +3,8 @@ import { getPlatforms } from "@ionic/react";
 
 import {
   IonPage,
-  IonList,
   IonCard,
   IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonContent,
   IonItem,
   IonHeader,
