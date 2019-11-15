@@ -1,0 +1,48 @@
+
+.toolbar--background {
+    --background: #00c79a;
+}
+
+.input__text--font {
+}
+
+.list__item {
+    --color-focused: #00c79a;
+    --color-activated: #00c79a;
+    --border-color: #00c79a;
+    --highlight-color-focused: #00c79a;
+    --box-shadow: 1.5vh 0.5vh 0.5vh teal;
+}
+
+.list__item--container {
+    display: flex;
+    flex-direction: column;
+}
+.list__item--margin {
+    margin-bottom: 3vh;
+}
+
+.item__input--placeholder {
+    --placeholder-color: #009c79;
+}
+
+.item__select--container {
+    max-width: 100%;
+    flex: 1;
+    --padding-start: 2vh;
+}
+
+.input__datetime {
+    flex: 1;
+    text-align: center;
+}
+
+.toolbar__buttons--container {
+    display: flex;
+    flex-direction: row;
+    padding: 2vh;
+}
+
+.buttons__button {
+    flex: 1.5;
+}

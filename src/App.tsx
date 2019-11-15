@@ -40,7 +40,7 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Log Hour',
-    url: '/log',
+    url: '/new',
     icon: timer
   }
 ];
@@ -52,7 +52,7 @@ const App: React.FC = () => (
         <Menu appPages={appPages} />
         <IonRouterOutlet id="main">
           <Route path="/home" component={Home} exact={true} />
-          <Route path="/log" component={LogHourForm} exact={true} />
+          <Route path="/new" component={LogHourForm} exact={true} />
           <Route path="/" render={() => <Redirect to="/home" exact={true} />} />
         </IonRouterOutlet>
       </IonSplitPane>
