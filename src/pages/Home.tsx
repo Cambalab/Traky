@@ -6,17 +6,17 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonMenuButton,
-  IonContent, 
+  IonContent,
   IonHeader,
-  IonPage, 
-  IonTitle, 
-  IonToolbar, 
-  IonList, 
-  IonItem, 
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonList,
+  IonItem,
   IonLabel
-} from '@ionic/react';
+} from "@ionic/react";
 
-import React from 'react';
+import React from "react";
 
 const Home: React.FC = () => {
   return (
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
           </IonCardContent>
         </IonCard>
         <IonList>
-          <IonItem routerLink="/home/list">
+          <IonItem routerLink="/list">
             <IonLabel>My hours</IonLabel>
           </IonItem>
         </IonList>

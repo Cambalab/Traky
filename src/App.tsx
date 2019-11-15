@@ -46,7 +46,7 @@ const appPages: AppPage[] = [
   },
   {
     title: "My hours",
-    url: "/home/list",
+    url: "/list",
     icon: list
   }
 ];
@@ -59,7 +59,7 @@ const App: React.FC = () => (
         <IonRouterOutlet id="main">
           <Route path="/home" component={Home} exact={true} />
           <Route path="/new" component={LogHourForm} exact={true} />
-          <Route path="/home/list" component={LogsList} exact={true} />
+          <Route path="/list" component={LogsList} exact={true} />
           <Route path="/" render={() => <Redirect to="/home" exact={true} />} />
         </IonRouterOutlet>
       </IonSplitPane>
