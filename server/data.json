@@ -18,6 +18,22 @@
       "userId": 1,
       "description": "Cooperative management work",
       "spent_time": 2,
+      "timestamp": "11/5/2019"
+    },
+   {
+      "id": 1,
+      "groupId": 1,
+      "userId": 1,
+      "description": "Work on development",
+      "spent_time": 5,
+      "timestamp": "11/9/2019"
+    },
+   {
+      "id": 1,
+      "groupId": 1,
+      "userId": 1,
+      "description": "Work on development",
+      "spent_time": 5,
       "timestamp": "11/11/2019"
     },
    {
@@ -25,24 +41,8 @@
       "groupId": 1,
       "userId": 1,
       "description": "Work on development",
-      "spent_time": 5,
-      "timestamp": "12/11/2019"
-    },
-   {
-      "id": 1,
-      "groupId": 1,
-      "userId": 1,
-      "description": "Work on development",
-      "spent_time": 5,
-      "timestamp": "12/11/2019"
-    },
-   {
-      "id": 1,
-      "groupId": 1,
-      "userId": 1,
-      "description": "Work on development",
       "spent_time": 4,
-      "timestamp": "13/11/2019"
+      "timestamp": "11/10/2019"
     },
    {
       "id": 1,
@@ -50,7 +50,7 @@
       "userId": 1,
       "description": "Work on development",
       "spent_time": 3,
-      "timestamp": "14/11/2019"
+      "timestamp": "11/14/2019"
     },
    {
       "id": 1,
@@ -58,7 +58,7 @@
       "userId": 1,
       "description": "Work on development",
       "spent_time": 7,
-      "timestamp": "15/11/2019"
+      "timestamp": "12/2/2019"
     }
   ],
   "groups": [

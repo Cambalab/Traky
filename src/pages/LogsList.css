@@ -2,6 +2,7 @@
   border-color: #00c79a;
   border-width: 1px;
   border-style: solid;
+  max-height: 20vh;
 }
 
 .list-header__toolbar {
@@ -30,15 +31,32 @@
   align-self: center;
 }
 
+.item-card__dividing-line--mobile {
+  width: 100%;
+  background: #00c79a no-repeat scroll center;
+  height: 1px;
+}
 .item-card__description--mobile {
+  margin-top: 10px;
 }
 
 .item-card__hour {
   color: #00c79a;
+  font-size: 35px;
+  display: flex;
+}
+
+.item-card__hour p {
   align-self: center;
-  font-size: 30px;
+}
+
+.item-card__icon {
+  align-self: center;
+  flex: 1;
+  margin: 5px;
+  color: var(--color);
 }
 
 .item-card__date {
-  align-self: center;
+  font-size: 3vh;
 }

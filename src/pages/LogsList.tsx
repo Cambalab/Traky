@@ -82,16 +82,22 @@ const LogsList: React.FC = () => {
                       {loggedHour.description}
                     </div>
                   )}
-                  <IonIcon
-                    className="item-card__icon"
-                    size={"large"}
-                    icon={timer}
-                  ></IonIcon>
-                  <div className="item-card__hour">{loggedHour.spent_time}</div>
+                  <div className="item-card__hour">
+                    <IonIcon
+                      className="item-card__icon"
+                      size={"large"}
+                      icon={timer}
+                    ></IonIcon>
+                    {loggedHour.spent_time}
+                    <p>hrs</p>
+                  </div>
                 </div>
                 {isMobile() && (
-                  <div className="item-card__description--mobile">
-                    {loggedHour.description}
+                  <div>
+                    <div className="item-card__dividing-line--mobile"></div>
+                    <div className="item-card__description--mobile">
+                      {loggedHour.description}
+                    </div>
                   </div>
                 )}
               </IonCardContent>
