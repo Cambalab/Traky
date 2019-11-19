@@ -49,16 +49,21 @@ const LogsList: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader className="list-header">
-        <IonToolbar color="#00c79a" className="list-header__toolbar">
+      <IonHeader>
+        <IonToolbar color="#00c79a" className="header__toolbar">
           <IonButtons>
             <IonMenuButton className="menu__button" />
-            <IonTitle className="list-header__title">My logged hours</IonTitle>
+            <IonTitle className="header__title">My logged hours</IonTitle>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         {/*-- List of logged hours --*/}
+        {hasError ? (
+          <div className="content___message">
+            <p>An error has occurred while triying to get the logged hours.</p>
+          </div>
+        ) : null}
         {loggedHours ? (
           loggedHours.map((loggedHour, i) => {
             return (

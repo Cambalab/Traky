@@ -5,16 +5,6 @@
   max-height: 23vh;
 }
 
-.list-header__toolbar {
-  background-color: #00c79a;
-}
-
-.list-header__title {
-  color: white;
-  text-align: center;
-  padding-left: 0;
-}
-
 .item-card__container {
   display: flex;
   justify-content: space-around;

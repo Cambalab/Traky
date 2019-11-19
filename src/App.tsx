@@ -35,12 +35,7 @@ import "./styles/global.scss";
 
 const appPages: AppPage[] = [
   {
-    title: "Home",
-    url: "/home",
-    icon: home
-  },
-  {
-    title: "Log Hour",
+    title: "New log",
     url: "/new",
     icon: timer
   },
@@ -57,10 +52,9 @@ const App: React.FC = () => (
       <IonSplitPane contentId="main">
         <Menu appPages={appPages} />
         <IonRouterOutlet id="main">
-          <Route path="/home" component={Home} exact={true} />
           <Route path="/new" component={LogHourForm} exact={true} />
           <Route path="/list" component={LogsList} exact={true} />
-          <Route path="/" render={() => <Redirect to="/home" exact={true} />} />
+          <Route path="/" render={() => <Redirect to="/list" exact={true} />} />
         </IonRouterOutlet>
       </IonSplitPane>
     </IonReactRouter>

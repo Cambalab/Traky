@@ -1,19 +1,14 @@
 import {
   IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonMenuButton,
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
   IonToolbar,
   IonList,
   IonItem,
-  IonLabel
+  IonLabel,
+  IonImg
 } from "@ionic/react";
 
 import React from "react";
@@ -24,23 +19,11 @@ const Home: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons>
-            <IonMenuButton />
+            <IonMenuButton className="menu__button--home" />
           </IonButtons>
-          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonCard>
-          <IonCardHeader>
-            <IonCardSubtitle>HOME</IonCardSubtitle>
-            <IonCardTitle>CamApp Traky</IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            <p>
-              App para loguear tus actividades de acuerdo al tiempo invertido
-            </p>
-          </IonCardContent>
-        </IonCard>
         <IonList>
           <IonItem routerLink="/list">
             <IonLabel>My hours</IonLabel>
