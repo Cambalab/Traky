@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IonButton } from "@ionic/react";
-import { CONFIG } from "../../constants";
+import { CONFIG, TEXTS } from "../../constants";
 import { isMobile } from "../../utils";
 
 import {
@@ -49,7 +49,7 @@ const LogsList: React.FC = () => {
         <IonToolbar color="#00c79a" className="header__toolbar">
           <IonButtons>
             <IonMenuButton className="menu__button" />
-            <IonTitle className="header__title">{CONFIG.LIST_TITLE}</IonTitle>
+            <IonTitle className="header__title">{TEXTS.LIST_TITLE}</IonTitle>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -57,7 +57,7 @@ const LogsList: React.FC = () => {
         {/*-- List of logged hours --*/}
         {hasError ? (
           <div className="content___message">
-            <p>{CONFIG.LIST_ERROR_MSG}</p>
+            <p>{TEXTS.LIST_ERROR_MSG}</p>
           </div>
         ) : null}
         {loggedHours ? (
@@ -116,7 +116,7 @@ const LogsList: React.FC = () => {
           })
         ) : (
           <div className="content___message">
-            <p>{CONFIG.LIST_NO_LOGS_YET_MSG}</p>
+            <p>{TEXTS.LIST_NO_LOGS_YET_MSG}</p>
             <IonButton routerLink="/new" expand="full">
               OK, start now!
             </IonButton>
