@@ -7,7 +7,7 @@ import { AppPage } from "./declarations";
 /* Pages */
 import Menu from "./components/Menu";
 import LogsList from "./pages/LogsList/LogsList";
-import LogHourForm from "./components/LogHourForm/LogHourForm";
+import LogHourPage from "./pages/LogHourPage";
 
 import { list, timer } from "ionicons/icons";
 
@@ -50,7 +50,7 @@ const App: React.FC = () => (
       <IonSplitPane contentId="main">
         <Menu appPages={appPages} />
         <IonRouterOutlet id="main">
-          <Route path="/new" component={LogHourForm} exact={true} />
+          <Route path="/new" component={LogHourPage} exact={true} />
           <Route path="/list" component={LogsList} exact={true} />
           <Route path="/" render={() => <Redirect to="/list" exact={true} />} />
         </IonRouterOutlet>
