@@ -24,7 +24,7 @@ export const isValidDate = (date: string | Date): boolean => {
     return moment(date).isValid();
 };
 
-const DATE_FORMAT = "DD/MM/YYYY";
+const DATE_FORMAT = "MM/DD/YYYY";
 
 export const handleInputOnlyNumber = (e: KeyboardEvent<HTMLIonInputElement>) => {
     const pattern = /[0-9.,]/;

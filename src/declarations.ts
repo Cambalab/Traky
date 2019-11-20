@@ -17,3 +17,7 @@ export interface IGroup {
     id: any,
     name: string
 }
+
+export interface IUser {
+    id?: any
+}

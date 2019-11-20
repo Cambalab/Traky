@@ -2,14 +2,15 @@ import {
     IonButton,
     IonButtons,
     IonContent,
-    IonDatetime, IonFooter,
+    IonDatetime,
+    IonFooter,
     IonInput,
     IonItem,
     IonList,
     IonSelect,
     IonSelectOption,
     IonText,
-    useIonViewDidEnter,
+    useIonViewDidEnter
 } from '@ionic/react';
 import React, {FunctionComponent, useState} from 'react';
 import "./LogHourForm.css"
@@ -17,23 +18,53 @@ import {fetchAPI} from "../../utils/api";
 import {IGroup} from "../../declarations";
 import {formatDate, handleInput, handleInputDatetime, handleInputOnlyNumber} from "../../utils/inputHandle";
 
-interface LogHourForm {
+interface OnButtonClickEventFunction extends Function {
+    (body: LogHourForm): void
+}
+
+interface LogHourFormProps {
     initialDescription?: string,
     initialSelectedGroup?: number,
     initialCurrentDate?: string,
-    initialHours?: string
+    initialHours?: string,
+    onClickSave: OnButtonClickEventFunction,
+    onClickCancel: OnButtonClickEventFunction
 }
 
-const LogHourForm: FunctionComponent<LogHourForm> = ({ initialDescription, initialSelectedGroup, initialCurrentDate = formatDate(new Date()), initialHours}) => {
+interface LogHourForm {
+    id?: string
+    userId: number,
+    groupId?: number,
+    description: string,
+    spent_time: number,
+    timestamp: string
+}
+
+const LogHourForm: FunctionComponent<LogHourFormProps> = ({
+    initialDescription = "",
+    initialSelectedGroup,
+    initialCurrentDate = formatDate(new Date()),
+    initialHours = "",
+    onClickSave,
+    onClickCancel
+}) => {
     const [groups, setGroups] = useState<IGroup[]>([]);
-    const [description, setDescription] = useState<string>(initialDescription || "");
+    const [description, setDescription] = useState<string>(initialDescription);
     const [selectedGroup, setSelectedGroup] = useState<number | undefined>(initialSelectedGroup);
     const [currentDate, setCurrentDate] = useState<string>(initialCurrentDate);
-    const [hours, setHours] = useState<string>(initialHours || "");
+    const [hours, setHours] = useState<string>(initialHours);
 
     useIonViewDidEnter(() => {
+        clearData();
         fetchGroups();
     });
+
+    const clearData = () => {
+        setDescription(initialDescription);
+        setSelectedGroup(initialSelectedGroup);
+        setCurrentDate(initialCurrentDate);
+        setHours(initialHours);
+    };
 
     const fetchGroups = async () => {
         const onSuccess = (newGroups: IGroup[]) => {
@@ -41,6 +72,24 @@ const LogHourForm: FunctionComponent<LogHourForm> = ({ initialDescription, initi
         };
 
         await fetchAPI({ url: 'groups', method: 'GET', onSuccess});
+    };
+
+    const getLogForm = () => {
+        return {
+            userId: 1,
+            groupId: selectedGroup,
+            description,
+            spent_time: parseInt(hours),
+            timestamp: currentDate
+        };
+    };
+
+    const handleOnClickSave = () => {
+        onClickSave(getLogForm())
+    };
+
+    const handleOnClickCancel = () => {
+        onClickCancel(getLogForm())
     };
 
     return (
@@ -93,13 +142,26 @@ const LogHourForm: FunctionComponent<LogHourForm> = ({ initialDescription, initi
                         value={hours}
                         onKeyPress={handleInputOnlyNumber}
                         onIonChange={handleInput(setHours)}
+                        required
                     />
                 </IonItem>
             </IonList>
             <IonFooter>
                 <IonButtons className="toolbar__buttons--container">
-                    <IonButton className="buttons__button" color="identity">Save</IonButton>
-                    <IonButton className="buttons__button" color="danger">Cancel</IonButton>
+                    <IonButton
+                        className="buttons__button"
+                        color="identity"
+                        onClick={handleOnClickSave}
+                    >
+                        Save
+                    </IonButton>
+                    <IonButton
+                        className="buttons__button"
+                        color="danger"
+                        onClick={handleOnClickCancel}
+                    >
+                        Cancel
+                    </IonButton>
                 </IonButtons>
             </IonFooter>
         </IonContent>

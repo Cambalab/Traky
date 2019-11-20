@@ -7,7 +7,7 @@ import { AppPage } from "./declarations";
 /* Pages */
 import Menu from "./components/Menu";
 import LogsList from "./pages/LogsList/LogsList";
-import LogHourPage from "./pages/LogHourPage";
+import LogHourPage from "./pages/LogHour/LogHourPage";
 
 import { list, timer } from "ionicons/icons";
 
