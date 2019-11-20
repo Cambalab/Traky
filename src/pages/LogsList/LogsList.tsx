@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { IonButton } from "@ionic/react";
+import React, { useState } from "react";
+import {IonButton, useIonViewDidEnter} from "@ionic/react";
 import { CONFIG, TEXTS } from "../../constants";
 import { isMobile } from "../../utils";
 
@@ -39,9 +39,9 @@ const LogsList: React.FC = () => {
       .catch(error => setError(error));
   }
 
-  useEffect(() => {
+  useIonViewDidEnter(() => {
     fetchData();
-  }, []);
+  });
 
   return (
     <IonPage>
