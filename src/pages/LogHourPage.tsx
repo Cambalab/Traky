@@ -16,8 +16,8 @@ const LogHourPage: FunctionComponent = () => {
             <IonHeader className="ion-text-center">
                 <IonToolbar className="toolbar--background">
                     <IonButtons>
-                        <IonMenuButton/>
-                        <IonTitle>Log Hours</IonTitle>
+                        <IonMenuButton className="menu__button"/>
+                        <IonTitle className="header__title">Log your hours</IonTitle>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
