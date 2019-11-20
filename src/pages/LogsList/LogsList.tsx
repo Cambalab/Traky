@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getPlatforms, IonButton } from "@ionic/react";
+import { IonButton } from "@ionic/react";
+import { CONFIG, TEXTS } from "../../constants";
+import { isMobile } from "../../utils";
 
 import {
   IonPage,
@@ -14,7 +16,7 @@ import {
   IonDatetime,
   IonIcon
 } from "@ionic/react";
-import { string, number } from "prop-types";
+
 import { timer, create } from "ionicons/icons";
 
 import "./LogsList.css";
@@ -29,14 +31,8 @@ const LogsList: React.FC = () => {
   const [hasError, setError] = useState(false);
   const [loggedHours, setLoggedHours] = React.useState<[ILogs] | null>();
 
-  function isMobile() {
-    if (getPlatforms().includes("mobile")) {
-      return true;
-    }
-  }
-
   async function fetchData() {
-    const res = await fetch("http://localhost:3000/users/1/hours");
+    const res = await fetch(CONFIG.API_ENDPOINT + "users/1/hours");
     res
       .json()
       .then(res => setLoggedHours(res))
@@ -53,7 +49,7 @@ const LogsList: React.FC = () => {
         <IonToolbar color="#00c79a" className="header__toolbar">
           <IonButtons>
             <IonMenuButton className="menu__button" />
-            <IonTitle className="header__title">My logged hours</IonTitle>
+            <IonTitle className="header__title">{TEXTS.LIST_TITLE}</IonTitle>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -61,7 +57,7 @@ const LogsList: React.FC = () => {
         {/*-- List of logged hours --*/}
         {hasError ? (
           <div className="content___message">
-            <p>An error has occurred while triying to get the logged hours.</p>
+            <p>{TEXTS.LIST_ERROR_MSG}</p>
           </div>
         ) : null}
         {loggedHours ? (
@@ -120,7 +116,7 @@ const LogsList: React.FC = () => {
           })
         ) : (
           <div className="content___message">
-            <p>You dont have any log yet..</p>
+            <p>{TEXTS.LIST_NO_LOGS_YET_MSG}</p>
             <IonButton routerLink="/new" expand="full">
               OK, start now!
             </IonButton>
