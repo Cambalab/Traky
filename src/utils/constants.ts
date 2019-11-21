@@ -9,7 +9,7 @@ export interface AppConfig {
 }
 
 export const CONFIG: AppConfig = {
-  API_ENDPOINT: "http://localhost:3000/"
+  API_ENDPOINT: process.env.BASE_URL ? process.env.BASE_URL : 'http://localhost:3000/api/'
 };
 
 export interface AppTexts {
@@ -23,3 +23,21 @@ export const TEXTS: AppTexts = {
     "An error has occurred while triying to get the logged hours.",
   LIST_TITLE: "My logged hours"
 };
+
+export interface URLMapping {
+  name: string,
+  path: string
+}
+
+export const URL_CONFIG: {[key: string]: URLMapping} = {
+  LOGS_LIST: {
+    name: "My hours",
+    path: "/list"
+  },
+  LOGS_NEW: {
+    name: "New log",
+    path: "/new"
+  }
+};
+
+export const DATE_FORMAT = "MM/DD/YYYY";
