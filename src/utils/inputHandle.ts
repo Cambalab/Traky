@@ -1,6 +1,7 @@
 import {DatetimeChangeEventDetail, InputChangeEventDetail, SelectChangeEventDetail} from "@ionic/core";
 import moment from "moment";
 import {KeyboardEvent} from "react";
+import {DATE_FORMAT} from "./constants";
 
 export const handleInput = (fn: Function) => (e: CustomEvent<InputChangeEventDetail | SelectChangeEventDetail>) => {
     const value = e.detail.value;
@@ -23,8 +24,6 @@ export const formatDate = (date: string | Date): string => {
 export const isValidDate = (date: string | Date): boolean => {
     return moment(date).isValid();
 };
-
-const DATE_FORMAT = "MM/DD/YYYY";
 
 export const handleInputOnlyNumber = (e: KeyboardEvent<HTMLIonInputElement>) => {
     const pattern = /[0-9.,]/;
