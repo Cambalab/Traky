@@ -12,18 +12,6 @@ export const CONFIG: AppConfig = {
   API_ENDPOINT: process.env.BASE_URL ? process.env.BASE_URL : 'http://localhost:3000/api/'
 };
 
-export interface AppTexts {
-  LIST_NO_LOGS_YET_MSG: string;
-  LIST_TITLE: string;
-  LIST_ERROR_MSG: string;
-}
-export const TEXTS: AppTexts = {
-  LIST_NO_LOGS_YET_MSG: "You dont have any log yet..",
-  LIST_ERROR_MSG:
-    "An error has occurred while triying to get the logged hours.",
-  LIST_TITLE: "My logged hours"
-};
-
 export interface URLMapping {
   name: string,
   path: string

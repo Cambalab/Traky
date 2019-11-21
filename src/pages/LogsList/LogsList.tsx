@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {IonButton, useIonViewDidEnter} from "@ionic/react";
-import { TEXTS } from "../../utils/constants";
 import { isMobile } from "../../utils/utils";
 
 import {
@@ -21,6 +20,7 @@ import { timer, create } from "ionicons/icons";
 
 import "./LogsList.css";
 import {getCurrentUser, getHours} from "../../utils/api";
+import {TEXTS} from "./constants";
 
 interface ILogs {
   description: string;
@@ -120,7 +120,7 @@ const LogsList: React.FC = () => {
           <div className="content___message">
             <p>{TEXTS.LIST_NO_LOGS_YET_MSG}</p>
             <IonButton routerLink="/new" expand="full">
-              OK, start now!
+              {TEXTS.BUTTON_NO_LOGS_YET_MSG}
             </IonButton>
           </div>
         )}
