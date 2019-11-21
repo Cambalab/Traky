@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { AppPage } from "./declarations";
+import { AppPage } from "./utils/declarations";
 
 /* Pages */
 import Menu from "./components/Menu";
@@ -30,16 +30,17 @@ import "@ionic/react/css/display.css";
 /* Theme variables and global styles */
 import "./theme/variables.css";
 import "./styles/global.scss";
+import {URL_CONFIG} from "./utils/constants";
 
 const appPages: AppPage[] = [
   {
-    title: "New log",
-    url: "/new",
+    title: URL_CONFIG.LOGS_NEW.name,
+    url: URL_CONFIG.LOGS_NEW.path,
     icon: timer
   },
   {
-    title: "My hours",
-    url: "/list",
+    title: URL_CONFIG.LOGS_LIST.name,
+    url: URL_CONFIG.LOGS_LIST.path,
     icon: list
   }
 ];
@@ -50,9 +51,9 @@ const App: React.FC = () => (
       <IonSplitPane contentId="main">
         <Menu appPages={appPages} />
         <IonRouterOutlet id="main">
-          <Route path="/new" component={LogHourPage} exact={true} />
-          <Route path="/list" component={LogsList} exact={true} />
-          <Route path="/" render={() => <Redirect to="/list" exact={true} />} />
+          <Route path={URL_CONFIG.LOGS_NEW.path} component={LogHourPage} exact={true} />
+          <Route path={URL_CONFIG.LOGS_LIST.path} component={LogsList} exact={true} />
+          <Route path="/" render={() => <Redirect to={URL_CONFIG.LOGS_LIST.path} exact={true} />} />
         </IonRouterOutlet>
       </IonSplitPane>
     </IonReactRouter>

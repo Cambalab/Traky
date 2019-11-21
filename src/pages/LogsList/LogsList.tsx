@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {IonButton, useIonViewDidEnter} from "@ionic/react";
-import { CONFIG, TEXTS } from "../../constants";
-import { isMobile } from "../../utils";
+import { isMobile } from "../../utils/utils";
 
 import {
   IonPage,
@@ -20,6 +19,8 @@ import {
 import { timer, create } from "ionicons/icons";
 
 import "./LogsList.css";
+import {getCurrentUser, getHours} from "../../utils/api";
+import {TEXTS} from "./constants";
 
 interface ILogs {
   description: string;
@@ -30,17 +31,18 @@ interface ILogs {
 const LogsList: React.FC = () => {
   const [hasError, setError] = useState(false);
   const [loggedHours, setLoggedHours] = React.useState<[ILogs] | null>();
+  const currentUser = getCurrentUser();
 
-  async function fetchData() {
-    const res = await fetch(CONFIG.API_ENDPOINT + "users/1/hours");
-    res
-      .json()
-      .then(res => setLoggedHours(res))
-      .catch(error => setError(error));
-  }
+  const onSuccessGetHours = (res: [ILogs]) => {
+    setLoggedHours(res);
+  };
+
+  const onErrorGetHours = (error: any) => {
+    setError(error);
+  };
 
   useIonViewDidEnter(() => {
-    fetchData();
+    getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
   });
 
   return (
@@ -118,7 +120,7 @@ const LogsList: React.FC = () => {
           <div className="content___message">
             <p>{TEXTS.LIST_NO_LOGS_YET_MSG}</p>
             <IonButton routerLink="/new" expand="full">
-              OK, start now!
+              {TEXTS.BUTTON_NO_LOGS_YET_MSG}
             </IonButton>
           </div>
         )}

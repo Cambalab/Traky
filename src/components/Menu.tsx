@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { AppPage } from '../declarations';
+import { AppPage } from '../utils/declarations';
 
 interface MenuProps extends RouteComponentProps {
     appPages: AppPage[];
