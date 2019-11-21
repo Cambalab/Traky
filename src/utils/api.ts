@@ -1,7 +1,6 @@
-import {FetchInput} from "../declarations";
+import {FetchInput} from "./declarations";
 import LogHourForm from "../components/LogHourForm/LogHourForm";
-
-const BASE_URL = process.env.BASE_URL ? process.env.BASE_URL : 'http://localhost:3000/api/';
+import {CONFIG} from "./constants";
 
 const createHeaders = () => {
     const headers: Headers = new Headers();
@@ -11,7 +10,7 @@ const createHeaders = () => {
 
 const fetchAPI = async ({ url, method, body, onSuccess, onError, parse = (x: object) => x}: FetchInput): Promise<object> => {
     try {
-        const response = await fetch(BASE_URL + url, {
+        const response = await fetch(CONFIG.API_ENDPOINT + url, {
             method,
             headers: createHeaders(),
             body: JSON.stringify(body)
@@ -35,6 +34,8 @@ const getCurrentUser = () => {
     return { id: 1 }
 };
 
+const getHours = (userId: any, onSuccess: Function, onError: Function) => fetchAPI({ url: `users/${userId}/hours`, method: 'GET', onSuccess, onError});
+const getGroups = (userId: any, onSuccess: Function) => fetchAPI({ url: `groups/${userId}`, method: 'GET', onSuccess});
 const logHours = (userId: any, body: LogHourForm, onSuccess: Function) => fetchAPI({ url: `users/${userId}/hours`, method: 'POST', body, onSuccess});
 
-export { fetchAPI, getCurrentUser, logHours}
+export { fetchAPI, getCurrentUser, logHours, getGroups, getHours}
