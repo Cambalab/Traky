@@ -14,9 +14,10 @@ import {
 } from '@ionic/react';
 import React, {FunctionComponent, useState} from 'react';
 import "./LogHourForm.css"
-import {fetchAPI} from "../../utils/api";
-import {IGroup} from "../../declarations";
+import {getCurrentUser, getGroups} from "../../utils/api";
+import {IGroup} from "../../utils/declarations";
 import {formatDate, handleInput, handleInputDatetime, handleInputOnlyNumber} from "../../utils/inputHandle";
+import {LOG_HOUR_FORM_TEXTS} from "./constants";
 
 interface OnButtonClickEventFunction extends Function {
     (body: LogHourForm): void
@@ -53,10 +54,15 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
     const [selectedGroup, setSelectedGroup] = useState<number | undefined>(initialSelectedGroup);
     const [currentDate, setCurrentDate] = useState<string>(initialCurrentDate);
     const [hours, setHours] = useState<string>(initialHours);
+    const currentUser = getCurrentUser();
+
+    const onSuccessGetGroups = (newGroups: IGroup[]) => {
+        setGroups(newGroups);
+    };
 
     useIonViewDidEnter(() => {
         clearData();
-        fetchGroups();
+        getGroups(currentUser.id, onSuccessGetGroups);
     });
 
     const clearData = () => {
@@ -66,17 +72,9 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
         setHours(initialHours);
     };
 
-    const fetchGroups = async () => {
-        const onSuccess = (newGroups: IGroup[]) => {
-            setGroups(newGroups);
-        };
-
-        await fetchAPI({ url: 'groups', method: 'GET', onSuccess});
-    };
-
     const getLogForm = () => {
         return {
-            userId: 1,
+            userId: currentUser.id,
             groupId: selectedGroup,
             description,
             spent_time: parseInt(hours),
@@ -95,23 +93,29 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
     return (
         <IonContent className="ion-text-center ion-padding">
             <IonList>
-                <IonText className="input__text--font" color="identity">Description</IonText>
+                <IonText className="input__text--font" color="identity">{LOG_HOUR_FORM_TEXTS.INPUT_DESCRIPTION_TEXT}</IonText>
                 <IonItem className="list__item list__item--margin">
                     <IonInput
                         name="description"
                         className="ion-text-center"
-                        placeholder="Enter your description" type="text" maxlength={100}
-                        value={description} onIonChange={handleInput(setDescription)}
+                        placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_DESCRIPTION_TEXT}
+                        type="text"
+                        maxlength={100}
+                        value={description}
+                        onIonChange={handleInput(setDescription)}
                     />
                 </IonItem>
-                <IonText className="input__text--font" color="identity">Registered Group</IonText>
+                <IonText className="input__text--font" color="identity">{LOG_HOUR_FORM_TEXTS.INPUT_SELECT_GROUP_TEXT}</IonText>
                 <IonItem className="list__item--container list__item list__item--margin">
                     <IonSelect
                         name="group"
                         className="ion-text-center item__select--container"
                         color="identity"
-                        value={selectedGroup} onIonChange={handleInput(setSelectedGroup)}
-                        okText="Ok" cancelText="Cancel" placeholder="Select a Group"
+                        value={selectedGroup}
+                        onIonChange={handleInput(setSelectedGroup)}
+                        okText="Ok"
+                        cancelText="Cancel"
+                        placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_GROUP_TEXT}
                     >
                         {
                             groups.map(({id, name}) => (
@@ -120,7 +124,7 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
                         }
                     </IonSelect>
                 </IonItem>
-                <IonText className="input__text--font" color="identity">Current Date</IonText>
+                <IonText className="input__text--font" color="identity">{LOG_HOUR_FORM_TEXTS.INPUT_DATE_TEXT}</IonText>
                 <IonItem className="list__item list__item--margin">
                     <IonDatetime
                         name="currentDate"
@@ -129,15 +133,15 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
                         displayFormat="MM/DD/YYYY"
                         value={currentDate}
                         onIonChange={handleInputDatetime(setCurrentDate)}
-                        placeholder="Enter your current date"
+                        placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_DATE_TEXT}
                     />
                 </IonItem>
-                <IonText className="input__text--font" color="identity">Spent Time</IonText>
+                <IonText className="input__text--font" color="identity">{LOG_HOUR_FORM_TEXTS.INPUT_SPENT_TIME_TEXT}</IonText>
                 <IonItem className="list__item list__item--margin">
                     <IonInput
                         name="hour"
                         className="ion-text-center"
-                        placeholder="Enter your spent time"
+                        placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_SPENT_TIME_TEXT}
                         type="number"
                         value={hours}
                         onKeyPress={handleInputOnlyNumber}
@@ -153,14 +157,14 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
                         color="identity"
                         onClick={handleOnClickSave}
                     >
-                        Save
+                        {LOG_HOUR_FORM_TEXTS.BUTTON_SAVE_TEXT}
                     </IonButton>
                     <IonButton
                         className="buttons__button"
                         color="danger"
                         onClick={handleOnClickCancel}
                     >
-                        Cancel
+                        {LOG_HOUR_FORM_TEXTS.BUTTON_CANCEL_TEXT}
                     </IonButton>
                 </IonButtons>
             </IonFooter>
