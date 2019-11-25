@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import {IonButton, useIonViewDidEnter} from "@ionic/react";
+import { IonButton, useIonViewDidEnter } from "@ionic/react";
 import { isMobile } from "../../utils/utils";
+import { History } from "history";
 
 import {
   IonPage,
@@ -19,8 +20,8 @@ import {
 import { timer, create } from "ionicons/icons";
 
 import "./LogsList.css";
-import {getCurrentUser, getHours} from "../../utils/api";
-import {TEXTS} from "./constants";
+import { getCurrentUser, getHours } from "../../utils/api";
+import { TEXTS } from "./constants";
 
 interface ILogs {
   description: string;
@@ -28,7 +29,11 @@ interface ILogs {
   spent_time: number;
 }
 
-const LogsList: React.FC = () => {
+interface EditPageHistory {
+  history: History;
+}
+
+const LogsList: React.FC<EditPageHistory> = ({ history }) => {
   const [hasError, setError] = useState(false);
   const [loggedHours, setLoggedHours] = React.useState<[ILogs] | null>();
   const currentUser = getCurrentUser();
@@ -44,6 +49,12 @@ const LogsList: React.FC = () => {
   useIonViewDidEnter(() => {
     getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
   });
+
+  const showEditView = (data: any) => {
+    history.push({
+      pathname: "/edit/" + JSON.stringify(data.id)
+    });
+  };
 
   return (
     <IonPage>
@@ -69,12 +80,14 @@ const LogsList: React.FC = () => {
                 <IonCardContent>
                   <div className="item-card__container">
                     <IonButton
-                      routerLink="/"
                       className="item-card__edite-button"
                       fill="outline"
                       shape="round"
                       size="small"
                       color="primary"
+                      onClick={() => {
+                        showEditView(loggedHour);
+                      }}
                     >
                       <IonIcon
                         className="item-card__icon"

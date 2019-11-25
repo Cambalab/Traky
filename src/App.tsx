@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
+import {
+  IonApp,
+  IonRouterOutlet,
+  IonSplitPane,
+  useIonViewDidEnter
+} from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { AppPage } from "./utils/declarations";
+
+import { getCurrentUser, getHours } from "./utils/api";
 
 /* Pages */
 import Menu from "./components/Menu";
@@ -31,7 +38,9 @@ import "@ionic/react/css/display.css";
 /* Theme variables and global styles */
 import "./theme/variables.css";
 import "./styles/global.scss";
-import {URL_CONFIG} from "./utils/constants";
+import { URL_CONFIG } from "./utils/constants";
+import { AppContext, AppContextProvider } from "./store/Store";
+import EditHourPage from "./pages/EditHour/EditHourPage";
 
 const appPages: AppPage[] = [
   {
@@ -48,23 +57,74 @@ const appPages: AppPage[] = [
     title: URL_CONFIG.LOGS_LIST.name,
     url: URL_CONFIG.LOGS_LIST.path,
     icon: list
+  },
+  {
+    title: "Edit View",
+    url: "/edit/:data",
+    icon: list
   }
 ];
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonSplitPane contentId="main">
-        <Menu appPages={appPages} />
-        <IonRouterOutlet id="main">
-          <Route path={URL_CONFIG.LOGS_LOGIN.path} component={LoginPage} exact={true} />
-          <Route path={URL_CONFIG.LOGS_NEW.path} component={LogHourPage} exact={true} />
-          <Route path={URL_CONFIG.LOGS_LIST.path} component={LogsList} exact={true} />
-          <Route path="/" render={() => <Redirect to={URL_CONFIG.LOGS_LOGIN.path} exact={true} />} />
-        </IonRouterOutlet>
-      </IonSplitPane>
-    </IonReactRouter>
-  </IonApp>
-);
+interface ILogs {
+  id: number;
+  description: string;
+  timestamp: Date;
+  spent_time: number;
+}
+
+const App: React.FC = () => {
+  const currentUser = getCurrentUser();
+
+  const { state, dispatch } = useContext(AppContext);
+
+  function onSuccessGetHours(res: ILogs[]) {
+    dispatch({
+      type: "UPDATE_LIST",
+      payload: res
+    });
+  }
+
+  const onErrorGetHours = (error: any) => {};
+
+  useEffect(() => {
+    getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
+  }, []);
+
+  return (
+    <IonApp>
+      <AppContextProvider>
+        <IonReactRouter>
+          <IonSplitPane contentId="main">
+            <Menu appPages={appPages} />
+            <IonRouterOutlet id="main">
+              <Route
+                path={URL_CONFIG.LOGS_LOGIN.path}
+                component={LoginPage}
+                exact={true}
+              />
+              <Route
+                path={URL_CONFIG.LOGS_NEW.path}
+                component={LogHourPage}
+                exact={true}
+              />
+              <Route
+                path={URL_CONFIG.LOGS_LIST.path}
+                component={LogsList}
+                exact={true}
+              />
+              <Route path="/edit/:data" component={EditHourPage} />
+              <Route
+                path="/"
+                render={() => (
+                  <Redirect to={URL_CONFIG.LOGS_LIST.path} exact={true} />
+                )}
+              />
+            </IonRouterOutlet>
+          </IonSplitPane>
+        </IonReactRouter>
+      </AppContextProvider>
+    </IonApp>
+  );
+};
 
 export default App;
