@@ -91,8 +91,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <IonApp>
-      <AppContextProvider>
+    <AppContextProvider>
+      <IonApp>
         <IonReactRouter>
           <IonSplitPane contentId="main">
             <Menu appPages={appPages} />
@@ -122,8 +122,8 @@ const App: React.FC = () => {
             </IonRouterOutlet>
           </IonSplitPane>
         </IonReactRouter>
-      </AppContextProvider>
-    </IonApp>
+      </IonApp>
+    </AppContextProvider>
   );
 };
 

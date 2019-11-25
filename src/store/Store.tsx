@@ -49,7 +49,8 @@ function reducer(state: OverviewState, action: Action): OverviewState {
   }
 }
 
-const AppContextProvider = (props: { children: any }) => {
+const AppContextProvider = (props: any) => {
+  console.log('props', props);
   const fullInitialState = {
     ...initialState
   };
