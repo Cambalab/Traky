@@ -10,46 +10,42 @@ import React, { useContext, FunctionComponent } from "react";
 import { AppContext } from "../../store/Store";
 import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
-import { getCurrentUser, logHours } from "../../utils/api";
-import { IUser } from "../../utils/declarations";
+import { getCurrentUser, logHours, editHours, getHours } from "../../utils/api";
+import { IUser, ILogs, IMatchParams } from "../../utils/declarations";
 import { URL_CONFIG } from "../../utils/constants";
 import { LOG_HOUR_PAGE_TEXTS } from "./constants";
 import { RouteComponentProps } from "react-router-dom";
-
-interface ILogs {
-  id: number;
-  description: string;
-  timestamp: Date;
-  spent_time: number;
-}
-
-interface IMatchParams {
-  data: string;
-}
 
 const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
   history,
   match
 }) => {
   const currentUser: IUser = getCurrentUser();
-
-  const Store: any = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
 
   function filterLoggedHour(id: number) {
-    //const element: ILogs = state.loggedHours.filter((e: ILogs) => e.id === id);
-    const element: number = Store.loggedHours;
+    const element = state.loggedHours.find((e: ILogs) => e.id === id);
     return element;
   }
 
-  //const data: ILogs = filterLoggedHour(Number(match.params.data));
-  const data: number = filterLoggedHour(Number(match.params.data));
+  const data = filterLoggedHour(Number(match.params.data));
+
+  function onSuccessGetHours(res: ILogs[]) {
+    dispatch({
+      type: "UPDATE_LIST",
+      payload: res
+    });
+  }
+
+  const onErrorGetHours = (error: any) => {};
 
   const onClickSave = async (body: LogHourForm) => {
     const onSuccess = () => {
+      getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
       history.push(URL_CONFIG.LOGS_LIST.path);
     };
 
-    await logHours(currentUser.id, body, onSuccess);
+    await editHours(currentUser.id, match.params.data, body, onSuccess);
   };
 
   const onClickCancel = async () => {
@@ -68,7 +64,16 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <LogHourForm onClickSave={() => {}} onClickCancel={() => {}} />
+      {data ? (
+        <LogHourForm
+          initialDescription={data.description}
+          initialSelectedGroup={data.groupId}
+          initialCurrentDate={data.timestamp.toString()}
+          initialHours={data.spent_time.toString()}
+          onClickSave={onClickSave}
+          onClickCancel={onClickCancel}
+        />
+      ) : null}
     </IonPage>
   );
 };

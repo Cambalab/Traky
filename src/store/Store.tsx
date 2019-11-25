@@ -1,25 +1,5 @@
-import React, { createContext, useReducer, Dispatch, useContext } from "react";
-
-interface ILogs {
-  id: number;
-  description: string;
-  timestamp: Date;
-  spent_time: number;
-}
-
-type Action = {
-  type: "UPDATE_LIST";
-  payload: ILogs[];
-};
-
-type OverviewState = {
-  loggedHours: ILogs[];
-};
-
-type IContext = {
-  state: OverviewState;
-  dispatch: Dispatch<Action>;
-};
+import React, { createContext, useReducer, useContext } from "react";
+import { IContext, OverviewState, Action } from "../utils/declarations";
 
 const AppContext = createContext<IContext>({} as IContext);
 
@@ -28,20 +8,12 @@ function useAppContext() {
 }
 
 const initialState = {
-  loggedHours: [
-    {
-      id: 1,
-      description: "horas",
-      timestamp: new Date(),
-      spent_time: 2
-    }
-  ]
+  loggedHours: []
 };
 
 function reducer(state: OverviewState, action: Action): OverviewState {
   switch (action.type) {
     case "UPDATE_LIST": {
-      console.log(state, "pasa");
       return { ...state, loggedHours: action.payload };
     }
     default:
@@ -50,7 +22,6 @@ function reducer(state: OverviewState, action: Action): OverviewState {
 }
 
 const AppContextProvider = (props: any) => {
-  console.log('props', props);
   const fullInitialState = {
     ...initialState
   };

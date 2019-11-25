@@ -1,13 +1,8 @@
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
-import {
-  IonApp,
-  IonRouterOutlet,
-  IonSplitPane,
-  useIonViewDidEnter
-} from "@ionic/react";
+import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { AppPage } from "./utils/declarations";
+import { AppPage, ILogs } from "./utils/declarations";
 
 import { getCurrentUser, getHours } from "./utils/api";
 
@@ -57,20 +52,8 @@ const appPages: AppPage[] = [
     title: URL_CONFIG.LOGS_LIST.name,
     url: URL_CONFIG.LOGS_LIST.path,
     icon: list
-  },
-  {
-    title: "Edit View",
-    url: "/edit/:data",
-    icon: list
   }
 ];
-
-interface ILogs {
-  id: number;
-  description: string;
-  timestamp: Date;
-  spent_time: number;
-}
 
 const App: React.FC = () => {
   const currentUser = getCurrentUser();
