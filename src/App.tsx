@@ -34,7 +34,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import "./styles/global.scss";
 import { URL_CONFIG } from "./utils/constants";
-import { AppContext, AppContextProvider } from "./store/Store";
+import { AppContext } from "./store/Store";
 import EditHourPage from "./pages/EditHour/EditHourPage";
 
 const appPages: AppPage[] = [
@@ -74,39 +74,37 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <AppContextProvider>
-      <IonApp>
-        <IonReactRouter>
-          <IonSplitPane contentId="main">
-            <Menu appPages={appPages} />
-            <IonRouterOutlet id="main">
-              <Route
-                path={URL_CONFIG.LOGS_LOGIN.path}
-                component={LoginPage}
-                exact={true}
-              />
-              <Route
-                path={URL_CONFIG.LOGS_NEW.path}
-                component={LogHourPage}
-                exact={true}
-              />
-              <Route
-                path={URL_CONFIG.LOGS_LIST.path}
-                component={LogsList}
-                exact={true}
-              />
-              <Route path="/edit/:data" component={EditHourPage} />
-              <Route
-                path="/"
-                render={() => (
-                  <Redirect to={URL_CONFIG.LOGS_LIST.path} exact={true} />
-                )}
-              />
-            </IonRouterOutlet>
-          </IonSplitPane>
-        </IonReactRouter>
-      </IonApp>
-    </AppContextProvider>
+    <IonApp>
+      <IonReactRouter>
+        <IonSplitPane contentId="main">
+          <Menu appPages={appPages} />
+          <IonRouterOutlet id="main">
+            <Route
+              path={URL_CONFIG.LOGS_LOGIN.path}
+              component={LoginPage}
+              exact={true}
+            />
+            <Route
+              path={URL_CONFIG.LOGS_NEW.path}
+              component={LogHourPage}
+              exact={true}
+            />
+            <Route
+              path={URL_CONFIG.LOGS_LIST.path}
+              component={LogsList}
+              exact={true}
+            />
+            <Route path="/edit/:data" component={EditHourPage} />
+            <Route
+              path="/"
+              render={() => (
+                <Redirect to={URL_CONFIG.LOGS_LIST.path} exact={true} />
+              )}
+            />
+          </IonRouterOutlet>
+        </IonSplitPane>
+      </IonReactRouter>
+    </IonApp>
   );
 };
 
