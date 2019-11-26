@@ -1,4 +1,5 @@
-import { OverviewState, Action } from "../utils/declarations";
+import { OverviewState } from "../utils/declarations";
+import { Action } from "./actions";
 
 export function reducer(state: OverviewState, action: Action): OverviewState {
   switch (action.type) {

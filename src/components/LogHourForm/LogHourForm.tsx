@@ -129,7 +129,11 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
             placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_GROUP_TEXT}
           >
             {groups.map(({ id, name }) => (
-              <IonSelectOption key={id} value={id}>
+              <IonSelectOption
+                selected={initialSelectedGroup === id}
+                key={id}
+                value={id}
+              >
                 {name}
               </IonSelectOption>
             ))}

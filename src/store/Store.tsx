@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { IContext, OverviewState, Action } from "../utils/declarations";
+import { IContext } from "../utils/declarations";
 import { reducer } from "./reducer";
 
 const AppContext = createContext<IContext>({} as IContext);
