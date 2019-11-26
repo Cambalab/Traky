@@ -25,7 +25,11 @@ export const URL_CONFIG: {[key: string]: URLMapping} = {
   LOGS_NEW: {
     name: "New log",
     path: "/new"
-  }
+  },
+  LOGS_LOGIN: {
+    name: "Login",
+    path: "/login"
+  },
 };
 
 export const DATE_FORMAT = "MM/DD/YYYY";
