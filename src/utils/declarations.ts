@@ -1,4 +1,5 @@
 import { Dispatch } from "react";
+import { Action } from "../store/actions";
 
 export interface AppPage {
   url: string;
@@ -34,11 +35,6 @@ export interface ILogs {
 
 export type OverviewState = {
   loggedHours: ILogs[] | [];
-};
-
-export type Action = {
-  type: "UPDATE_LIST";
-  payload: ILogs[];
 };
 
 export type IContext = {

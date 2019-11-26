@@ -10,10 +10,10 @@ import React, { useContext, FunctionComponent } from "react";
 import { AppContext } from "../../store/Store";
 import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
-import { getCurrentUser, logHours, editHours, getHours } from "../../utils/api";
+import { getCurrentUser, editHours } from "../../utils/api";
 import { IUser, ILogs, IMatchParams } from "../../utils/declarations";
 import { URL_CONFIG } from "../../utils/constants";
-import { LOG_HOUR_PAGE_TEXTS } from "./constants";
+import { EDIT_HOUR_PAGE_TEXTS } from "./constants";
 import { RouteComponentProps } from "react-router-dom";
 
 const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
@@ -30,18 +30,12 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
 
   const data = filterLoggedHour(Number(match.params.data));
 
-  function onSuccessGetHours(res: ILogs[]) {
-    dispatch({
-      type: "UPDATE_LIST",
-      payload: res
-    });
-  }
-
-  const onErrorGetHours = (error: any) => {};
-
   const onClickSave = async (body: LogHourForm) => {
-    const onSuccess = () => {
-      getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
+    const onSuccess = (res: any) => {
+      dispatch({
+        type: "UPDATE_LIST",
+        payload: state.loggedHours.concat(res)
+      });
       history.push(URL_CONFIG.LOGS_LIST.path);
     };
 
@@ -59,7 +53,7 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
           <IonButtons>
             <IonMenuButton className="menu__button" />
             <IonTitle className="header__title">
-              {LOG_HOUR_PAGE_TEXTS.HEADER_TITLE}
+              {EDIT_HOUR_PAGE_TEXTS.HEADER_TITLE}
             </IonTitle>
           </IonButtons>
         </IonToolbar>

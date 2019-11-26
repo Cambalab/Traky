@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { IContext, OverviewState, Action } from "../utils/declarations";
+import { reducer } from "./reducer";
 
 const AppContext = createContext<IContext>({} as IContext);
 
@@ -10,16 +11,6 @@ function useAppContext() {
 const initialState = {
   loggedHours: []
 };
-
-function reducer(state: OverviewState, action: Action): OverviewState {
-  switch (action.type) {
-    case "UPDATE_LIST": {
-      return { ...state, loggedHours: action.payload };
-    }
-    default:
-      return state;
-  }
-}
 
 const AppContextProvider = (props: any) => {
   const fullInitialState = {
