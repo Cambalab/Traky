@@ -21,14 +21,18 @@
     "typescript": "3.6.3"
   },
   "scripts": {
-    "start": "npm run staging:build && npm run staging:start",
+    "start": "npm run staging:start",
     "react:start": "react-scripts start",
     "react:build": "react-scripts build",
     "react:test": "react-scripts test",
     "react:eject": "react-scripts eject",
-    "staging:build": "env-cmd npm run react:build",
-    "staging:start": "env-cmd node server/index.js",
-    "server:start": "json-server --watch server/data.json --routes server/routes.json"
+    "local:build": "env-cmd npm run react:build",
+    "local:start": "env-cmd npm run staging:start",
+    "staging:build": "npm run react:build",
+    "staging:start": "node server/index.js",
+    "webserver:start": "env-cmd npm run react:start",
+    "apiserver:start": "json-server --watch server/data.json --routes server/routes.json",
+    "heroku-postbuild": "npm run staging:build"
   },
   "eslintConfig": {
     "extends": "react-app"
