@@ -32,7 +32,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables and global styles */
 import "./theme/variables.css";
-import "./styles/global.scss";
+import "./styles/global.css";
 import { URL_CONFIG } from "./utils/constants";
 import { AppContext } from "./store/Store";
 import EditHourPage from "./pages/EditHour/EditHourPage";
