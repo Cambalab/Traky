@@ -13,52 +13,68 @@
   ],
   "hours": [
     {
-      "id": 1,
-      "groupId": 1,
       "userId": 1,
+      "groupId": 1,
       "description": "Cooperative management work and go for a walk and then start to sign in the shower and go for an ice-cream.",
-      "spent_time": 2,
-      "timestamp": "11/5/2019"
+      "spent_time": 5,
+      "timestamp": "11/5/2019",
+      "id": 1
     },
-   {
-      "id": 1,
+    {
+      "id": 2,
       "groupId": 1,
       "userId": 1,
       "description": "Work on development",
       "spent_time": 5,
       "timestamp": "11/9/2019"
     },
-   {
-      "id": 1,
-      "groupId": 1,
+    {
       "userId": 1,
-      "description": "Work on development",
-      "spent_time": 5,
-      "timestamp": "11/11/2019"
+      "groupId": 1,
+      "description": "Cooperative management wwwwwwwork and go for a walk ",
+      "spent_time": 2,
+      "timestamp": "11/5/2019",
+      "id": 3
     },
-   {
-      "id": 1,
+    {
+      "id": 4,
       "groupId": 1,
       "userId": 1,
       "description": "Work on development",
       "spent_time": 4,
       "timestamp": "11/10/2019"
     },
-   {
-      "id": 1,
+    {
+      "id": 5,
       "groupId": 1,
       "userId": 1,
-      "description": "Work on development",
+      "description": "Work on development with shisus",
       "spent_time": 3,
       "timestamp": "11/14/2019"
     },
-   {
-      "id": 1,
+    {
+      "id": 6,
       "groupId": 1,
       "userId": 1,
-      "description": "Work on development",
+      "description": "Work on development from home",
       "spent_time": 7,
       "timestamp": "12/2/2019"
+    },
+    {
+      "userId": 1,
+      "groupId": 1,
+      "description": "Cooperative management work and go for a walk and then start to sign in the shower and go for an ice-cream.",
+      "spent_time": 1,
+      "timestamp": "11/5/2019",
+      "id": 7
+    },
+    {
+      "userId": 1,
+      "groupId": 1,
+      "description": "Work on development",
+      "spent_time": 4,
+      "timestamp": "11/9/2019",
+      "id": 8
     }
   ],
   "groups": [

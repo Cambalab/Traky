@@ -2,5 +2,7 @@
   "/api/*": "/$1",
   "/users/:id/hours": "/hours?userId=:id",
   "/groups/:userId": "/groups",
-  "/signin": "/users"
-}
+  "/signin": "/users",
+  "/users/:id/hours/:id": "/hours?userId=:id/hours?id=:id"
+}	
+

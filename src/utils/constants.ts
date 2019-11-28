@@ -9,15 +9,17 @@ export interface AppConfig {
 }
 
 export const CONFIG: AppConfig = {
-  API_ENDPOINT: process.env.BASE_URL ? process.env.BASE_URL : 'http://localhost:3000/api/'
+  API_ENDPOINT: process.env.BASE_URL
+    ? process.env.BASE_URL
+    : "http://localhost:3000/api/"
 };
 
 export interface URLMapping {
-  name: string,
-  path: string
+  name: string;
+  path: string;
 }
 
-export const URL_CONFIG: {[key: string]: URLMapping} = {
+export const URL_CONFIG: { [key: string]: URLMapping } = {
   LOGS_LIST: {
     name: "My hours",
     path: "/list"
@@ -30,6 +32,10 @@ export const URL_CONFIG: {[key: string]: URLMapping} = {
     name: "Login",
     path: "/login"
   },
+  LOGS_EDIT: {
+    name: "Edit",
+    path: "/edit/:data"
+  }
 };
 
 export const DATE_FORMAT = "MM/DD/YYYY";
