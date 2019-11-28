@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IonButton, useIonViewDidEnter } from "@ionic/react";
+import { IonButton, useIonViewDidEnter, IonSpinner } from "@ionic/react";
 import { isMobile } from "../../utils/utils";
 import { History } from "history";
 
@@ -22,6 +22,7 @@ import { timer, create } from "ionicons/icons";
 import "./LogsList.css";
 import { getCurrentUser, getHours } from "../../utils/api";
 import { TEXTS } from "./constants";
+import { render } from "react-dom";
 
 interface ILogs {
   description: string;
@@ -35,18 +36,22 @@ interface EditPageHistory {
 
 const LogsList: React.FC<EditPageHistory> = ({ history }) => {
   const [hasError, setError] = useState(false);
-  const [loggedHours, setLoggedHours] = React.useState<[ILogs] | null>();
+  const [loggedHours, setLoggedHours] = React.useState<ILogs[] | null>();
   const currentUser = getCurrentUser();
+  const [isLoading, setLoading] = useState(false);
 
-  const onSuccessGetHours = (res: [ILogs]) => {
+  const onSuccessGetHours = (res: ILogs[]) => {
     setLoggedHours(res);
+    setLoading(false);
   };
 
   const onErrorGetHours = (error: any) => {
     setError(error);
+    setLoading(false);
   };
 
   useIonViewDidEnter(() => {
+    setLoading(true);
     getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
   });
 
@@ -55,6 +60,72 @@ const LogsList: React.FC<EditPageHistory> = ({ history }) => {
       pathname: "/edit/" + JSON.stringify(data.id)
     });
   };
+
+  const renderList = () =>
+    loggedHours && loggedHours.length >= 1 ? (
+      loggedHours.map((loggedHour, i) => {
+        return (
+          <IonCard key={i} className="item-card">
+            <IonCardContent>
+              <div className="item-card__container">
+                <IonButton
+                  className="item-card__edite-button"
+                  fill="outline"
+                  shape="round"
+                  size="small"
+                  color="primary"
+                  onClick={() => {
+                    showEditView(loggedHour);
+                  }}
+                >
+                  <IonIcon
+                    className="item-card__icon"
+                    size={"small"}
+                    icon={create}
+                  ></IonIcon>
+                </IonButton>
+                <IonDatetime
+                  readonly={true}
+                  className="item-card__date"
+                  onChange={() => {}}
+                  displayFormat="D MMM YY"
+                  value={`${loggedHour.timestamp}`}
+                ></IonDatetime>
+                {!isMobile() && (
+                  <div className="item-card__description">
+                    {loggedHour.description}
+                  </div>
+                )}
+                <div className="item-card__hour">
+                  <IonIcon
+                    className="item-card__icon"
+                    size={"large"}
+                    icon={timer}
+                  ></IonIcon>
+                  {loggedHour.spent_time}
+                  <p>hrs</p>
+                </div>
+              </div>
+              {isMobile() && (
+                <div>
+                  <div className="item-card__dividing-line--mobile"></div>
+                  <div className="item-card__description--mobile">
+                    {loggedHour.description}
+                  </div>
+                </div>
+              )}
+            </IonCardContent>
+          </IonCard>
+        );
+      })
+    ) : (
+      <div className="content___message">
+        <p>{TEXTS.LIST_NO_LOGS_YET_MSG}</p>
+        <IonButton routerLink="/new" expand="full">
+          {TEXTS.BUTTON_NO_LOGS_YET_MSG}
+        </IonButton>
+      </div>
+    );
 
   return (
     <IonPage>
@@ -68,74 +139,14 @@ const LogsList: React.FC<EditPageHistory> = ({ history }) => {
       </IonHeader>
       <IonContent>
         {/*-- List of logged hours --*/}
-        {hasError ? (
+        {isLoading ? (
+          <IonSpinner className="content__spinner" name="lines" />
+        ) : hasError ? (
           <div className="content___message">
             <p>{TEXTS.LIST_ERROR_MSG}</p>
           </div>
-        ) : null}
-        {loggedHours ? (
-          loggedHours.map((loggedHour, i) => {
-            return (
-              <IonCard key={i} className="item-card">
-                <IonCardContent>
-                  <div className="item-card__container">
-                    <IonButton
-                      className="item-card__edite-button"
-                      fill="outline"
-                      shape="round"
-                      size="small"
-                      color="primary"
-                      onClick={() => {
-                        showEditView(loggedHour);
-                      }}
-                    >
-                      <IonIcon
-                        className="item-card__icon"
-                        size={"small"}
-                        icon={create}
-                      ></IonIcon>
-                    </IonButton>
-                    <IonDatetime
-                      readonly={true}
-                      className="item-card__date"
-                      onChange={() => {}}
-                      displayFormat="D MMM YY"
-                      value={`${loggedHour.timestamp}`}
-                    ></IonDatetime>
-                    {!isMobile() && (
-                      <div className="item-card__description">
-                        {loggedHour.description}
-                      </div>
-                    )}
-                    <div className="item-card__hour">
-                      <IonIcon
-                        className="item-card__icon"
-                        size={"large"}
-                        icon={timer}
-                      ></IonIcon>
-                      {loggedHour.spent_time}
-                      <p>hrs</p>
-                    </div>
-                  </div>
-                  {isMobile() && (
-                    <div>
-                      <div className="item-card__dividing-line--mobile"></div>
-                      <div className="item-card__description--mobile">
-                        {loggedHour.description}
-                      </div>
-                    </div>
-                  )}
-                </IonCardContent>
-              </IonCard>
-            );
-          })
         ) : (
-          <div className="content___message">
-            <p>{TEXTS.LIST_NO_LOGS_YET_MSG}</p>
-            <IonButton routerLink="/new" expand="full">
-              {TEXTS.BUTTON_NO_LOGS_YET_MSG}
-            </IonButton>
-          </div>
+          renderList()
         )}
       </IonContent>
     </IonPage>

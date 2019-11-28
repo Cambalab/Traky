@@ -41,7 +41,7 @@ const getCurrentUser = () => {
   return { id: 1 };
 };
 
-const getHours = (userId: any, onSuccess: Function, onError: Function) =>
+const getHours = (userId: any, onSuccess: Function, onError?: Function) =>
   fetchAPI({ url: `users/${userId}/hours`, method: "GET", onSuccess, onError });
 const getGroups = (userId: any, onSuccess: Function) =>
   fetchAPI({ url: `groups/${userId}`, method: "GET", onSuccess });

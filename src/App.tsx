@@ -60,17 +60,15 @@ const App: React.FC = () => {
 
   const { state, dispatch } = useContext(AppContext);
 
-  function onSuccessGetHours(res: ILogs[]) {
+  const onSuccessGetHours = (res: ILogs[]) => {
     dispatch({
       type: "UPDATE_LIST",
       payload: res
     });
-  }
-
-  const onErrorGetHours = (error: any) => {};
+  };
 
   useEffect(() => {
-    getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
+    getHours(currentUser.id, onSuccessGetHours);
   }, []);
 
   return (
@@ -94,7 +92,7 @@ const App: React.FC = () => {
               component={LogsList}
               exact={true}
             />
-            <Route path="/edit/:data" component={EditHourPage} />
+            <Route path={URL_CONFIG.LOGS_EDIT.path} component={EditHourPage} />
             <Route
               path="/"
               render={() => (
