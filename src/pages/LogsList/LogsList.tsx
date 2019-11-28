@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { IonButton, useIonViewDidEnter, IonSpinner } from "@ionic/react";
 import { isMobile } from "../../utils/utils";
 import { History } from "history";
@@ -20,40 +20,19 @@ import {
 import { timer, create } from "ionicons/icons";
 
 import "./LogsList.css";
-import { getCurrentUser, getHours } from "../../utils/api";
 import { TEXTS } from "./constants";
-import { render } from "react-dom";
+import { AppContext } from "../../store/Store";
+import { ILogs } from "../../utils/declarations";
 
-interface ILogs {
-  description: string;
-  timestamp: Date;
-  spent_time: number;
-}
-
-interface EditPageHistory {
+interface LogsPageHistory {
   history: History;
 }
 
-const LogsList: React.FC<EditPageHistory> = ({ history }) => {
-  const [hasError, setError] = useState(false);
-  const [loggedHours, setLoggedHours] = React.useState<ILogs[] | null>();
-  const currentUser = getCurrentUser();
-  const [isLoading, setLoading] = useState(false);
-
-  const onSuccessGetHours = (res: ILogs[]) => {
-    setLoggedHours(res);
-    setLoading(false);
-  };
-
-  const onErrorGetHours = (error: any) => {
-    setError(error);
-    setLoading(false);
-  };
-
-  useIonViewDidEnter(() => {
-    setLoading(true);
-    getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
-  });
+const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
+  const { state } = useContext(AppContext);
+  const loggedHours: ILogs[] = state.loggedHours;
+  const isLoading: boolean = state.isLoading;
+  const hasError: boolean = state.hasError;
 
   const showEditView = (data: any) => {
     history.push({

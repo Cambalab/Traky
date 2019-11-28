@@ -58,17 +58,36 @@ const appPages: AppPage[] = [
 const App: React.FC = () => {
   const currentUser = getCurrentUser();
 
-  const { state, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
 
   const onSuccessGetHours = (res: ILogs[]) => {
     dispatch({
       type: "UPDATE_LIST",
       payload: res
     });
+    dispatch({
+      type: "UPDATE_LOADING",
+      payload: false
+    });
+  };
+
+  const onErrorGetHours = () => {
+    dispatch({
+      type: "UPDATE_ERROR",
+      payload: true
+    });
+    dispatch({
+      type: "UPDATE_LOADING",
+      payload: false
+    });
   };
 
   useEffect(() => {
-    getHours(currentUser.id, onSuccessGetHours);
+    dispatch({
+      type: "UPDATE_LOADING",
+      payload: true
+    });
+    getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
   }, []);
 
   return (

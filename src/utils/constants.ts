@@ -11,7 +11,7 @@ export interface AppConfig {
 export const CONFIG: AppConfig = {
   API_ENDPOINT: process.env.BASE_URL
     ? process.env.BASE_URL
-    : "https://traky-ionic-react.herokuapp.com/api/"
+    : "http://localhost:3000/api/"
 };
 
 export interface URLMapping {

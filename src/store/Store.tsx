@@ -9,7 +9,9 @@ function useAppContext() {
 }
 
 const initialState = {
-  loggedHours: []
+  loggedHours: [],
+  isLoading: false,
+  hasError: false
 };
 
 const AppContextProvider = (props: any) => {

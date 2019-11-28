@@ -35,6 +35,8 @@ export interface ILogs {
 
 export type OverviewState = {
   loggedHours: ILogs[] | [];
+  isLoading: boolean;
+  hasError: boolean;
 };
 
 export type IContext = {

@@ -30,11 +30,18 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
 
   const data = filterLoggedHour(Number(match.params.data));
 
+  const updateHour = (loggedHours: ILogs[], editedHour: ILogs) => {
+    const loggedHoursNew: ILogs[] = loggedHours.map(function(hour) {
+      return hour.id == editedHour.id ? editedHour : hour;
+    });
+    return loggedHoursNew;
+  };
+
   const onClickSave = async (body: LogHourForm) => {
     const onSuccess = (res: any) => {
       dispatch({
         type: "UPDATE_LIST",
-        payload: state.loggedHours.concat(res)
+        payload: updateHour(state.loggedHours, res)
       });
       history.push(URL_CONFIG.LOGS_LIST.path);
     };
