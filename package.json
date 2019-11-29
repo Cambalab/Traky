@@ -18,7 +18,10 @@
     "react-router": "^5.1.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.2.0",
-    "typescript": "3.6.3"
+    "typescript": "3.6.3",
+    "express": "^4.17.1",
+    "json-server": "^0.15.1",
+    "path": "^0.12.7"
   },
   "scripts": {
     "start": "env-cmd npm run react:start",
@@ -46,9 +49,9 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
-    "env-cmd": "^10.0.1",
-    "express": "^4.17.1",
-    "json-server": "^0.15.1",
-    "path": "^0.12.7"
+    "env-cmd": "^10.0.1"
+  },
+  "engines": {
+    "node": ">=9 <10"
   }
 }
