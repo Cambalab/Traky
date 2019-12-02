@@ -12,6 +12,15 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
     case "UPDATE_ERROR": {
       return { ...state, hasError: action.payload };
     }
+    case "LOGIN": {
+      return { ...state, isLoged: true };
+    }
+    case "LOGOUT": {
+      return { ...state, isLoged: false }
+    }
+    case "SET_USER": {
+      return { ...state, user: {id: action.payload.id, name: action.payload.name} };
+    }
     default:
       return state;
   }

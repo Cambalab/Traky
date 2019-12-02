@@ -1,4 +1,4 @@
-import { ILogs } from "../utils/declarations";
+import { ILogs, IUser } from "../utils/declarations";
 
 export type Action =
   | {
@@ -12,4 +12,16 @@ export type Action =
   | {
       type: "UPDATE_ERROR";
       payload: boolean;
-    };
+    }
+  | {
+      type: "LOGIN";
+      payload: boolean;
+    }
+  | {
+      type: "LOGOUT";
+      payload: boolean;
+    }
+  | {
+      type: "SET_USER";
+      payload: IUser;
+    }
