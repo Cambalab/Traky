@@ -23,6 +23,7 @@ export interface IGroup {
 
 export interface IUser {
   id?: any;
+  name?: string;
 }
 
 export interface ILogs {
@@ -37,6 +38,8 @@ export type OverviewState = {
   loggedHours: ILogs[] | [];
   isLoading: boolean;
   hasError: boolean;
+  isLoged: boolean;
+  user: IUser | {id: null, name: ''};
 };
 
 export type IContext = {
