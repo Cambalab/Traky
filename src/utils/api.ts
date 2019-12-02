@@ -1,5 +1,6 @@
 import { FetchInput } from "./declarations";
 import LogHourForm from "../components/LogHourForm/LogHourForm";
+import LoginForm from "../components/LoginForm/LoginForm";
 import { CONFIG } from "./constants";
 
 const createHeaders = () => {
@@ -59,5 +60,12 @@ const editHours = (
     body,
     onSuccess
   });
-
-export { fetchAPI, getCurrentUser, logHours, getGroups, getHours, editHours };
+const loginUser = (user: string, password: string, body: LoginForm, onSuccess: Function) => {
+  fetchAPI({
+    url: `login/username:${user},password:${password}`,
+    method: "POST",
+    body,
+    onSuccess
+  })
+}
+export { fetchAPI, getCurrentUser, logHours, getGroups, getHours, editHours, loginUser };
