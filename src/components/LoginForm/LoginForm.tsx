@@ -54,40 +54,15 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({
     const [userValidate, setUserValidate]         = useState(initialUserValidate);
     const [passwordValidate, setPasswordValidate] = useState(initialPasswordValidate);
 
-    const validateEmail = (event: CustomEvent<any>) => {
-      handleInput(setUsername)(event)
-      let element   = document.getElementById('username-item');
-      let text      = event.srcElement;
-      let data      = {
-              data: username,
-              elem: element,
-              text: text,
-              event: event,
-              styles: {
-                correct: 'dark',
-                error: 'danger',
-                classError: 'error'
-              }
-            }
-      setUserValidate(handleValidation(isValidEmail, data))
-    }
 
-    const validatePassword = async (event: CustomEvent<any>) => {
-      handleInput(setPassword)(event)
-      let element   = document.getElementById('password-item');
-      let text      = event.srcElement;
-      let data      = {
-              data: password,
-              elem: element,
-              text: text,
-              event: event,
-              styles: {
-                correct: 'dark',
-                error: 'danger',
-                classError: 'error'
-              }
-            }
-      setPasswordValidate(handleValidation(isValidPassword, data))
+    const validateEmail = (email: string) => {
+      setUserValidate(isValidEmail(email))
+      setUsername(email);
+   }
+
+    const validatePassword = (password: string) => {
+      setPasswordValidate(isValidPassword(password))
+      setPassword(password)
     }
 
     const getFormData = () => {
@@ -102,36 +77,52 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({
       onClickLogin(getFormData())
     }
 
+    const getUsernameClassNameError = (): string => {
+      return userValidate === null || userValidate  ? '': 'error'
+    }
+
+    const getUsernameColor = (): string => {
+      return getUsernameClassNameError() === 'error' ? 'danger': 'dark';
+    }
+
+    const getPasswordClassNameError = (): string => {
+      return passwordValidate === null || passwordValidate ? '': 'error'
+    }
+
+    const getPasswordColor = (): string => {
+      return getPasswordClassNameError() === 'error' ? 'danger': 'dark'
+    }
 
     return (
           <IonGrid>
             <IonRow>
               <IonCol sizeXs="10" offsetXs="1" sizeMd="4" offsetMd="4">
                 <IonImg className="login-img" src={IMAGE_URL}/>
-                <IonItem className="login-input" id="username-item">
+                <IonItem className={`login-input ${getUsernameClassNameError()}`} >
                   <IonLabel position="floating" >{LOGIN_PAGE_TEXTS.USERNAME}</IonLabel>
                   <IonInput
-                    color="dark"
+                    color={getUsernameColor()}
                     name="username"
                     type="email"
                     inputmode="email"
-                    pattern="/^(.*[@].*[.]+[c]+[o]+[o]+[p])$/"
+                    pattern="/^(.*[@].*[.]*)$/"
                     value={username}
                     autofocus={true}
-                    onIonChange={validateEmail}
+                    onIonChange={handleInput(validateEmail)}
                   />
                   </IonItem>
                   <IonLabel color="danger" hidden={userValidate !== false}>
                     <b>{LOGIN_PAGE_TEXTS.USERNAME_ERROR}</b>
                   </IonLabel>
-                <IonItem className="login-input" id="password-item">
+                <IonItem className={`login-input ${getPasswordClassNameError()}`}>
                   <IonLabel position="floating">{LOGIN_PAGE_TEXTS.PASSWORD}</IonLabel>
                   <IonInput
+                    color={getPasswordColor()}
                     name="password"
                     type="password"
                     value={password}
                     minlength={6}
-                    onIonChange={validatePassword}
+                    onIonChange={handleInput(validatePassword)}
                   />
                 </IonItem>
                 <IonLabel color="danger" hidden={passwordValidate !== false}>
