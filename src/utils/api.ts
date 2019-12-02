@@ -60,9 +60,11 @@ const editHours = (
     body,
     onSuccess
   });
-const loginUser = (user: string, password: string, body: LoginForm, onSuccess: Function) => {
+const loginUser = (body: LoginForm, onSuccess: Function) => {
+  const user = body.username
+  const password = body.password
   fetchAPI({
-    url: `login/username:${user},password:${password}`,
+    url: `login/username:${user}&password:${password}`,
     method: "POST",
     body,
     onSuccess
