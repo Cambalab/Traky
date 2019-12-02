@@ -16,14 +16,13 @@ interface LoginPage {
 
 const LoginPage: FunctionComponent<LoginPage> = ({ history }) => {
 
-  const { state, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
 
   const onClickLogin = async (body: LoginForm) => {
-    console.log(body)
     const onSuccess = (res: any) => {
       dispatch({
         type: 'SET_USER',
-        payload: {id: res.id, name: body.username} // state.user.name
+        payload: {id: res.id, name: body.username}
       })
       dispatch({
         type: 'LOGIN',
@@ -31,7 +30,7 @@ const LoginPage: FunctionComponent<LoginPage> = ({ history }) => {
       })
       history.push(URL_CONFIG.LOGS_LIST.path)
     }
-    await loginUser(body.username, body.password, body, onSuccess) // llamada a api
+    await loginUser(body, onSuccess) // llamada a api
   }
 
   return (
