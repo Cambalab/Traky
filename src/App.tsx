@@ -115,7 +115,7 @@ const App: React.FC = () => {
             <Route
               path="/"
               render={() => (
-                <Redirect to={URL_CONFIG.LOGS_LIST.path} exact={true} />
+                <Redirect to={URL_CONFIG.LOGS_LOGIN.path} exact={true} />
               )}
             />
           </IonRouterOutlet>
