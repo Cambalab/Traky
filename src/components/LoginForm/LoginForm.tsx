@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import {LOGIN_PAGE_TEXTS} from "./constants";
 
-// import TRAKY_LOGO from "@public/assets/icon/favicon.png";
 import "./LoginForm.css";
 import {
   IonButton,
@@ -30,7 +29,7 @@ interface LoginFormProps {
   history?                 : History,
   initialUsername?         : string,
   initialPassword?         : string,
-  initlaUserValidate?      : boolean,
+  initialUserValidate?     : boolean,
   initialPasswordValidate? : boolean,
   onClickLogin             : OnButtonClickEventFunction
 }
@@ -46,13 +45,13 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({
   onClickLogin,
   initialUsername         = "",
   initialPassword         = "",
-  initlaUserValidate      = null,
+  initialUserValidate     = null,
   initialPasswordValidate = null
 }) => {
 
     const [username, setUsername]                 = useState(initialUsername);
     const [password, setPassword]                 = useState(initialPassword);
-    const [userValidate, setUserValidate]         = useState(initlaUserValidate);
+    const [userValidate, setUserValidate]         = useState(initialUserValidate);
     const [passwordValidate, setPasswordValidate] = useState(initialPasswordValidate);
 
     const validateEmail = (event: CustomEvent<any>) => {
@@ -99,7 +98,6 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({
     }
 
     const logUser = (event :any) => {
-      console.log(event.type)
       event.preventDefault();
       onClickLogin(getFormData())
     }
