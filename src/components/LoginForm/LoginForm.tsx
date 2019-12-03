@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
 import {LOGIN_PAGE_TEXTS} from "./constants";
-
 import "./LoginForm.css";
 import {
   IonButton,
@@ -20,6 +19,7 @@ import {
 import {
   handleValidation
 } from "../../utils/stylesHandle";
+const IMAGE_URL = "/assets/icon/favicon.png"
 
 interface OnButtonClickEventFunction extends Function {
   (body: LoginForm) : void
@@ -38,8 +38,6 @@ interface LoginForm {
     username         : string,
     password         : string
 }
-
-const IMAGE_URL = "https://recursos.camba.coop/uploads/-/system/project/avatar/299/logo-traky2.png?width=40";
 
 const LoginForm: FunctionComponent<LoginFormProps> = ({
   onClickLogin,
