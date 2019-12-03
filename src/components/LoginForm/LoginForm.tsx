@@ -17,8 +17,12 @@ import {
   isValidPassword
 } from "../../utils/inputHandle";
 import {
-  handleValidation
-} from "../../utils/stylesHandle";
+  isValid,
+  getPasswordColor,
+  getUsernameColor,
+  getPasswordClassNameError,
+  getUsernameClassNameError
+} from "../../utils/utils";
 const IMAGE_URL = "/assets/icon/favicon.png"
 
 interface OnButtonClickEventFunction extends Function {
@@ -41,10 +45,10 @@ interface LoginForm {
 
 const LoginForm: FunctionComponent<LoginFormProps> = ({
   onClickLogin,
-  initialUsername         = "",
-  initialPassword         = "",
-  initialUserValidate     = null,
-  initialPasswordValidate = null
+  initialUsername         = '',
+  initialPassword         = '',
+  initialUserValidate     = false,
+  initialPasswordValidate = false
 }) => {
 
     const [username, setUsername]                 = useState(initialUsername);
@@ -75,31 +79,15 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({
       onClickLogin(getFormData())
     }
 
-    const getUsernameClassNameError = (): string => {
-      return userValidate === null || userValidate  ? '': 'error'
-    }
-
-    const getUsernameColor = (): string => {
-      return getUsernameClassNameError() === 'error' ? 'danger': 'dark';
-    }
-
-    const getPasswordClassNameError = (): string => {
-      return passwordValidate === null || passwordValidate ? '': 'error'
-    }
-
-    const getPasswordColor = (): string => {
-      return getPasswordClassNameError() === 'error' ? 'danger': 'dark'
-    }
-
     return (
           <IonGrid>
             <IonRow>
               <IonCol sizeXs="10" offsetXs="1" sizeMd="4" offsetMd="4">
                 <IonImg className="login-img" src={IMAGE_URL}/>
-                <IonItem className={`login-input ${getUsernameClassNameError()}`} >
+                <IonItem className={`login-input ${getUsernameClassNameError(username, userValidate)}`} >
                   <IonLabel position="floating" >{LOGIN_PAGE_TEXTS.USERNAME}</IonLabel>
                   <IonInput
-                    color={getUsernameColor()}
+                    color={getUsernameColor(username, userValidate)}
                     name="username"
                     type="email"
                     inputmode="email"
@@ -109,13 +97,13 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({
                     onIonChange={handleInput(validateEmail)}
                   />
                   </IonItem>
-                  <IonLabel color="danger" hidden={userValidate !== false}>
+                  <IonLabel color="danger" hidden={isValid(username, userValidate)}>
                     <b>{LOGIN_PAGE_TEXTS.USERNAME_ERROR}</b>
                   </IonLabel>
-                <IonItem className={`login-input ${getPasswordClassNameError()}`}>
+                <IonItem className={`login-input ${getPasswordClassNameError(password, passwordValidate)}`}>
                   <IonLabel position="floating">{LOGIN_PAGE_TEXTS.PASSWORD}</IonLabel>
                   <IonInput
-                    color={getPasswordColor()}
+                    color={getPasswordColor(password, passwordValidate)}
                     name="password"
                     type="password"
                     value={password}
@@ -123,7 +111,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({
                     onIonChange={handleInput(validatePassword)}
                   />
                 </IonItem>
-                <IonLabel color="danger" hidden={passwordValidate !== false}>
+                <IonLabel color="danger" hidden={isValid(password, passwordValidate)}>
                   <b>{LOGIN_PAGE_TEXTS.PASSWORD_ERROR}</b>
                 </IonLabel>
                 <IonButton
