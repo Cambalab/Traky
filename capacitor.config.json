@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "ionic-react-traky-sample",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {},
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1000
+    }
+  }
+}

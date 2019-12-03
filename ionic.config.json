@@ -1,5 +1,7 @@
 {
   "name": "ionic-react-traky-sample",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }
