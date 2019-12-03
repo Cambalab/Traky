@@ -1,0 +1,55 @@
+.item-card {
+    border-color: #00c79a;
+    border-width: 1px;
+    border-style: solid;
+    max-height: 23vh;
+}
+
+.item-card__container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.item-card-buttons__container {
+    display: flex;
+    align-items: center;
+}
+
+.item-card__icon {
+    align-self: center;
+    margin: 5px;
+}
+
+.item-card__date {
+    padding-left: 0;
+    font-size: 22px;
+}
+
+.item-card__description {
+    text-align: left;
+    width: 50%;
+    align-self: center;
+    font-size: 15px;
+}
+
+.item-card__hour {
+    color: #00c79a;
+    font-size: 35px;
+    display: flex;
+}
+
+.item-card__hour p {
+    align-self: center;
+}
+
+.item-card__dividing-line--mobile {
+    width: 100%;
+    background: #00c79a no-repeat scroll center;
+    height: 1px;
+}
+
+.item-card__description--mobile {
+    margin-top: 10px;
+    max-height: 70px;
+}
