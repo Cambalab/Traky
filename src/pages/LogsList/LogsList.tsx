@@ -17,8 +17,8 @@ import { TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
 import { ILogs } from "../../utils/declarations";
 import LogHourCard from "../../components/LogHourCard/LogHourCard";
-import {URL_CONFIG} from "../../utils/constants";
-import {getCurrentUser, removeHours} from "../../utils/api";
+import { URL_CONFIG } from "../../utils/constants";
+import { getCurrentUser, removeHours } from "../../utils/api";
 
 interface LogsPageHistory {
   history: History;
@@ -35,7 +35,37 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
     history.push(`/edit/${loggedHourId}`);
   };
 
+  const removeHour = (loggedHours: ILogs[], removingHour: ILogs) => {
+    return loggedHours.filter(hour => hour.id !== removingHour.id);
+  };
+
   const onDelete = (logHour: ILogs) => async () => {
+    const onSuccess = () => {
+      history.push(URL_CONFIG.LOGS_LIST.path);
+      dispatch({
+        type: "UPDATE_LIST",
+        payload: removeHour(loggedHours, logHour)
+      });
+      dispatch({
+        type: "UPDATE_LOADING",
+        payload: false
+      });
+    };
+    const onError = () => {
+      dispatch({
+        type: "UPDATE_LOADING",
+        payload: false
+      });
+      dispatch({
+        type: "UPDATE_ERROR",
+        payload: true
+      });
+    };
+    dispatch({
+      type: "UPDATE_LOADING",
+      payload: true
+    });
+    await removeHours(currentUser, logHour, onSuccess, onError);
   };
 
   const renderList = () =>
