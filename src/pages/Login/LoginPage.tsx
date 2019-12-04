@@ -1,43 +1,42 @@
-import React, {FunctionComponent} from 'react';
-import {LOGIN_PAGE_TEXTS} from "./constants";
+import React, { FunctionComponent, useContext} from 'react';
 import "./LoginPage.css";
+import { AppContext } from "../../store/Store";
+import { History } from "history";
+import LoginForm from "../../components/LoginForm/LoginForm";
+import { URL_CONFIG } from "../../utils/constants";
+import { loginUser } from "../../utils/api";
 import {
   IonPage,
-  IonContent,
-  IonButton,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonImg,
+  IonContent
 } from '@ionic/react';
 
 interface LoginPage {
-    history: History
+  history: History
 }
 
 const LoginPage: FunctionComponent<LoginPage> = ({ history }) => {
+
+  const { dispatch } = useContext(AppContext);
+
+  const onClickLogin = async (body: LoginForm) => {
+    const onSuccess = (res: any) => {
+      dispatch({
+        type: 'SET_USER',
+        payload: {id: res.id, name: body.username}
+      })
+      dispatch({
+        type: 'LOGIN',
+        payload: true
+      })
+      history.push(URL_CONFIG.LOGS_LIST.path)
+    }
+    await loginUser(body, onSuccess) // llamada a api
+  }
+
   return (
     <IonPage>
-      <IonContent className="toolbar--background ">
-        <IonGrid>
-          <IonRow >
-            <IonCol sizeXs="10" offsetXs="1" sizeMd="4" offsetMd="4">
-              <IonImg className="login-img" src="https://recursos.camba.coop/uploads/-/system/project/avatar/299/logo-traky2.png?width=40"/>
-              <IonItem className="login-input">
-                <IonLabel position="floating" >{LOGIN_PAGE_TEXTS.USERNAME}</IonLabel>
-                <IonInput type="email" />
-              </IonItem>
-              <IonItem className="login-input">
-                <IonLabel position="floating">{LOGIN_PAGE_TEXTS.PASSWORD}</IonLabel>
-                <IonInput type="password" />
-              </IonItem>
-              <IonButton color="dark" className="login-button" >{LOGIN_PAGE_TEXTS.LOGIN_BUTTON}</IonButton>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+      <IonContent color="primary">
+        <LoginForm onClickLogin={onClickLogin}/>
       </IonContent>
     </IonPage>
   )

@@ -33,3 +33,13 @@ export const handleInputOnlyNumber = (e: KeyboardEvent<HTMLIonInputElement>) => 
         e.preventDefault();
     }
 };
+
+export const isValidEmail = (email: string): boolean => {
+  const pattern = /^(.*[@].*[.]*)$/;
+  return pattern.test(email)
+
+}
+
+export const isValidPassword = (password: string): boolean => {
+  return password.length > 5
+}

@@ -9,6 +9,8 @@ function useAppContext() {
 }
 
 const initialState = {
+  isLoged: false,
+  user: {id: null, name: ''},
   loggedHours: [],
   isLoading: false,
   hasError: false

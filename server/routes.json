@@ -1,7 +1,6 @@
 {
   "/users/:id/hours": "/hours?userId=:id",
   "/groups/:userId": "/groups",
-  "/signin": "/users",
+  "/login": "/users",
   "/users/:id/hours/:id": "/hours?userId=:id/hours?id=:id"
-}	
-
+}
