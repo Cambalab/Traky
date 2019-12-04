@@ -64,7 +64,7 @@ const loginUser = (body: LoginForm, onSuccess: Function) => {
   const user = body.username
   const password = body.password
   fetchAPI({
-    url: `login/username:${user}&password:${password}`,
+    url: `login/`,
     method: "POST",
     body,
     onSuccess
