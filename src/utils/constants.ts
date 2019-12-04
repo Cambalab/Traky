@@ -9,8 +9,8 @@ export interface AppConfig {
 }
 
 export const CONFIG: AppConfig = {
-  API_ENDPOINT: process.env.BASE_URL
-    ? process.env.BASE_URL
+  API_ENDPOINT: process.env.REACT_APP_BASE_API_URL
+    ? process.env.REACT_APP_BASE_API_URL
     : "http://localhost:3000/api/"
 };
 

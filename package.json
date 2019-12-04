@@ -12,21 +12,25 @@
     "@types/react-router": "^5.1.1",
     "@types/react-router-dom": "^5.1.0",
     "ionicons": "^4.6.3",
-    "node-sass": "^4.13.0",
     "moment": "^2.24.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-router": "^5.1.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.2.0",
-    "typescript": "3.6.3"
+    "typescript": "3.6.3",
+    "express": "^4.17.1",
+    "json-server": "^0.15.1",
+    "path": "^0.12.7"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server:start": "json-server --watch server/data.json --port 3000 --routes server/routes.json"
+    "start": "env-cmd npm run react:start",
+    "server:start": "env-cmd node server/index.js",
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "react:test": "react-scripts test",
+    "react:eject": "react-scripts eject",
+    "heroku-postbuild": "npm run react:build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,6 +49,9 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
-    "json-server": "^0.15.1"
+    "env-cmd": "^10.0.1"
+  },
+  "engines": {
+    "node": ">=9 <10"
   }
 }
