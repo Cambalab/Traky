@@ -1,4 +1,4 @@
-import { FetchInput } from "./declarations";
+import { FetchInput, ILogs } from "./declarations";
 import LogHourForm from "../components/LogHourForm/LogHourForm";
 import LoginForm from "../components/LoginForm/LoginForm";
 import { CONFIG } from "./constants";
@@ -60,14 +60,12 @@ const editHours = (
     body,
     onSuccess
   });
-const loginUser = (body: LoginForm, onSuccess: Function) => {
-  const user = body.username
-  const password = body.password
-  fetchAPI({
-    url: `login/`,
-    method: "POST",
-    body,
-    onSuccess
-  })
-}
-export { fetchAPI, getCurrentUser, logHours, getGroups, getHours, editHours, loginUser };
+
+const loginUser = (body: LoginForm, onSuccess: Function) =>
+  fetchAPI({ url: `login/`, method: "POST", body, onSuccess })
+
+const removeHours = (user: object, logHour: ILogs, onSuccess: Function, onError: Function) =>
+    fetchAPI({ url: `hours/${logHour.id}`, method: "DELETE", onSuccess, onError});
+
+export { fetchAPI, getCurrentUser, logHours, getGroups, getHours, editHours, removeHours, loginUser };
+

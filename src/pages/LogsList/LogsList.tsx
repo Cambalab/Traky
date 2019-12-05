@@ -1,100 +1,83 @@
-import React, { useState, useContext, useEffect } from "react";
-import { IonButton, useIonViewDidEnter, IonSpinner } from "@ionic/react";
-import { isMobile } from "../../utils/utils";
+import React, { useContext } from "react";
+import { IonButton, IonSpinner } from "@ionic/react";
 import { History } from "history";
 
 import {
   IonPage,
-  IonCard,
-  IonCardContent,
   IonContent,
   IonHeader,
   IonToolbar,
   IonTitle,
   IonButtons,
   IonMenuButton,
-  IonDatetime,
-  IonIcon
 } from "@ionic/react";
-
-import { timer, create } from "ionicons/icons";
 
 import "./LogsList.css";
 import { TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
 import { ILogs } from "../../utils/declarations";
+import LogHourCard from "../../components/LogHourCard/LogHourCard";
+import { URL_CONFIG } from "../../utils/constants";
+import { getCurrentUser, removeHours } from "../../utils/api";
 
 interface LogsPageHistory {
   history: History;
 }
 
 const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const loggedHours: ILogs[] = state.loggedHours;
+  const currentUser = getCurrentUser();
   const isLoading: boolean = state.isLoading;
   const hasError: boolean = state.hasError;
 
-  const showEditView = (data: any) => {
-    history.push({
-      pathname: "/edit/" + JSON.stringify(data.id)
+  const showEditView = (loggedHourId: number) => () => {
+    history.push(`/edit/${loggedHourId}`);
+  };
+
+  const removeHour = (loggedHours: ILogs[], removingHour: ILogs) => {
+    return loggedHours.filter(hour => hour.id !== removingHour.id);
+  };
+
+  const onDelete = (logHour: ILogs) => async () => {
+    const onSuccess = () => {
+      history.push(URL_CONFIG.LOGS_LIST.path);
+      dispatch({
+        type: "UPDATE_LIST",
+        payload: removeHour(loggedHours, logHour)
+      });
+      dispatch({
+        type: "UPDATE_LOADING",
+        payload: false
+      });
+    };
+    const onError = () => {
+      dispatch({
+        type: "UPDATE_LOADING",
+        payload: false
+      });
+      dispatch({
+        type: "UPDATE_ERROR",
+        payload: true
+      });
+    };
+    dispatch({
+      type: "UPDATE_LOADING",
+      payload: true
     });
+    await removeHours(currentUser, logHour, onSuccess, onError);
   };
 
   const renderList = () =>
     loggedHours && loggedHours.length >= 1 ? (
-      loggedHours.map((loggedHour, i) => {
+      loggedHours.map(loggedHour => {
         return (
-          <IonCard key={i} className="item-card">
-            <IonCardContent>
-              <div className="item-card__container">
-                <IonButton
-                  className="item-card__edite-button"
-                  fill="outline"
-                  shape="round"
-                  size="small"
-                  color="primary"
-                  onClick={() => {
-                    showEditView(loggedHour);
-                  }}
-                >
-                  <IonIcon
-                    className="item-card__icon"
-                    size={"small"}
-                    icon={create}
-                  ></IonIcon>
-                </IonButton>
-                <IonDatetime
-                  readonly={true}
-                  className="item-card__date"
-                  onChange={() => {}}
-                  displayFormat="D MMM YY"
-                  value={`${loggedHour.timestamp}`}
-                ></IonDatetime>
-                {!isMobile() && (
-                  <div className="item-card__description">
-                    {loggedHour.description}
-                  </div>
-                )}
-                <div className="item-card__hour">
-                  <IonIcon
-                    className="item-card__icon"
-                    size={"large"}
-                    icon={timer}
-                  ></IonIcon>
-                  {loggedHour.spent_time}
-                  <p>hrs</p>
-                </div>
-              </div>
-              {isMobile() && (
-                <div>
-                  <div className="item-card__dividing-line--mobile"></div>
-                  <div className="item-card__description--mobile">
-                    {loggedHour.description}
-                  </div>
-                </div>
-              )}
-            </IonCardContent>
-          </IonCard>
+          <LogHourCard
+              key={loggedHour.id}
+              logHour={loggedHour}
+              onEditClick={showEditView(loggedHour.id)}
+              onDeleteClick={onDelete(loggedHour)}
+          />
         );
       })
     ) : (
