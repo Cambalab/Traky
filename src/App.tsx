@@ -36,6 +36,7 @@ import "./styles/global.css";
 import { URL_CONFIG } from "./utils/constants";
 import { AppContext } from "./store/Store";
 import EditHourPage from "./pages/EditHour/EditHourPage";
+import AuthProvider from "./components/AuthProvider";
 
 const appPages: AppPage[] = [
   {
@@ -103,12 +104,12 @@ const App: React.FC = () => {
             />
             <Route
               path={URL_CONFIG.LOGS_NEW.path}
-              component={LogHourPage}
+              render={() => <AuthProvider Component={LogHourPage} />}
               exact={true}
             />
             <Route
               path={URL_CONFIG.LOGS_LIST.path}
-              component={LogsList}
+              render={() => <AuthProvider Component={LogsList} />}
               exact={true}
             />
             <Route path={URL_CONFIG.LOGS_EDIT.path} component={EditHourPage} />
