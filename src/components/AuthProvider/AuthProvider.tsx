@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router";
-import { AppContext } from "../store/Store";
-import { URL_CONFIG } from "../utils/constants";
+import { AppContext } from "../../store/Store";
+import { URL_CONFIG } from "../../utils/constants";
 
 interface AuthProviderProps {
   Component: React.FunctionComponent<any>;
