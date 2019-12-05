@@ -1,14 +1,18 @@
 import {DatetimeChangeEventDetail, InputChangeEventDetail, SelectChangeEventDetail} from "@ionic/core";
 import moment from "moment";
-import {KeyboardEvent} from "react";
+import {FormEvent, KeyboardEvent} from "react";
 import {DATE_FORMAT} from "./constants";
 
 export const handleInput = (fn: Function) => (e: CustomEvent<InputChangeEventDetail | SelectChangeEventDetail>) => {
     const value = e.detail.value;
 
-    if(value) {
-        fn(value);
-    }
+    fn(value);
+};
+
+export const handleInputElement = (fn: Function) => (e: FormEvent<HTMLIonInputElement>) => {
+    const value = e.currentTarget.value;
+
+    fn(value);
 };
 
 export const handleInputDatetime = (fn: Function) => (e: CustomEvent<DatetimeChangeEventDetail>) => {
