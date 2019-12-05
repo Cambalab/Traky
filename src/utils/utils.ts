@@ -33,3 +33,14 @@ export const getPasswordColor = (password: string, passwordValidate: boolean): s
 export const getUsernameColor = (username: string, usernameValidate: boolean): string => {
   return getElementColor(username, usernameValidate)
 }
+
+export const isEmptyString = (str: string | null | undefined): boolean => str !== null && str !== undefined && str.length === 0;
+
+export const isValidNumber = (str: any) => isNaN(Number(str));
+
+export const transformNumberToString = (num : number) => {
+  if (num === null || num === undefined) {
+    return ""
+  }
+  return String(num);
+};
