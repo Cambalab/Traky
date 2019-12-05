@@ -1,20 +1,15 @@
-import {
-  IonButtons,
-  IonHeader,
-  IonMenuButton,
-  IonPage,
-  IonTitle,
-  IonToolbar
-} from "@ionic/react";
-import React, { useContext, FunctionComponent } from "react";
+import { IonButtons, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import React, { FunctionComponent, useContext } from "react";
 import { AppContext } from "../../store/Store";
 import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
-import { getCurrentUser, editHours } from "../../utils/api";
-import { IUser, ILogs, IMatchParams } from "../../utils/declarations";
+import { editHours, getCurrentUser } from "../../utils/api";
+import { ILogs, IMatchParams, IUser } from "../../utils/declarations";
 import { URL_CONFIG } from "../../utils/constants";
 import { EDIT_HOUR_PAGE_TEXTS } from "./constants";
 import { RouteComponentProps } from "react-router-dom";
+import { formatDate } from "../../utils/inputHandle";
+import { transformNumberToString } from "../../utils/utils";
 
 const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
   history,
@@ -69,8 +64,8 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
         <LogHourForm
           initialDescription={data.description}
           initialSelectedGroup={data.groupId}
-          initialCurrentDate={data.timestamp.toString()}
-          initialHours={data.spent_time.toString()}
+          initialCurrentDate={formatDate(data.timestamp)}
+          initialHours={transformNumberToString(data.spent_time)}
           onClickSave={onClickSave}
           onClickCancel={onClickCancel}
         />
