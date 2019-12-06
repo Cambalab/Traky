@@ -36,7 +36,7 @@ import "./styles/global.css";
 import { URL_CONFIG } from "./utils/constants";
 import { AppContext } from "./store/Store";
 import EditHourPage from "./pages/EditHour/EditHourPage";
-import AuthProvider from "./components/AuthProvider";
+import AuthProvider from "./components/AuthProvider/AuthProvider";
 
 const appPages: AppPage[] = [
   {
