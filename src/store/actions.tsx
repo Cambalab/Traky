@@ -15,11 +15,11 @@ export type Action =
     }
   | {
       type: "LOGIN";
-      payload: boolean;
+      payload?: boolean;
     }
   | {
       type: "LOGOUT";
-      payload: boolean;
+      payload?: boolean;
     }
   | {
       type: "SET_USER";

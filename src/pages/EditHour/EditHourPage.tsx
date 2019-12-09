@@ -3,9 +3,9 @@ import React, { FunctionComponent, useContext } from "react";
 import { AppContext } from "../../store/Store";
 import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
-import { editHours, getCurrentUser } from "../../utils/api";
+import { editHours } from "../../utils/api";
 import { ILogs, IMatchParams, IUser } from "../../utils/declarations";
-import { URL_CONFIG } from "../../utils/constants";
+import { LOGS_LIST_URL_CONFIG } from "../../utils/constants";
 import { EDIT_HOUR_PAGE_TEXTS } from "./constants";
 import { RouteComponentProps } from "react-router-dom";
 import { formatDate } from "../../utils/inputHandle";
@@ -15,8 +15,8 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
   history,
   match
 }) => {
-  const currentUser: IUser = getCurrentUser();
   const { state, dispatch } = useContext(AppContext);
+  const currentUser: IUser = state.user;
 
   function filterLoggedHour(id: number) {
     const element = state.loggedHours.find((e: ILogs) => e.id === id);
@@ -27,7 +27,7 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
 
   const updateHour = (loggedHours: ILogs[], editedHour: ILogs) => {
     const loggedHoursNew: ILogs[] = loggedHours.map(function(hour) {
-      return hour.id == editedHour.id ? editedHour : hour;
+      return hour.id === editedHour.id ? editedHour : hour;
     });
     return loggedHoursNew;
   };
@@ -38,14 +38,14 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
         type: "UPDATE_LIST",
         payload: updateHour(state.loggedHours, res)
       });
-      history.push(URL_CONFIG.LOGS_LIST.path);
+      history.push(LOGS_LIST_URL_CONFIG.path);
     };
 
     await editHours(currentUser.id, match.params.data, body, onSuccess);
   };
 
   const onClickCancel = async () => {
-    history.push(URL_CONFIG.LOGS_LIST.path);
+    history.push(LOGS_LIST_URL_CONFIG.path);
   };
 
   return (

@@ -12,9 +12,9 @@ import {
   IonText,
   useIonViewDidEnter
 } from "@ionic/react";
-import React, { FormEvent, FunctionComponent, useState } from "react";
+import React, {FormEvent, FunctionComponent, useContext, useState} from "react";
 import "./LogHourForm.css";
-import { getCurrentUser, getGroups } from "../../utils/api";
+import { getGroups } from "../../utils/api";
 import { IGroup } from "../../utils/declarations";
 import {
   formatDate,
@@ -26,6 +26,7 @@ import {
 import { LOG_HOUR_FORM_TEXTS } from "./constants";
 import { InputChangeEventDetail, SelectChangeEventDetail } from "@ionic/core";
 import { isEmptyString, isValidNumber } from "../../utils/utils";
+import {AppContext} from "../../store/Store";
 
 interface OnButtonClickEventFunction extends Function {
   (body: LogHourForm): void;
@@ -57,6 +58,7 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
   onClickSave,
   onClickCancel
 }) => {
+  const { state } = useContext(AppContext);
   const [groups, setGroups] = useState<IGroup[]>([]);
   const [description, setDescription] = useState<string>(initialDescription);
   const [selectedGroup, setSelectedGroup] = useState<number | undefined>(
@@ -65,7 +67,7 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
   const [currentDate, setCurrentDate] = useState<string>(initialCurrentDate);
   const [hours, setHours] = useState<string>(initialHours);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const currentUser = getCurrentUser();
+  const currentUser = state.user;
 
   const onSuccessGetGroups = (newGroups: IGroup[]) => {
     setGroups(newGroups);

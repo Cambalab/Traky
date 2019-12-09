@@ -14,28 +14,38 @@ export const CONFIG: AppConfig = {
     : "http://localhost:3000/api/"
 };
 
-export interface URLMapping {
+export interface URL_CONFIG {
   name: string;
   path: string;
 }
 
-export const URL_CONFIG: { [key: string]: URLMapping } = {
-  LOGS_LIST: {
-    name: "My hours",
-    path: "/list"
-  },
-  LOGS_NEW: {
-    name: "New log",
-    path: "/new"
-  },
-  LOGS_LOGIN: {
-    name: "Login",
-    path: "/login"
-  },
-  LOGS_EDIT: {
-    name: "Edit",
-    path: "/edit/:data"
-  }
+export const LOGS_LIST_URL_CONFIG: URL_CONFIG = {
+  name: "My hours",
+  path: "/list"
+};
+export const LOGS_NEW_URL_CONFIG: URL_CONFIG = {
+  name: "New log",
+  path: "/new"
+};
+export const LOGS_LOGIN_URL_CONFIG: URL_CONFIG = {
+  name: "Login",
+  path: "/login"
+};
+export const LOGS_EDIT_URL_CONFIG: URL_CONFIG = {
+  name: "Edit",
+  path: "/edit/:data"
+};
+export const LOGS_LOGOUT_URL_CONFIG: URL_CONFIG = {
+  name: "Log Out",
+  path: "/"
+};
+
+export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
+  LOGS_LIST_URL_CONFIG,
+  LOGS_NEW_URL_CONFIG,
+  LOGS_LOGIN_URL_CONFIG,
+  LOGS_EDIT_URL_CONFIG,
+  LOGS_LOGOUT_URL_CONFIG,
 };
 
 export const DATE_FORMAT = "MM/DD/YYYY";
