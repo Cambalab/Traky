@@ -50,6 +50,14 @@
 }
 
 .item-card__description--mobile {
-  margin-top: 10px;
+  margin-top: 7px;
   max-height: 70px;
+}
+
+.item-card__group--mobile {
+  margin-top: 10px;
+}
+
+.item-card__group--desktop {
+  margin-top: 10px;
 }

@@ -35,16 +35,16 @@ export interface ILogs {
 }
 
 export interface INotificationOptions {
-  onDidDismiss?    : Function | undefined;
-  isOpen?          : boolean;
-  message?         : string;
-  color?           : string;
-  duration?        : number;
-  showCloseButton? : boolean;
-  closeButtonText? : string;
-  header?          : string;
-  position?        : "bottom" | "top" | "middle" | undefined;
-  mode?            : string;
+  onDidDismiss?: Function | undefined;
+  isOpen?: boolean;
+  message?: string;
+  color?: string;
+  duration?: number;
+  showCloseButton?: boolean;
+  closeButtonText?: string;
+  header?: string;
+  position?: "bottom" | "top" | "middle" | undefined;
+  mode?: string;
 }
 
 export type OverviewState = {
@@ -52,9 +52,10 @@ export type OverviewState = {
   isLoading: boolean;
   hasError: boolean;
   isLoged: boolean;
-  user: IUser | {id: null, name: ''};
+  user: IUser | { id: null; name: "" };
   showNotification: boolean;
   notificationOptions: INotificationOptions;
+  groups: IGroup[] | [];
 };
 
 export type IContext = {

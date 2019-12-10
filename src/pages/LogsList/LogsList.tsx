@@ -9,20 +9,20 @@ import {
   IonToolbar,
   IonTitle,
   IonButtons,
-  IonMenuButton,
+  IonMenuButton
 } from "@ionic/react";
 
 import "./LogsList.css";
 import { TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
-import { ILogs } from "../../utils/declarations";
+import { ILogs, IGroup } from "../../utils/declarations";
 import LogHourCard from "../../components/LogHourCard/LogHourCard";
 import {
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
   LOGS_LIST_URL_CONFIG
 } from "../../utils/constants";
-import { removeHours, getHours } from "../../utils/api";
+import { removeHours, getHours, getGroups } from "../../utils/api";
 
 interface LogsPageHistory {
   history: History;
@@ -31,6 +31,7 @@ interface LogsPageHistory {
 const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
   const loggedHours: ILogs[] = state.loggedHours;
+  const groups: IGroup[] = state.groups;
   const currentUser = state.user;
   const isLoading: boolean = state.isLoading;
   const hasError: boolean = state.hasError;
@@ -42,8 +43,20 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const removeHour = (loggedHours: ILogs[], removingHour: ILogs) => {
     return loggedHours.filter(hour => hour.id !== removingHour.id);
   };
+
+  const groupName = (id: Number) => {
+    const group = state.groups.find((g: IGroup) => g.id === id);
+    return group ? group.name : null;
+  };
+
   useIonViewDidEnter(() => {
     if (currentUser.id !== null && loggedHours.length === 0) {
+      const onSuccessGetGroups = (res: IGroup[]) => {
+        dispatch({
+          type: "UPDATE_GROUPS",
+          payload: res
+        });
+      };
       const onSuccessGetHours = (res: ILogs[]) => {
         dispatch({
           type: "UPDATE_LIST",
@@ -71,17 +84,18 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
             message: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_BODY,
             color: NOTIFICATION_TYPE.ERROR
           }
-        })
+        });
         dispatch({
           type: "SHOW_NOTIFICATION",
           payload: true
-        })
+        });
       };
       dispatch({
         type: "UPDATE_LOADING",
         payload: true
       });
       getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
+      getGroups(currentUser.id, onSuccessGetGroups);
     }
   });
 
@@ -103,11 +117,11 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
           message: NOTIFICATION_MESSAGES.DELETE_HOUR_SUCCESS_BODY,
           color: NOTIFICATION_TYPE.SUCCESS
         }
-      })
+      });
       dispatch({
         type: "SHOW_NOTIFICATION",
         payload: true
-      })
+      });
     };
 
     const onError = () => {
@@ -126,11 +140,11 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
           message: NOTIFICATION_MESSAGES.DELETE_HOUR_ERROR_BODY,
           color: NOTIFICATION_TYPE.ERROR
         }
-      })
+      });
       dispatch({
         type: "SHOW_NOTIFICATION",
         payload: true
-      })
+      });
     };
     dispatch({
       type: "UPDATE_LOADING",
@@ -145,10 +159,11 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       loggedHours.map(loggedHour => {
         return (
           <LogHourCard
-              key={loggedHour.id}
-              logHour={loggedHour}
-              onEditClick={showEditView(loggedHour.id)}
-              onDeleteClick={onDelete(loggedHour)}
+            key={loggedHour.id}
+            logHour={loggedHour}
+            onEditClick={showEditView(loggedHour.id)}
+            onDeleteClick={onDelete(loggedHour)}
+            group={groupName(loggedHour.groupId)}
           />
         );
       })

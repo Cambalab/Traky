@@ -17,10 +17,16 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return { ...state, isLoged: true };
     }
     case "LOGOUT": {
-      return { ...state, isLoged: false }
+      return { ...state, isLoged: false };
     }
     case "SET_USER": {
-      return { ...state, user: {id: action.payload.id, name: action.payload.name} };
+      return {
+        ...state,
+        user: { id: action.payload.id, name: action.payload.name }
+      };
+    }
+    case "UPDATE_GROUPS": {
+      return { ...state, groups: action.payload };
     }
     case "NOTIFICATION": {
       return { ...state, notificationOptions: action.payload }
