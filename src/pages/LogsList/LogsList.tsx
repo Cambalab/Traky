@@ -1,5 +1,11 @@
 import React, { useContext } from "react";
-import { IonButton, IonSpinner, useIonViewDidEnter } from "@ionic/react";
+import {
+  IonButton,
+  IonSpinner,
+  useIonViewDidEnter,
+  IonItem,
+  IonList
+} from "@ionic/react";
 import { History } from "history";
 
 import {
@@ -195,7 +201,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
             <p>{TEXTS.LIST_ERROR_MSG}</p>
           </div>
         ) : (
-          renderList()
+          <IonList>{renderList()}</IonList>
         )}
       </IonContent>
     </IonPage>

@@ -61,3 +61,20 @@
 .item-card__group--desktop {
   margin-top: 10px;
 }
+
+.item-card-buttons__col {
+  display: flex;
+  align-self: center;
+}
+
+.item-card__hour-col {
+  display: flex;
+  align-self: center;
+}
+
+.item-card__hour-text {
+  font-size: 12px;
+}
+
+.item-card__description {
+}
