@@ -1,4 +1,4 @@
-import { ILogs, IUser } from "../utils/declarations";
+import { ILogs, IUser, INotificationOptions } from "../utils/declarations";
 
 export type Action =
   | {
@@ -24,4 +24,12 @@ export type Action =
   | {
       type: "SET_USER";
       payload: IUser;
+    }
+  | {
+      type: "NOTIFICATION";
+      payload: INotificationOptions;
+    }
+  | {
+      type: "SHOW_NOTIFICATION";
+      payload: boolean
     }
