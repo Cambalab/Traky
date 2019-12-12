@@ -117,6 +117,17 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
     setIsDisabled(disabled);
     handleInput(setSelectedGroup)(e)
   };
+
+  const compareGroups = (group1: IGroup, group2: IGroup): boolean => {
+    if (group1 && group2) {
+      if (group1.id && group2.id) {
+        return group1.id === group2.id;
+      }
+      return group1 === group2;
+    }
+    return false;
+  };
+
   return (
     <IonContent className="ion-text-center ion-padding">
       <IonList>
@@ -144,13 +155,14 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
             color="identity"
             value={selectedGroup}
             onIonChange={validateSelectedGroup}
+            compareWith={compareGroups}
             okText="Ok"
             cancelText="Cancel"
             placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_GROUP_TEXT}
           >
             {groups.map(({ id, name }) => (
               <IonSelectOption
-                selected={initialSelectedGroup === id}
+                selected={selectedGroup === id}
                 key={id}
                 value={id}
               >
