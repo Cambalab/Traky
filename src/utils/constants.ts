@@ -48,4 +48,27 @@ export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_LOGOUT_URL_CONFIG,
 };
 
+export const NOTIFICATION_MESSAGES = {
+  authErrorHeader: 'Authentication Error',
+  authErrorBody: 'Username or Password are wrong',
+  newHourErrorHeader: 'Save Error',
+  newHourErrorBody: 'Verify that each data is Ok',
+  editHourErrorHeader: 'Edit Error',
+  editHourErrorBody: "Can't edit hour",
+  deleteHourErrorHeader: 'Delete Error',
+  deleteHourErrorBody: "Can't delete hour",
+  newHourSuccessHeader: 'Save Success',
+  newHourSuccessBody: 'The hour has been saved successfuly',
+  editHourSuccessHeader: 'Edit Success',
+  editHourSuccessBody: 'The hour has been edited successfuly',
+  deleteHourSuccessHeader: 'Delete Success',
+  deleteHourSuccessBody: 'The hour has been deleted successfuly'
+}
+
+export const NOTIFICATION_TYPE = {
+  ERROR: 'danger',
+  SUCCESS: 'success',
+  WARNING: 'warning'
+}
+
 export const DATE_FORMAT = "MM/DD/YYYY";
