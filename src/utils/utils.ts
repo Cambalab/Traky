@@ -1,4 +1,5 @@
 import { getPlatforms } from "@ionic/react";
+import {ILogs} from "./declarations";
 
 export function isMobile() {
   if (getPlatforms().includes("mobile")) {
@@ -43,4 +44,16 @@ export const transformNumberToString = (num : number) => {
     return ""
   }
   return String(num);
+};
+
+export const sortByDate = (list: ILogs[]) => {
+  return list.sort((a, b) => {
+    if (a.timestamp < b.timestamp) {
+      return 1;
+    } else if (a.timestamp > b.timestamp) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
 };
