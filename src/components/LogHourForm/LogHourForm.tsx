@@ -195,6 +195,7 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
             placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_SPENT_TIME_TEXT}
             type="number"
             value={hours}
+            min="0"
             onInput={validateSpentTime}
             onKeyPress={handleInputOnlyNumber}
             required
