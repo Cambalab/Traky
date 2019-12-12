@@ -1,26 +1,32 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
+import { AppContext } from "../../store/Store"
 import { IonToast } from '@ionic/react'
 import { ToastOptions } from '@ionic/core'
 
 interface IToastNotification extends ToastOptions {
-  isOpen?         : boolean | undefined,
-  onDidDismiss?   : Function | undefined
+  isOpen?         : boolean,
+  onDidDismiss?   : Function
 }
 
 const Notification: FunctionComponent<IToastNotification> = ({
   message,
-  duration,
+  duration = 2000,
   color,
   header,
   showCloseButton,
   closeButtonText,
   position,
-  mode,
-  isOpen,
-  onDidDismiss = () => setinternalIsOpen(false)
+  isOpen = false
 }) => {
 
-  const [internalIsOpen, setinternalIsOpen] = useState(false)
+  const { dispatch } = useContext(AppContext)
+
+  const hideNotification = () => {
+    dispatch({
+      type: 'SHOW_NOTIFICATION',
+      payload: false
+    })
+  }
 
   return (
     <IonToast
@@ -31,10 +37,9 @@ const Notification: FunctionComponent<IToastNotification> = ({
       showCloseButton={showCloseButton}
       closeButtonText={closeButtonText}
       position={position}
-      mode={mode}
-      isOpen={ isOpen || internalIsOpen}
-      onDidDismiss={() => onDidDismiss}
-    ></IonToast>
+      isOpen={isOpen}
+      onDidDismiss={hideNotification}
+    />
   )
 }
 
