@@ -12,7 +12,12 @@ import LogHourForm from "../../components/LogHourForm/LogHourForm";
 import { logHours } from "../../utils/api";
 import { History } from "history";
 import { IUser } from "../../utils/declarations";
-import {LOGS_LIST_URL_CONFIG, URL_CONFIG} from "../../utils/constants";
+import {
+  URL_CONFIG,
+  NOTIFICATION_MESSAGES,
+  NOTIFICATION_TYPE,
+  LOGS_LIST_URL_CONFIG
+} from "../../utils/constants";
 import { LOG_HOUR_PAGE_TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
 
@@ -31,10 +36,37 @@ const LogHourPage: FunctionComponent<LogHourPageHistory> = ({ history }) => {
         type: "UPDATE_LIST",
         payload: state.loggedHours.concat(res)
       });
-      history.push(URL_CONFIG.LOGS_LIST_URL_CONFIG.path);
+      dispatch({
+        type: "NOTIFICATION",
+        payload: {
+          header: NOTIFICATION_MESSAGES.newHourSuccessHeader,
+          message: NOTIFICATION_MESSAGES.newHourSuccessBody,
+          color: NOTIFICATION_TYPE.SUCCESS
+        }
+      })
+      dispatch({
+        type: "SHOW_NOTIFICATION",
+        payload: true
+      })
+      history.push(LOGS_LIST_URL_CONFIG.path);
     };
 
-    await logHours(currentUser.id, body, onSuccess);
+    const onError = () => {
+      dispatch({
+        type: "NOTIFICATION",
+        payload: {
+          header: NOTIFICATION_MESSAGES.newHourErrorHeader,
+          message: NOTIFICATION_MESSAGES.newHourErrorBody,
+          color: NOTIFICATION_TYPE.ERROR
+        }
+      })
+      dispatch({
+        type: "SHOW_NOTIFICATION",
+        payload: true
+      })
+    }
+
+    await logHours(currentUser.id, body, onSuccess, onError);
   };
 
   const onClickCancel = async () => {

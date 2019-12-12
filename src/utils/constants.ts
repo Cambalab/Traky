@@ -57,6 +57,8 @@ export const NOTIFICATION_MESSAGES = {
   editHourErrorBody: "Can't edit hour",
   deleteHourErrorHeader: 'Delete Error',
   deleteHourErrorBody: "Can't delete hour",
+  fetchHoursErrorHeader: "Fetch Error",
+  fetchHoursErrorBody: "Don't fetch data from server",
   newHourSuccessHeader: 'Save Success',
   newHourSuccessBody: 'The hour has been saved successfuly',
   editHourSuccessHeader: 'Edit Success',

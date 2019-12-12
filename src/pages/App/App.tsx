@@ -43,18 +43,18 @@ import { AppContext } from "../../store/Store";
 
 const appPages: AppPage[] = [
   {
-    title: URL_CONFIG.LOGS_LOGIN.name,
-    url: URL_CONFIG.LOGS_LOGIN.path,
+    title: LOGS_LOGIN_URL_CONFIG.name,
+    url: LOGS_LOGIN_URL_CONFIG.path,
     icon: contact
   },
   {
-    title: URL_CONFIG.LOGS_NEW.name,
-    url: URL_CONFIG.LOGS_NEW.path,
+    title: LOGS_NEW_URL_CONFIG.name,
+    url: LOGS_NEW_URL_CONFIG.path,
     icon: timer
   },
   {
-    title: URL_CONFIG.LOGS_LIST.name,
-    url: URL_CONFIG.LOGS_LIST.path,
+    title: LOGS_LIST_URL_CONFIG.name,
+    url: LOGS_LIST_URL_CONFIG.path,
     icon: list
   }
 ];

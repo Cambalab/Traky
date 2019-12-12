@@ -5,7 +5,7 @@ import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
 import { editHours } from "../../utils/api";
 import { ILogs, IMatchParams, IUser } from "../../utils/declarations";
-import { LOGS_LIST_URL_CONFIG } from "../../utils/constants";
+import { NOTIFICATION_MESSAGES, NOTIFICATION_TYPE, LOGS_LIST_URL_CONFIG } from "../../utils/constants";
 import { EDIT_HOUR_PAGE_TEXTS } from "./constants";
 import { RouteComponentProps } from "react-router-dom";
 import { formatDate } from "../../utils/inputHandle";
@@ -38,10 +38,37 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
         type: "UPDATE_LIST",
         payload: updateHour(state.loggedHours, res)
       });
+      dispatch({
+        type: "NOTIFICATION",
+        payload: {
+          header: NOTIFICATION_MESSAGES.editHourSuccessHeader,
+          message: NOTIFICATION_MESSAGES.editHourSuccessBody,
+          color: NOTIFICATION_TYPE.SUCCESS
+        }
+      })
+      dispatch({
+        type: "SHOW_NOTIFICATION",
+        payload: true
+      })
       history.push(LOGS_LIST_URL_CONFIG.path);
     };
 
-    await editHours(currentUser.id, match.params.data, body, onSuccess);
+    const onError = () => {
+      dispatch({
+        type: "NOTIFICATION",
+        payload: {
+          header: NOTIFICATION_MESSAGES.editHourErrorHeader,
+          message: NOTIFICATION_MESSAGES.editHourErrorBody,
+          color: NOTIFICATION_TYPE.ERROR
+        }
+      })
+      dispatch({
+        type: "SHOW_NOTIFICATION",
+        payload: true
+      })
+    }
+
+    await editHours(currentUser.id, match.params.data, body, onSuccess, onError);
   };
 
   const onClickCancel = async () => {
