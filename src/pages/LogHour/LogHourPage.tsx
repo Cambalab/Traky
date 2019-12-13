@@ -13,7 +13,6 @@ import { logHours } from "../../utils/api";
 import { History } from "history";
 import { IUser } from "../../utils/declarations";
 import {
-  URL_CONFIG,
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
   LOGS_LIST_URL_CONFIG

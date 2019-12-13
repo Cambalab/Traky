@@ -4,7 +4,6 @@ import { AppContext } from "../../store/Store";
 import { History } from "history";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import {
-  URL_CONFIG,
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
   LOGS_LIST_URL_CONFIG

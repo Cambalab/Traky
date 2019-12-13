@@ -2,8 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { list, timer, contact } from "ionicons/icons";
-import { AppPage, ILogs } from "../../utils/declarations";
+import { ILogs } from "../../utils/declarations";
 import { getCurrentUser, getHours } from "../../utils/api";
 
 /* Core CSS required for Ionic components to work properly */
@@ -38,33 +37,20 @@ import AuthProvider from "../../components/AuthProvider/AuthProvider";
 import Notification from "../../components/ToastNotification/Notification";
 
 /* Util functions and constant values */
-import { URL_CONFIG, LOGS_EDIT_URL_CONFIG, LOGS_LIST_URL_CONFIG, LOGS_LOGIN_URL_CONFIG, LOGS_NEW_URL_CONFIG } from "../../utils/constants";
 import { AppContext } from "../../store/Store";
-
-const appPages: AppPage[] = [
-  {
-    title: LOGS_LOGIN_URL_CONFIG.name,
-    url: LOGS_LOGIN_URL_CONFIG.path,
-    icon: contact
-  },
-  {
-    title: LOGS_NEW_URL_CONFIG.name,
-    url: LOGS_NEW_URL_CONFIG.path,
-    icon: timer
-  },
-  {
-    title: LOGS_LIST_URL_CONFIG.name,
-    url: LOGS_LIST_URL_CONFIG.path,
-    icon: list
-  }
-];
+import {
+  LOGS_EDIT_URL_CONFIG,
+  LOGS_LIST_URL_CONFIG,
+  LOGS_LOGIN_URL_CONFIG,
+  LOGS_NEW_URL_CONFIG
+} from "../../utils/constants";
 
 const App: React.FC = () => {
   const currentUser = getCurrentUser();
 
   const { state, dispatch } = useContext(AppContext);
-  const {showNotification} = state;
-  
+  const { showNotification } = state;
+
   const onSuccessGetHours = (res: ILogs[]) => {
     dispatch({
       type: "UPDATE_LIST",
@@ -94,7 +80,7 @@ const App: React.FC = () => {
     });
     getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
   }, []);
-  
+
   return (
     <IonApp>
       <IonReactRouter>
