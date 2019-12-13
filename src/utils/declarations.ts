@@ -43,7 +43,8 @@ export interface INotificationOptions {
   showCloseButton? : boolean;
   closeButtonText? : string;
   header?          : string;
-  position?        : string;
+  position?        : "bottom" | "top" | "middle" | undefined;
+  mode?            : string;
 }
 
 export type OverviewState = {
