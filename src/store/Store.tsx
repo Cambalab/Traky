@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { IContext } from "../utils/declarations";
+import { IContext, INotificationOptions } from "../utils/declarations";
 import { reducer } from "./reducer";
 
 const AppContext = createContext<IContext>({} as IContext);
@@ -8,7 +8,7 @@ function useAppContext() {
   return useContext(AppContext);
 }
 
-const initialNotification = {
+const initialNotification: INotificationOptions = {
   message: '',
   duration: 2000,
   showCloseButton: false,
