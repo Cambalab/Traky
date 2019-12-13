@@ -49,22 +49,22 @@ export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
 };
 
 export const NOTIFICATION_MESSAGES = {
-  authErrorHeader: 'Authentication Error',
-  authErrorBody: 'Username or Password are wrong',
-  newHourErrorHeader: 'Save Error',
-  newHourErrorBody: 'Verify that each data is Ok',
-  editHourErrorHeader: 'Edit Error',
-  editHourErrorBody: "Can't edit hour",
-  deleteHourErrorHeader: 'Delete Error',
-  deleteHourErrorBody: "Can't delete hour",
-  fetchHoursErrorHeader: "Fetch Error",
-  fetchHoursErrorBody: "Don't fetch data from server",
-  newHourSuccessHeader: 'Save Success',
-  newHourSuccessBody: 'The hour has been saved successfuly',
-  editHourSuccessHeader: 'Edit Success',
-  editHourSuccessBody: 'The hour has been edited successfuly',
-  deleteHourSuccessHeader: 'Delete Success',
-  deleteHourSuccessBody: 'The hour has been deleted successfuly'
+  AUTH_ERROR_HEADER: 'Authentication Error',
+  AUTH_ERROR_BODY: 'Username or Password are wrong',
+  NEW_HOUR_ERROR_HEADER: 'Save Error',
+  NEW_HOUR_ERROR_BODY: 'Verify that each data is Ok',
+  EDIT_HOUR_ERROR_HEADER: 'Edit Error',
+  EDIT_HOUR_ERROR_BODY: "Can't edit hour",
+  DELETE_HOUR_ERROR_HEADER: 'Delete Error',
+  DELETE_HOUR_ERROR_BODY: "Can't delete hour",
+  FETCH_HOURS_ERROR_HEADER: "Fetch Error",
+  FETCH_HOURS_ERROR_BODY: "Don't fetch data from server",
+  NEW_HOUR_SUCCESS_HEADER: 'Save Success',
+  NEW_HOUR_SUCCESS_BODY: 'The hour has been saved successfuly',
+  EDIT_HOUR_SUCCESS_HEADER: 'Edit Success',
+  EDIT_HOUR_SUCCESS_BODY: 'The hour has been edited successfuly',
+  DELETE_HOUR_SUCCESS_HEADER: 'Delete Success',
+  DELETE_HOUR_SUCCESS_BODY: 'The hour has been deleted successfuly'
 }
 
 export const NOTIFICATION_TYPE = {

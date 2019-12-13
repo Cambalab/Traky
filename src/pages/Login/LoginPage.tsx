@@ -37,8 +37,8 @@ const LoginPage: FunctionComponent<LoginPageHistory> = ({ history }) => {
       dispatch({
         type: 'NOTIFICATION',
         payload: {
-          header: NOTIFICATION_MESSAGES.authErrorHeader,
-          message: NOTIFICATION_MESSAGES.authErrorBody,
+          header: NOTIFICATION_MESSAGES.AUTH_ERROR_HEADER,
+          message: NOTIFICATION_MESSAGES.AUTH_ERROR_BODY,
           color: NOTIFICATION_TYPE.ERROR
         }
       })

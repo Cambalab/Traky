@@ -38,8 +38,8 @@ const LogHourPage: FunctionComponent<LogHourPageHistory> = ({ history }) => {
       dispatch({
         type: "NOTIFICATION",
         payload: {
-          header: NOTIFICATION_MESSAGES.newHourSuccessHeader,
-          message: NOTIFICATION_MESSAGES.newHourSuccessBody,
+          header: NOTIFICATION_MESSAGES.NEW_HOUR_SUCCESS_HEADER,
+          message: NOTIFICATION_MESSAGES.NEW_HOUR_SUCCESS_BODY,
           color: NOTIFICATION_TYPE.SUCCESS
         }
       })
@@ -54,8 +54,8 @@ const LogHourPage: FunctionComponent<LogHourPageHistory> = ({ history }) => {
       dispatch({
         type: "NOTIFICATION",
         payload: {
-          header: NOTIFICATION_MESSAGES.newHourErrorHeader,
-          message: NOTIFICATION_MESSAGES.newHourErrorBody,
+          header: NOTIFICATION_MESSAGES.NEW_HOUR_ERROR_HEADER,
+          message: NOTIFICATION_MESSAGES.NEW_HOUR_ERROR_BODY,
           color: NOTIFICATION_TYPE.ERROR
         }
       })

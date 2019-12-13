@@ -41,8 +41,8 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
       dispatch({
         type: "NOTIFICATION",
         payload: {
-          header: NOTIFICATION_MESSAGES.editHourSuccessHeader,
-          message: NOTIFICATION_MESSAGES.editHourSuccessBody,
+          header: NOTIFICATION_MESSAGES.EDIT_HOUR_SUCCESS_HEADER,
+          message: NOTIFICATION_MESSAGES.EDIT_HOUR_SUCCESS_BODY,
           color: NOTIFICATION_TYPE.SUCCESS
         }
       })
@@ -57,8 +57,8 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
       dispatch({
         type: "NOTIFICATION",
         payload: {
-          header: NOTIFICATION_MESSAGES.editHourErrorHeader,
-          message: NOTIFICATION_MESSAGES.editHourErrorBody,
+          header: NOTIFICATION_MESSAGES.EDIT_HOUR_ERROR_HEADER,
+          message: NOTIFICATION_MESSAGES.EDIT_HOUR_ERROR_BODY,
           color: NOTIFICATION_TYPE.ERROR
         }
       })

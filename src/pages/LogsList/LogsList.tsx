@@ -67,8 +67,8 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         dispatch({
           type: "NOTIFICATION",
           payload: {
-            header: NOTIFICATION_MESSAGES.fetchHoursErrorHeader,
-            message: NOTIFICATION_MESSAGES.fetchHoursErrorBody,
+            header: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_HEADER,
+            message: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_BODY,
             color: NOTIFICATION_TYPE.ERROR
           }
         })
@@ -99,8 +99,8 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       dispatch({
         type: "NOTIFICATION",
         payload: {
-          header: NOTIFICATION_MESSAGES.deleteHourSuccessHeader,
-          message: NOTIFICATION_MESSAGES.deleteHourSuccessBody,
+          header: NOTIFICATION_MESSAGES.DELETE_HOUR_SUCCESS_HEADER,
+          message: NOTIFICATION_MESSAGES.DELETE_HOUR_SUCCESS_BODY,
           color: NOTIFICATION_TYPE.SUCCESS
         }
       })
@@ -122,8 +122,8 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       dispatch({
         type: "NOTIFICATION",
         payload: {
-          header: NOTIFICATION_MESSAGES.deleteHourErrorHeader,
-          message: NOTIFICATION_MESSAGES.deleteHourErrorBody,
+          header: NOTIFICATION_MESSAGES.DELETE_HOUR_ERROR_HEADER,
+          message: NOTIFICATION_MESSAGES.DELETE_HOUR_ERROR_BODY,
           color: NOTIFICATION_TYPE.ERROR
         }
       })
