@@ -34,12 +34,27 @@ export interface ILogs {
   groupId: number;
 }
 
+export interface INotificationOptions {
+  onDidDismiss?    : Function | undefined;
+  isOpen?          : boolean;
+  message?         : string;
+  color?           : string;
+  duration?        : number;
+  showCloseButton? : boolean;
+  closeButtonText? : string;
+  header?          : string;
+  position?        : "bottom" | "top" | "middle" | undefined;
+  mode?            : string;
+}
+
 export type OverviewState = {
   loggedHours: ILogs[] | [];
   isLoading: boolean;
   hasError: boolean;
   isLoged: boolean;
   user: IUser | {id: null, name: ''};
+  showNotification: boolean;
+  notificationOptions: INotificationOptions;
 };
 
 export type IContext = {

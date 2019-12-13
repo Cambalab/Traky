@@ -3,7 +3,11 @@ import "./LoginPage.css";
 import { AppContext } from "../../store/Store";
 import { History } from "history";
 import LoginForm from "../../components/LoginForm/LoginForm";
-import { LOGS_LIST_URL_CONFIG } from "../../utils/constants";
+import {
+  NOTIFICATION_MESSAGES,
+  NOTIFICATION_TYPE,
+  LOGS_LIST_URL_CONFIG
+ } from "../../utils/constants";
 import { loginUser } from "../../utils/api";
 import {
   IonPage,
@@ -29,7 +33,21 @@ const LoginPage: FunctionComponent<LoginPageHistory> = ({ history }) => {
       })
       history.push(LOGS_LIST_URL_CONFIG.path)
     }
-    await loginUser(body, onSuccess)
+    const onError = () => {
+      dispatch({
+        type: 'NOTIFICATION',
+        payload: {
+          header: NOTIFICATION_MESSAGES.AUTH_ERROR_HEADER,
+          message: NOTIFICATION_MESSAGES.AUTH_ERROR_BODY,
+          color: NOTIFICATION_TYPE.ERROR
+        }
+      })
+      dispatch({
+        type: "SHOW_NOTIFICATION",
+        payload: true
+      })
+    }
+    await loginUser(body, onSuccess, onError) // llamada a api
   }
 
   return (

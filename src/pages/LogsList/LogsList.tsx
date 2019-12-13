@@ -17,8 +17,12 @@ import { TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
 import { ILogs } from "../../utils/declarations";
 import LogHourCard from "../../components/LogHourCard/LogHourCard";
-import { LOGS_LIST_URL_CONFIG } from "../../utils/constants";
-import { getHours, removeHours } from "../../utils/api";
+import {
+  NOTIFICATION_MESSAGES,
+  NOTIFICATION_TYPE,
+  LOGS_LIST_URL_CONFIG
+} from "../../utils/constants";
+import { removeHours, getHours } from "../../utils/api";
 
 interface LogsPageHistory {
   history: History;
@@ -60,6 +64,18 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
           type: "UPDATE_LOADING",
           payload: false
         });
+        dispatch({
+          type: "NOTIFICATION",
+          payload: {
+            header: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_HEADER,
+            message: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_BODY,
+            color: NOTIFICATION_TYPE.ERROR
+          }
+        })
+        dispatch({
+          type: "SHOW_NOTIFICATION",
+          payload: true
+        })
       };
       dispatch({
         type: "UPDATE_LOADING",
@@ -80,7 +96,20 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         type: "UPDATE_LOADING",
         payload: false
       });
+      dispatch({
+        type: "NOTIFICATION",
+        payload: {
+          header: NOTIFICATION_MESSAGES.DELETE_HOUR_SUCCESS_HEADER,
+          message: NOTIFICATION_MESSAGES.DELETE_HOUR_SUCCESS_BODY,
+          color: NOTIFICATION_TYPE.SUCCESS
+        }
+      })
+      dispatch({
+        type: "SHOW_NOTIFICATION",
+        payload: true
+      })
     };
+
     const onError = () => {
       dispatch({
         type: "UPDATE_LOADING",
@@ -90,11 +119,24 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         type: "UPDATE_ERROR",
         payload: true
       });
+      dispatch({
+        type: "NOTIFICATION",
+        payload: {
+          header: NOTIFICATION_MESSAGES.DELETE_HOUR_ERROR_HEADER,
+          message: NOTIFICATION_MESSAGES.DELETE_HOUR_ERROR_BODY,
+          color: NOTIFICATION_TYPE.ERROR
+        }
+      })
+      dispatch({
+        type: "SHOW_NOTIFICATION",
+        payload: true
+      })
     };
     dispatch({
       type: "UPDATE_LOADING",
       payload: true
     });
+
     await removeHours(currentUser, logHour, onSuccess, onError);
   };
 

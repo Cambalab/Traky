@@ -22,6 +22,12 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
     case "SET_USER": {
       return { ...state, user: {id: action.payload.id, name: action.payload.name} };
     }
+    case "NOTIFICATION": {
+      return { ...state, notificationOptions: action.payload }
+    }
+    case "SHOW_NOTIFICATION": {
+      return { ...state, showNotification: action.payload }
+    }
     default:
       return state;
   }
