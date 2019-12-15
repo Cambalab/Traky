@@ -1,14 +1,11 @@
 import React, { useContext } from "react";
+import { History } from "history";
+
 import {
   IonButton,
   IonSpinner,
   useIonViewDidEnter,
-  IonItem,
-  IonList
-} from "@ionic/react";
-import { History } from "history";
-
-import {
+  IonList,
   IonPage,
   IonContent,
   IonHeader,
@@ -18,17 +15,18 @@ import {
   IonMenuButton
 } from "@ionic/react";
 
-import "./LogsList.css";
-import { TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
 import { ILogs, IGroup } from "../../utils/declarations";
+import "./LogsList.css";
 import LogHourCard from "../../components/LogHourCard/LogHourCard";
 import {
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
   LOGS_LIST_URL_CONFIG
 } from "../../utils/constants";
-import { removeHours, getHours, getGroups } from "../../utils/api";
+import { TEXTS } from "./constants";
+
+import { removeHours, getHours } from "../../utils/api";
 
 interface LogsPageHistory {
   history: History;
@@ -51,18 +49,12 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   };
 
   const groupName = (id: Number) => {
-    const group = state.groups.find((g: IGroup) => g.id === id);
+    const group = groups.find((g: IGroup) => g.id === id);
     return group ? group.name : null;
   };
 
   useIonViewDidEnter(() => {
     if (currentUser.id !== null && loggedHours.length === 0) {
-      const onSuccessGetGroups = (res: IGroup[]) => {
-        dispatch({
-          type: "UPDATE_GROUPS",
-          payload: res
-        });
-      };
       const onSuccessGetHours = (res: ILogs[]) => {
         dispatch({
           type: "UPDATE_LIST",
@@ -101,7 +93,6 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         payload: true
       });
       getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
-      getGroups(currentUser.id, onSuccessGetGroups);
     }
   });
 

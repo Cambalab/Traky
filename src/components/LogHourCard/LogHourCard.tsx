@@ -7,8 +7,7 @@ import {
   IonItem,
   IonGrid,
   IonRow,
-  IonCol,
-  IonItemDivider
+  IonCol
 } from "@ionic/react";
 import { create, timer, trash, calendar } from "ionicons/icons";
 import { ILogs } from "../../utils/declarations";
