@@ -186,7 +186,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       <IonContent>
         {/*-- List of logged hours --*/}
         {isLoading ? (
-          <IonSpinner className="content__spinner" name="lines" />
+          <IonSpinner className="content__spinner" name="crescent" color="primary" />
         ) : hasError ? (
           <div className="content___message">
             <p>{TEXTS.LIST_ERROR_MSG}</p>
