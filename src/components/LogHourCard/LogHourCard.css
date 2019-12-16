@@ -14,6 +14,7 @@
 .item-card-buttons__container {
   display: flex;
   align-items: center;
+  float: right;
 }
 
 .item-card__icon {
@@ -22,18 +23,17 @@
 }
 
 .item-card__date {
-  padding-left: 0;
-  font-size: 22px;
+  padding: 0px;
+  font-size: 20px;
+  color: #7e8584;
+  align-self: center;
 }
 
 .item-card__description {
-  text-align: left;
-  width: 50%;
-  align-self: center;
-  font-size: 15px;
+  color: #7e8584;
 }
 
-.item-card__hour {
+.item-card__icon-container {
   color: #00c79a;
   font-size: 35px;
   display: flex;
@@ -43,13 +43,34 @@
   align-self: center;
 }
 
-.item-card__dividing-line--mobile {
+.item-card__dividing-line {
   width: 100%;
   background: #00c79a no-repeat scroll center;
   height: 1px;
 }
 
 .item-card__description--mobile {
-  margin-top: 10px;
+  margin-top: 7px;
   max-height: 70px;
+}
+
+.item-card__group--mobile {
+  margin-top: 10px;
+}
+
+.item-card__group--desktop {
+  margin-top: 10px;
+}
+
+.item-card__col {
+  display: flex;
+  align-self: center;
+}
+
+.item-card__hour-text {
+  font-size: 12px;
+}
+
+.item-card__row {
+  margin-top: 10px;
 }

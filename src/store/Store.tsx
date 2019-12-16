@@ -9,24 +9,25 @@ function useAppContext() {
 }
 
 const initialNotification: INotificationOptions = {
-  message: '',
+  message: "",
   duration: 2000,
   showCloseButton: false,
-  closeButtonText: 'x',
-  position: 'bottom',
-  color: 'danger',
-  mode: 'md',
-  header: ''
-}
+  closeButtonText: "x",
+  position: "bottom",
+  color: "danger",
+  mode: "md",
+  header: ""
+};
 
 const initialState = {
   isLoged: false,
-  user: {id: null, name: ''},
+  user: { id: null, name: "" },
   loggedHours: [],
   isLoading: false,
   hasError: false,
   showNotification: false,
-  notificationOptions: initialNotification
+  notificationOptions: initialNotification,
+  groups: []
 };
 
 const AppContextProvider = (props: any) => {

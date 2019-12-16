@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { ILogs } from "../../utils/declarations";
-import { getCurrentUser, getHours } from "../../utils/api";
+import { ILogs, IGroup } from "../../utils/declarations";
+import { getCurrentUser, getHours, getGroups } from "../../utils/api";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -51,6 +51,12 @@ const App: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const { showNotification } = state;
 
+  const onSuccessGetGroups = (res: IGroup[]) => {
+    dispatch({
+      type: "UPDATE_GROUPS",
+      payload: res
+    });
+  };
   const onSuccessGetHours = (res: ILogs[]) => {
     dispatch({
       type: "UPDATE_LIST",
@@ -78,14 +84,16 @@ const App: React.FC = () => {
       type: "UPDATE_LOADING",
       payload: true
     });
+
     getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
+    getGroups(currentUser.id, onSuccessGetGroups);
   }, []);
 
   return (
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          <Menu/>
+          <Menu />
           <IonRouterOutlet id="main">
             <Route
               path={LOGS_LOGIN_URL_CONFIG.path}
@@ -94,12 +102,14 @@ const App: React.FC = () => {
             />
             <Route
               path={LOGS_NEW_URL_CONFIG.path}
-              render={(props) => <AuthProvider Component={LogHourPage} {...props}/>}
+              render={props => (
+                <AuthProvider Component={LogHourPage} {...props} />
+              )}
               exact={true}
             />
             <Route
               path={LOGS_LIST_URL_CONFIG.path}
-              render={(props) => <AuthProvider Component={LogsList} {...props}/>}
+              render={props => <AuthProvider Component={LogsList} {...props} />}
               exact={true}
             />
             <Route path={LOGS_EDIT_URL_CONFIG.path} component={EditHourPage} />
@@ -112,8 +122,7 @@ const App: React.FC = () => {
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
-      {
-        showNotification &&
+      {showNotification && (
         <Notification
           message={state.notificationOptions.message}
           duration={state.notificationOptions.duration}
@@ -124,7 +133,7 @@ const App: React.FC = () => {
           position={state.notificationOptions.position}
           isOpen={true}
         />
-      }
+      )}
     </IonApp>
   );
 };

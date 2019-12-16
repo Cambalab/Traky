@@ -1,4 +1,9 @@
-import { ILogs, IUser, INotificationOptions } from "../utils/declarations";
+import {
+  ILogs,
+  IUser,
+  INotificationOptions,
+  IGroup
+} from "../utils/declarations";
 
 export type Action =
   | {
@@ -31,5 +36,9 @@ export type Action =
     }
   | {
       type: "SHOW_NOTIFICATION";
-      payload: boolean
+      payload: boolean;
     }
+  | {
+      type: "UPDATE_GROUPS";
+      payload: IGroup[];
+    };

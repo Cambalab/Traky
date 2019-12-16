@@ -12,7 +12,12 @@ import {
   IonText,
   useIonViewDidEnter
 } from "@ionic/react";
-import React, {FormEvent, FunctionComponent, useContext, useState} from "react";
+import React, {
+  FormEvent,
+  FunctionComponent,
+  useContext,
+  useState
+} from "react";
 import "./LogHourForm.css";
 import { getGroups } from "../../utils/api";
 import { IGroup } from "../../utils/declarations";
@@ -26,7 +31,7 @@ import {
 import { LOG_HOUR_FORM_TEXTS } from "./constants";
 import { InputChangeEventDetail, SelectChangeEventDetail } from "@ionic/core";
 import { isEmptyString, isValidNumber } from "../../utils/utils";
-import {AppContext} from "../../store/Store";
+import { AppContext } from "../../store/Store";
 
 interface OnButtonClickEventFunction extends Function {
   (body: LogHourForm): void;
@@ -59,7 +64,7 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
   onClickCancel
 }) => {
   const { state } = useContext(AppContext);
-  const [groups, setGroups] = useState<IGroup[]>([]);
+
   const [description, setDescription] = useState<string>(initialDescription);
   const [selectedGroup, setSelectedGroup] = useState<number | undefined>(
     initialSelectedGroup
@@ -69,13 +74,10 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const currentUser = state.user;
 
-  const onSuccessGetGroups = (newGroups: IGroup[]) => {
-    setGroups(newGroups);
-  };
+  const groups: IGroup[] = state.groups;
 
   useIonViewDidEnter(() => {
     clearData();
-    getGroups(currentUser.id, onSuccessGetGroups);
   });
 
   const clearData = () => {
@@ -105,17 +107,20 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
   };
 
   const validateSpentTime = (e: FormEvent<HTMLIonInputElement>) => {
-    const disabled = isEmptyString(e.currentTarget.value) || isValidNumber(selectedGroup);
+    const disabled =
+      isEmptyString(e.currentTarget.value) || isValidNumber(selectedGroup);
 
     setIsDisabled(disabled);
     handleInputElement(setHours)(e);
   };
 
-  const validateSelectedGroup = (e: CustomEvent<InputChangeEventDetail | SelectChangeEventDetail>) => {
+  const validateSelectedGroup = (
+    e: CustomEvent<InputChangeEventDetail | SelectChangeEventDetail>
+  ) => {
     const disabled = isEmptyString(hours) || isValidNumber(e.detail.value);
 
     setIsDisabled(disabled);
-    handleInput(setSelectedGroup)(e)
+    handleInput(setSelectedGroup)(e);
   };
 
   const compareGroups = (group1: IGroup, group2: IGroup): boolean => {
