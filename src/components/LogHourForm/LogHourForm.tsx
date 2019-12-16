@@ -19,7 +19,6 @@ import React, {
   useState
 } from "react";
 import "./LogHourForm.css";
-import { getGroups } from "../../utils/api";
 import { IGroup } from "../../utils/declarations";
 import {
   formatDate,
