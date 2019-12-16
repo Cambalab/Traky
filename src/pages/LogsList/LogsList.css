@@ -5,3 +5,11 @@
   color: #989aa2;
   margin-top: 10vh;
 }
+
+.content__spinner {
+  display: flex;
+  margin: 0 auto;
+  padding-top: 50%;
+  width: 6em;
+  height: 6em;
+}
