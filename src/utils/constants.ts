@@ -11,7 +11,7 @@ export interface AppConfig {
 export const CONFIG: AppConfig = {
   API_ENDPOINT: process.env.REACT_APP_BASE_API_URL
     ? process.env.REACT_APP_BASE_API_URL
-    : "http://localhost:3000/api/"
+    : "https://traky-ionic-react.herokuapp.com/api/"
 };
 
 export interface URL_CONFIG {
@@ -45,32 +45,33 @@ export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_NEW_URL_CONFIG,
   LOGS_LOGIN_URL_CONFIG,
   LOGS_EDIT_URL_CONFIG,
-  LOGS_LOGOUT_URL_CONFIG,
+  LOGS_LOGOUT_URL_CONFIG
 };
 
 export const NOTIFICATION_MESSAGES = {
-  AUTH_ERROR_HEADER: 'Authentication Error',
-  AUTH_ERROR_BODY: 'Username or Password are wrong',
-  NEW_HOUR_ERROR_HEADER: 'Save Error',
-  NEW_HOUR_ERROR_BODY: 'Verify that each data is Ok',
-  EDIT_HOUR_ERROR_HEADER: 'Edit Error',
+  AUTH_ERROR_HEADER: "Authentication Error",
+  AUTH_ERROR_BODY: "Username or Password are wrong",
+  NEW_HOUR_ERROR_HEADER: "Save Error",
+  NEW_HOUR_ERROR_BODY: "Verify that each data is Ok",
+  EDIT_HOUR_ERROR_HEADER: "Edit Error",
   EDIT_HOUR_ERROR_BODY: "Can't edit hour",
-  DELETE_HOUR_ERROR_HEADER: 'Delete Error',
+  DELETE_HOUR_ERROR_HEADER: "Delete Error",
   DELETE_HOUR_ERROR_BODY: "Can't delete hour",
   FETCH_HOURS_ERROR_HEADER: "Fetch Error",
   FETCH_HOURS_ERROR_BODY: "Don't fetch data from server",
-  NEW_HOUR_SUCCESS_HEADER: 'Save Success',
-  NEW_HOUR_SUCCESS_BODY: 'The hour has been saved successfuly',
-  EDIT_HOUR_SUCCESS_HEADER: 'Edit Success',
-  EDIT_HOUR_SUCCESS_BODY: 'The hour has been edited successfuly',
-  DELETE_HOUR_SUCCESS_HEADER: 'Delete Success',
-  DELETE_HOUR_SUCCESS_BODY: 'The hour has been deleted successfuly'
-}
+  NEW_HOUR_SUCCESS_HEADER: "Save Success",
+  NEW_HOUR_SUCCESS_BODY: "The hour has been saved successfuly",
+  EDIT_HOUR_SUCCESS_HEADER: "Edit Success",
+  EDIT_HOUR_SUCCESS_BODY: "The hour has been edited successfuly",
+  DELETE_HOUR_SUCCESS_HEADER: "Delete Success",
+  DELETE_HOUR_SUCCESS_BODY: "The hour has been deleted successfuly"
+};
 
 export const NOTIFICATION_TYPE = {
-  ERROR: 'danger',
-  SUCCESS: 'success',
-  WARNING: 'warning'
-}
+  ERROR: "danger",
+  SUCCESS: "success",
+  WARNING: "warning"
+};
 
 export const DATE_FORMAT = "MM/DD/YYYY";
+export const HOUR_FORMAT = "h:mm";

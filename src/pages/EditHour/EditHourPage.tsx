@@ -1,14 +1,25 @@
-import { IonButtons, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import {
+  IonButtons,
+  IonHeader,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from "@ionic/react";
 import React, { FunctionComponent, useContext } from "react";
 import { AppContext } from "../../store/Store";
 import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
 import { editHours } from "../../utils/api";
 import { ILogs, IMatchParams, IUser } from "../../utils/declarations";
-import { NOTIFICATION_MESSAGES, NOTIFICATION_TYPE, LOGS_LIST_URL_CONFIG } from "../../utils/constants";
+import {
+  NOTIFICATION_MESSAGES,
+  NOTIFICATION_TYPE,
+  LOGS_LIST_URL_CONFIG
+} from "../../utils/constants";
 import { EDIT_HOUR_PAGE_TEXTS } from "./constants";
 import { RouteComponentProps } from "react-router-dom";
-import { formatDate } from "../../utils/inputHandle";
+import { formatDate, formatHour } from "../../utils/inputHandle";
 import { transformNumberToString } from "../../utils/utils";
 
 const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
@@ -45,11 +56,11 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
           message: NOTIFICATION_MESSAGES.EDIT_HOUR_SUCCESS_BODY,
           color: NOTIFICATION_TYPE.SUCCESS
         }
-      })
+      });
       dispatch({
         type: "SHOW_NOTIFICATION",
         payload: true
-      })
+      });
       history.push(LOGS_LIST_URL_CONFIG.path);
     };
 
@@ -61,14 +72,20 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
           message: NOTIFICATION_MESSAGES.EDIT_HOUR_ERROR_BODY,
           color: NOTIFICATION_TYPE.ERROR
         }
-      })
+      });
       dispatch({
         type: "SHOW_NOTIFICATION",
         payload: true
-      })
-    }
+      });
+    };
 
-    await editHours(currentUser.id, match.params.data, body, onSuccess, onError);
+    await editHours(
+      currentUser.id,
+      match.params.data,
+      body,
+      onSuccess,
+      onError
+    );
   };
 
   const onClickCancel = async () => {
@@ -92,7 +109,7 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
           initialDescription={data.description}
           initialSelectedGroup={data.groupId}
           initialCurrentDate={formatDate(data.timestamp)}
-          initialHours={transformNumberToString(data.spent_time)}
+          initialHours={formatHour(data.spent_time)}
           onClickSave={onClickSave}
           onClickCancel={onClickCancel}
         />

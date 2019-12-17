@@ -7,8 +7,7 @@ import {
   IonItem,
   IonGrid,
   IonRow,
-  IonCol,
-  IonItemDivider
+  IonCol
 } from "@ionic/react";
 import { create, timer, trash, calendar } from "ionicons/icons";
 import { ILogs } from "../../utils/declarations";
@@ -44,6 +43,23 @@ const LogHourCard: React.FC<LogHourCard> = ({
       <IonItem text-wrap className="item-card">
         <IonGrid>
           <IonRow>
+            <IonCol size="7">
+              <div className="item-card__icon-container">
+                <IonIcon
+                  className="item-card__icon"
+                  size={"large"}
+                  icon={timer}
+                />
+                <IonDatetime
+                  readonly={true}
+                  displayFormat={LOG_HOUR_CARD_TEXTS.HOUR_DISPLAY_FORMAT}
+                  value={`${logHour.spent_time}`}
+                />
+                <p className="item-card__hour-text">
+                  {LOG_HOUR_CARD_TEXTS.SPENT_TIME_HOURS_TEXT}
+                </p>
+              </div>
+            </IonCol>
             <IonCol className="item-card__col">
               <div className="item-card__icon-container">
                 <IonIcon
@@ -59,7 +75,7 @@ const LogHourCard: React.FC<LogHourCard> = ({
                 />
               </div>
             </IonCol>
-            <IonCol size="2" style={{marginRight: 0}}>
+            <IonCol size="2" style={{ marginRight: 0 }}>
               <div className="item-card__icon-container">
                 <IonIcon
                   className="item-card__icon"
@@ -101,7 +117,6 @@ const LogHourCard: React.FC<LogHourCard> = ({
           <IonRow>
             <IonCol>
               <div className="item-card-buttons__container">
-
                 <IonButton
                   fill="clear"
                   shape="round"
