@@ -12,22 +12,14 @@ import {
   IonText,
   useIonViewDidEnter
 } from "@ionic/react";
-import React, {
-  FormEvent,
-  FunctionComponent,
-  useContext,
-  useState
-} from "react";
+import React, { FunctionComponent, useContext, useState } from "react";
 import "./LogHourForm.css";
 import { IGroup } from "../../utils/declarations";
 import {
   formatDate,
   handleInput,
   handleInputDatetime,
-  handleInputElement,
-  handleInputOnlyNumber,
-  handleInputHour,
-  formatHour
+  handleInputHour
 } from "../../utils/inputHandle";
 import { LOG_HOUR_FORM_TEXTS } from "./constants";
 import {
@@ -200,21 +192,11 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
           {LOG_HOUR_FORM_TEXTS.INPUT_SPENT_TIME_TEXT}
         </IonText>
         <IonItem className="list__item list__item--margin">
-          {/* <IonInput
-            name="hour"
-            className="ion-text-center"
-            placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_SPENT_TIME_TEXT}
-            type="number"
-            value={hours}
-            min="0"
-            onInput={validateSpentTime}
-            onKeyPress={handleInputOnlyNumber}
-            required
-          /> */}
           <IonDatetime
             display-format={HOUR_FORMAT}
             picker-format={HOUR_FORMAT}
             name="hour"
+            hourValues="0,1,2,3,4,5,6,7,8"
             className="input__datetime"
             value={hours}
             onIonChange={validateSpentTime}

@@ -5,7 +5,7 @@ import {
 } from "@ionic/core";
 import moment from "moment";
 import { FormEvent, KeyboardEvent } from "react";
-import { DATE_FORMAT, HOUR_FORMAT } from "./constants";
+import { DATE_FORMAT } from "./constants";
 
 export const handleInput = (fn: Function) => (
   e: CustomEvent<InputChangeEventDetail | SelectChangeEventDetail>

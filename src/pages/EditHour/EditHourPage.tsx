@@ -20,7 +20,6 @@ import {
 import { EDIT_HOUR_PAGE_TEXTS } from "./constants";
 import { RouteComponentProps } from "react-router-dom";
 import { formatDate, formatHour } from "../../utils/inputHandle";
-import { transformNumberToString } from "../../utils/utils";
 
 const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
   history,

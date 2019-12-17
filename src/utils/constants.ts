@@ -11,7 +11,7 @@ export interface AppConfig {
 export const CONFIG: AppConfig = {
   API_ENDPOINT: process.env.REACT_APP_BASE_API_URL
     ? process.env.REACT_APP_BASE_API_URL
-    : "https://traky-ionic-react.herokuapp.com/api/"
+    : "https://traky-ionic-react.herokuapp.com/api"
 };
 
 export interface URL_CONFIG {
@@ -74,4 +74,4 @@ export const NOTIFICATION_TYPE = {
 };
 
 export const DATE_FORMAT = "MM/DD/YYYY";
-export const HOUR_FORMAT = "h:mm";
+export const HOUR_FORMAT = "H:mm";
