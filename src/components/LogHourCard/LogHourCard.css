@@ -57,7 +57,11 @@
 
 .item-card__hour-text {
   font-size: 20px;
-  color: var(--ion-color-medium)
+  color: var(--ion-color-medium);
+}
+
+.item-card__hour {
+  padding-left: 0px;
 }
 
 .item-card__dividing-line {

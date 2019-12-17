@@ -43,7 +43,7 @@ const LogHourCard: React.FC<LogHourCard> = ({
       <IonItem text-wrap className="item-card">
         <IonGrid>
           <IonRow>
-            <IonCol size="7">
+            <IonCol size="6">
               <div className="item-card__icon-container">
                 <IonIcon
                   className="item-card__icon"
@@ -51,6 +51,7 @@ const LogHourCard: React.FC<LogHourCard> = ({
                   icon={timer}
                 />
                 <IonDatetime
+                  className="item-card__hour"
                   readonly={true}
                   displayFormat={LOG_HOUR_CARD_TEXTS.HOUR_DISPLAY_FORMAT}
                   value={`${logHour.spent_time}`}
