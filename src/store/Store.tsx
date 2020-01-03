@@ -27,7 +27,8 @@ const initialState = {
   hasError: false,
   showNotification: false,
   notificationOptions: initialNotification,
-  groups: []
+  groups: [],
+  localHistory: null
 };
 
 const AppContextProvider = (props: any) => {

@@ -2,8 +2,10 @@ import {
   ILogs,
   IUser,
   INotificationOptions,
-  IGroup
+  IGroup,
+  IUrlOptions
 } from "../utils/declarations";
+import { History } from "history";
 
 export type Action =
   | {
@@ -41,4 +43,12 @@ export type Action =
   | {
       type: "UPDATE_GROUPS";
       payload: IGroup[];
-    };
+    }
+  | {
+      type: "GO_BACK";
+      payload?: IUrlOptions
+    }
+  | {
+      type: "SET_HISTORY"
+      payload: History
+    }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext} from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import "./LoginPage.css";
 import { AppContext } from "../../store/Store";
 import { History } from "history";
@@ -11,8 +11,11 @@ import {
 import { loginUser } from "../../utils/api";
 import {
   IonPage,
-  IonContent
+  IonContent,
+  useIonViewDidEnter
 } from '@ionic/react';
+import { Plugins } from "@capacitor/core";
+const CapApp = Plugins.App
 
 interface LoginPageHistory {
   history: History
@@ -21,6 +24,19 @@ interface LoginPageHistory {
 const LoginPage: FunctionComponent<LoginPageHistory> = ({ history }) => {
 
   const { dispatch } = useContext(AppContext);
+
+  useIonViewDidEnter(() => {
+    dispatch({
+      type: "SET_HISTORY",
+      payload: history
+    })
+
+    CapApp.addListener("backButton", () => {
+      dispatch({
+        type: "GO_BACK"
+      })
+    })
+  })
 
   const onClickLogin = async (body: LoginForm) => {
     const onSuccess = (res: any) => {

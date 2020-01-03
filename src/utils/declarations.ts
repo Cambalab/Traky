@@ -1,5 +1,6 @@
 import { Dispatch } from "react";
 import { Action } from "../store/actions";
+import { History } from "history";
 
 export interface AppPage {
   url: string;
@@ -56,6 +57,7 @@ export type OverviewState = {
   showNotification: boolean;
   notificationOptions: INotificationOptions;
   groups: IGroup[] | [];
+  localHistory: History | null;
 };
 
 export type IContext = {
@@ -65,4 +67,8 @@ export type IContext = {
 
 export interface IMatchParams {
   data: string;
-}
+};
+
+export interface IUrlOptions {
+  url: string;
+};
