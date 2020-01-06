@@ -12,7 +12,10 @@ import {
   IonToolbar,
   IonTitle,
   IonButtons,
-  IonMenuButton
+  IonMenuButton,
+  IonFab,
+  IonFabButton,
+  IonIcon
 } from "@ionic/react";
 
 import { AppContext } from "../../store/Store";
@@ -24,7 +27,7 @@ import {
   NOTIFICATION_TYPE,
   LOGS_LIST_URL_CONFIG
 } from "../../utils/constants";
-import { TEXTS } from "./constants";
+import { TEXTS, NEW_HOUR_BUTTON_OPTION } from "./constants";
 
 import { removeHours, getHours } from "../../utils/api";
 
@@ -184,16 +187,21 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {/*-- List of logged hours --*/}
-        {isLoading ? (
-          <IonSpinner className="content__spinner" name="crescent" color="primary" />
-        ) : hasError ? (
-          <div className="content___message">
-            <p>{TEXTS.LIST_ERROR_MSG}</p>
-          </div>
-        ) : (
-          <IonList>{renderList()}</IonList>
-        )}
+          {/*-- List of logged hours --*/}
+          {isLoading ? (
+            <IonSpinner className="content__spinner" name="crescent" color="primary" />
+          ) : hasError ? (
+            <div className="content___message">
+              <p>{TEXTS.LIST_ERROR_MSG}</p>
+            </div>
+          ) : (
+            <IonList className="hours_list">{renderList()}</IonList>
+          )}
+          <IonFab horizontal="end" vertical="bottom" slot="fixed">
+            <IonFabButton color="primary" routerLink={NEW_HOUR_BUTTON_OPTION.url} >
+              <IonIcon icon={NEW_HOUR_BUTTON_OPTION.icon} />
+            </IonFabButton>
+          </IonFab>
       </IonContent>
     </IonPage>
   );
