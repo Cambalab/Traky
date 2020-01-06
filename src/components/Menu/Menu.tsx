@@ -9,9 +9,12 @@ import {
     IonMenuToggle,
     IonTitle,
     IonToolbar,
-    IonItemGroup    
+    IonItemGroup,
+    IonItemOptions,
+    IonItemSliding,
+    IonItemOption
 } from '@ionic/react';
-import React, {useContext, useState} from 'react';
+import React, {useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import {AppContext} from "../../store/Store";
 import { LOG_LIST_MENU_OPTION, LOGIN_MENU_OPTION, LOGOUT_MENU_OPTION, NEW_LOG_MENU_OPTION, USER_OPTION } from "./constants";
@@ -25,7 +28,6 @@ const Menu: React.FunctionComponent<Menu> = ({ history }) => {
 
     const { state, dispatch } = useContext(AppContext);
     const { isLoged } = state;
-    const [showLogout, setShowLogout] = useState(false)
 
     const logout = () => {
         dispatch({ type: 'SET_USER', payload: {} });
@@ -69,17 +71,18 @@ const Menu: React.FunctionComponent<Menu> = ({ history }) => {
                     {isLoged &&
                       <IonMenuToggle autoHide={false}>
                           <IonItemGroup>
-                            <IonItem button onClick={() => setShowLogout(!showLogout)} detail>
-                                <IonIcon slot="start" icon={USER_OPTION.icon} />
-                                <IonLabel>{state.user.name}</IonLabel>
-                            </IonItem>
-                            {
-                              showLogout &&
-                              <IonItem button onClick={logout}>
-                                <IonIcon slot="start" icon={LOGOUT_MENU_OPTION.icon} />
-                                <IonLabel>{LOGOUT_MENU_OPTION.title}</IonLabel>
+                            <IonItemSliding >
+                              <IonItem detail>
+                                  <IonIcon slot="start" icon={USER_OPTION.icon} />
+                                  <IonLabel>{state.user.name}</IonLabel>
                               </IonItem>
-                            }
+                              <IonItemOptions>
+                                  <IonItemOption type="button" color="light" onClick={logout}>
+                                    <IonIcon slot="start" icon={LOGOUT_MENU_OPTION.icon} />
+                                    <IonLabel>{LOGOUT_MENU_OPTION.title}</IonLabel>
+                                  </IonItemOption>
+                              </IonItemOptions>
+                            </IonItemSliding>
                           </IonItemGroup>
                       </IonMenuToggle>
                     }
