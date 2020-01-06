@@ -1,8 +1,10 @@
 .item-card {
-  border-color: #00c79a;
-  border-width: 1px;
-  border-style: solid;
-  max-height: 30vh;
+  /* border-color: var(--ion-color-medium-shade); */
+  /* border-width: 1px; */
+  /* border-style: ridge; */
+  border-radius: 30px;
+  margin: 1em 1em 1em 1em;
+  box-shadow: 2px 2px 10px var(--ion-color-medium-shade);
 }
 
 .item-card__container {
@@ -15,6 +17,7 @@
   display: flex;
   align-items: center;
   float: right;
+  padding-bottom: 0.5em;
 }
 
 .item-card__icon {
@@ -25,28 +28,43 @@
 .item-card__date {
   padding: 0px;
   font-size: 20px;
-  color: #7e8584;
+  color: var(--ion-color-medium);
   align-self: center;
 }
 
 .item-card__description {
-  color: #7e8584;
+  color: var(--ion-color-medium);
 }
 
 .item-card__icon-container {
-  color: #00c79a;
+  color: var(--ion-color-tertiary);
   font-size: 35px;
   display: flex;
+  align-items: center;
+  float: right;
+}
+
+.item-card__hour {
+  display: inline-flex;
+  flex-direction: row;
 }
 
 .item-card__hour p {
+  color: var(--ion-color-medium);
+  margin: 0 auto;
   align-self: center;
+}
+
+.item-card__hour-text {
+  font-size: 20px;
+  color: var(--ion-color-medium)
 }
 
 .item-card__dividing-line {
   width: 100%;
-  background: #00c79a no-repeat scroll center;
+  background: var(--ion-color-secondary) no-repeat scroll center;
   height: 1px;
+  margin: 0.3em 0em 1em 0em;
 }
 
 .item-card__description--mobile {
@@ -65,10 +83,6 @@
 .item-card__col {
   display: flex;
   align-self: center;
-}
-
-.item-card__hour-text {
-  font-size: 12px;
 }
 
 .item-card__row {

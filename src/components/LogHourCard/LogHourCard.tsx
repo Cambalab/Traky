@@ -7,7 +7,8 @@ import {
   IonItem,
   IonGrid,
   IonRow,
-  IonCol
+  IonCol,
+  IonItemDivider
 } from "@ionic/react";
 import { create, timer, trash, calendar } from "ionicons/icons";
 import { ILogs } from "../../utils/declarations";
@@ -40,22 +41,9 @@ const LogHourCard: React.FC<LogHourCard> = ({
   };
   return (
     <div>
-      <IonItem text-wrap>
+      <IonItem text-wrap className="item-card">
         <IonGrid>
           <IonRow>
-            <IonCol size="5">
-              <div className="item-card__icon-container">
-                <IonIcon
-                  className="item-card__icon"
-                  size={"large"}
-                  icon={timer}
-                />
-                {logHour.spent_time}
-                <p className="item-card__hour-text">
-                  {LOG_HOUR_CARD_TEXTS.SPENT_TIME_HOURS_TEXT}
-                </p>
-              </div>
-            </IonCol>
             <IonCol className="item-card__col">
               <div className="item-card__icon-container">
                 <IonIcon
@@ -71,10 +59,38 @@ const LogHourCard: React.FC<LogHourCard> = ({
                 />
               </div>
             </IonCol>
+            <IonCol size="2" style={{marginRight: 0}}>
+              <div className="item-card__icon-container">
+                <IonIcon
+                  className="item-card__icon"
+                  size={"large"}
+                  icon={timer}
+                />
+                <div className="item-card__hour">
+                  <p>{logHour.spent_time}</p>
+                  <p className="item-card__hour-text">
+                    {LOG_HOUR_CARD_TEXTS.SPENT_TIME_HOURS_TEXT}
+                  </p>
+                </div>
+                <IonButton
+                  fill="clear"
+                  shape="round"
+                  size="small"
+                  color="tertiary"
+                  onClick={handleOnEdit}
+                >
+                  <IonIcon
+                    className="item-card__icon"
+                    size={"large"}
+                    icon={create}
+                  />
+                </IonButton>
+              </div>
+            </IonCol>
           </IonRow>
           <div className="item-card__dividing-line" />
           <IonRow className="item-card__row">
-            <IonBadge>{group}</IonBadge>
+            <IonBadge color="tertiary">{group}</IonBadge>
           </IonRow>
 
           <IonRow>
@@ -85,21 +101,9 @@ const LogHourCard: React.FC<LogHourCard> = ({
           <IonRow>
             <IonCol>
               <div className="item-card-buttons__container">
+
                 <IonButton
-                  fill="outline"
-                  shape="round"
-                  size="small"
-                  color="primary"
-                  onClick={handleOnEdit}
-                >
-                  <IonIcon
-                    className="item-card__icon"
-                    size={"small"}
-                    icon={create}
-                  />
-                </IonButton>
-                <IonButton
-                  fill="outline"
+                  fill="clear"
                   shape="round"
                   size="small"
                   color="danger"
@@ -107,7 +111,7 @@ const LogHourCard: React.FC<LogHourCard> = ({
                 >
                   <IonIcon
                     className="item-card__icon"
-                    size={"small"}
+                    size={"large"}
                     icon={trash}
                   />
                 </IonButton>

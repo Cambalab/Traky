@@ -115,7 +115,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({
                   <b>{LOGIN_PAGE_TEXTS.PASSWORD_ERROR}</b>
                 </IonLabel>
                 <IonButton
-                  color="dark"
+                  color="secondary"
                   className="login-button"
                   disabled={!(userValidate && passwordValidate)}
                   onClick={logUser}

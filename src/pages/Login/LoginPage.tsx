@@ -52,7 +52,7 @@ const LoginPage: FunctionComponent<LoginPageHistory> = ({ history }) => {
 
   return (
     <IonPage>
-      <IonContent color="primary">
+      <IonContent color="tertiary">
         <LoginForm onClickLogin={onClickLogin}/>
       </IonContent>
     </IonPage>
