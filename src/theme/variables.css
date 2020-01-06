@@ -1,9 +1,9 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
-
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
+  --ion-font-family: 'Monserrat', sans;
   --ion-color-primary: #00c79a;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
