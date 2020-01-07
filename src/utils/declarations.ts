@@ -65,4 +65,4 @@ export type IContext = {
 
 export interface IMatchParams {
   data: string;
-}
+};

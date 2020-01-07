@@ -41,4 +41,4 @@ export type Action =
   | {
       type: "UPDATE_GROUPS";
       payload: IGroup[];
-    };
+    }
