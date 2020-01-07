@@ -26,15 +26,8 @@ const LoginPage: FunctionComponent<LoginPageHistory> = ({ history }) => {
   const { dispatch } = useContext(AppContext);
 
   useIonViewDidEnter(() => {
-    dispatch({
-      type: "SET_HISTORY",
-      payload: history
-    })
-
     CapApp.addListener("backButton", () => {
-      dispatch({
-        type: "GO_BACK"
-      })
+      history.goBack()
     })
   })
 

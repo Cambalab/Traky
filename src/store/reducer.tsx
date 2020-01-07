@@ -34,16 +34,6 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
     case "SHOW_NOTIFICATION": {
       return { ...state, showNotification: action.payload }
     }
-    case "GO_BACK": {
-        const { localHistory } = state;
-        if (localHistory != null) {
-          localHistory.goBack()
-        }
-      return { ...state, localHistory: localHistory}
-    }
-    case "SET_HISTORY": {
-      return { ...state, localHistory: action.payload}
-    }
     default:
       return state;
   }
