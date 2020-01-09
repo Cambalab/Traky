@@ -74,4 +74,6 @@ export const NOTIFICATION_TYPE = {
 };
 
 export const DATE_FORMAT = "MM/DD/YYYY";
+export const DATE_FORMAT_COMPLETE = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 export const HOUR_FORMAT = "H:mm";
+export const HOUR_FORMAT_DOUBLE_NUMBER = "HH:mm";

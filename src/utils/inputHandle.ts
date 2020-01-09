@@ -5,7 +5,11 @@ import {
 } from "@ionic/core";
 import moment from "moment";
 import { FormEvent, KeyboardEvent } from "react";
-import { DATE_FORMAT } from "./constants";
+import {
+  DATE_FORMAT,
+  DATE_FORMAT_COMPLETE,
+  HOUR_FORMAT_DOUBLE_NUMBER
+} from "./constants";
 
 export const handleInput = (fn: Function) => (
   e: CustomEvent<InputChangeEventDetail | SelectChangeEventDetail>
@@ -44,7 +48,7 @@ export const formatDate = (date: string | Date): string => {
 };
 
 export const formatHour = (date: string | Date): string => {
-  return moment(date, "YYYY-MM-DDTHH:mm:ss.SSSZ").format("HH:mm");
+  return moment(date, DATE_FORMAT_COMPLETE).format(HOUR_FORMAT_DOUBLE_NUMBER);
 };
 
 export const isValidDate = (date: string | Date): boolean => {

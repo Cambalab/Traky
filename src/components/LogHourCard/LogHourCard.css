@@ -90,5 +90,10 @@
 }
 
 .item-card__row {
+  display: flex;
+  align-self: center;
+}
+
+.item-card__row {
   margin-top: 10px;
 }
