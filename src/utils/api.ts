@@ -4,8 +4,8 @@ import LoginForm from "../components/LoginForm/LoginForm";
 import { CONFIG } from "./constants";
 
 const createHeaders = () => {
-  const headers: Headers = new Headers();
-  headers.set("Content-Type", "application/json");
+  const headers: HeadersInit = new Headers();
+  headers.set("Authorization", "bearer " + process.env.REACT_APP_AUTHORIZATION_KEY);
   return headers;
 };
 
@@ -18,11 +18,12 @@ const fetchAPI = async ({
   parse = (x: object) => x
 }: FetchInput): Promise<object> => {
   try {
-    const response = await fetch(CONFIG.API_ENDPOINT + url, {
+    const request: any = {
       method,
       headers: createHeaders(),
       body: JSON.stringify(body)
-    });
+    };
+    const response = await fetch(url, request);
     const json = await response.json();
     const parsed = parse(json);
 
@@ -43,11 +44,14 @@ const getCurrentUser = () => {
 };
 
 const getHours = (userId: any, onSuccess: Function, onError?: Function) =>
-  fetchAPI({ url: `users/${userId}/hours`, method: "GET", onSuccess, onError });
-const getGroups = (userId: any, onSuccess: Function) =>
-  fetchAPI({ url: `groups/${userId}`, method: "GET", onSuccess });
+  fetchAPI({ url: CONFIG.API_ENDPOINT + `users/${userId}/hours`, method: "GET", onSuccess, onError });
+const getGroups = (userId: any, onSuccess: Function) => {
+  const trytonURL = `https://tryton-camba.nube.coop/camba_prd/timesheet/employee/${process.env.REACT_APP_TRYTON_USER_ID}/works`;
+
+  return fetchAPI({ url: trytonURL, method: "GET", onSuccess })
+};
 const logHours = (userId: any, body: LogHourForm, onSuccess: Function, onError: Function) =>
-  fetchAPI({ url: `users/${userId}/hours`, method: "POST", body, onSuccess, onError });
+  fetchAPI({ url: CONFIG.API_ENDPOINT + `users/${userId}/hours`, method: "POST", body, onSuccess, onError });
 const editHours = (
   userId: any,
   hourId: any,
@@ -56,7 +60,7 @@ const editHours = (
   onError: Function
 ) =>
   fetchAPI({
-    url: `hours/${hourId}`,
+    url: CONFIG.API_ENDPOINT + `hours/${hourId}`,
     method: "PUT",
     body,
     onSuccess,
@@ -64,9 +68,9 @@ const editHours = (
   });
 
 const loginUser = (body: LoginForm, onSuccess: Function, onError: Function) =>
-  fetchAPI({ url: `login/`, method: "POST", body, onSuccess, onError })
+  fetchAPI({ url: CONFIG.API_ENDPOINT + `login/`, method: "POST", body, onSuccess, onError })
 
 const removeHours = (user: object, logHour: ILogs, onSuccess: Function, onError: Function) =>
-    fetchAPI({ url: `hours/${logHour.id}`, method: "DELETE", onSuccess, onError});
+    fetchAPI({ url: CONFIG.API_ENDPOINT + `hours/${logHour.id}`, method: "DELETE", onSuccess, onError});
 
 export { fetchAPI, getCurrentUser, logHours, getGroups, getHours, editHours, removeHours, loginUser };
