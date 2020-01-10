@@ -6,7 +6,8 @@ import "./SettingPage.css";
 import {
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
-  LOGS_LOGIN_URL_CONFIG
+  LOGS_LOGIN_URL_CONFIG,
+  LOGS_LIST_URL_CONFIG
  } from "../../utils/constants";
 import {
   IonPage,
@@ -22,7 +23,7 @@ interface SettingsPageProps {
 
 const SettingPage: FunctionComponent<SettingsPageProps> = ({ history }) => {
 
-  const { dispatch } = useContext(AppContext);
+  const { dispatch, state } = useContext(AppContext);
 
   const onClickSave = async (body: SettingForm) => {
     await Storage.set({
@@ -49,7 +50,9 @@ const SettingPage: FunctionComponent<SettingsPageProps> = ({ history }) => {
       type: "SHOW_NOTIFICATION",
       payload: true
     })
-    history.push(LOGS_LOGIN_URL_CONFIG.path)
+    state.isLoged
+      ? history.push(LOGS_LIST_URL_CONFIG.path)
+      : history.push(LOGS_LOGIN_URL_CONFIG.path)
   }
 
   return (
