@@ -26,6 +26,12 @@ export interface IUser {
   name?: string;
 }
 
+export interface ISettings {
+  serverAddress: string,
+  database: string,
+  key: string
+}
+
 export interface ILogs {
   id: number;
   description: string;
@@ -56,6 +62,7 @@ export type OverviewState = {
   showNotification: boolean;
   notificationOptions: INotificationOptions;
   groups: IGroup[] | [];
+  settings: ISettings | { serverAddress: '', database: '', key: '' };
 };
 
 export type IContext = {

@@ -27,7 +27,8 @@ const initialState = {
   hasError: false,
   showNotification: false,
   notificationOptions: initialNotification,
-  groups: []
+  groups: [],
+  settings: { serverAddress: '', database: '', key: '' }
 };
 
 const AppContextProvider = (props: any) => {

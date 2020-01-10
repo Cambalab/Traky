@@ -40,8 +40,8 @@ const SettingPage: FunctionComponent<SettingsPageProps> = ({ history }) => {
     dispatch({
       type: 'NOTIFICATION',
       payload: {
-        header: NOTIFICATION_MESSAGES.SAVE_SETTINGS_SUCCES_HEADER,
-        message: NOTIFICATION_MESSAGES.SAVE_SETTINGS_SUCCES_BODY,
+        header: NOTIFICATION_MESSAGES.SAVE_SETTINGS_SUCCESS_HEADER,
+        message: NOTIFICATION_MESSAGES.SAVE_SETTINGS_SUCCESS_BODY,
         color: NOTIFICATION_TYPE.SUCCESS
       }
     })

@@ -2,7 +2,8 @@ import {
   ILogs,
   IUser,
   INotificationOptions,
-  IGroup
+  IGroup,
+  ISettings
 } from "../utils/declarations";
 
 export type Action =
@@ -41,4 +42,8 @@ export type Action =
   | {
       type: "UPDATE_GROUPS";
       payload: IGroup[];
+    }
+  | {
+      type: "SET_SETTINGS";
+      payload: ISettings;
     }

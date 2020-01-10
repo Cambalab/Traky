@@ -34,6 +34,9 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
     case "SHOW_NOTIFICATION": {
       return { ...state, showNotification: action.payload }
     }
+    case "SET_SETTINGS": {
+      return { ...state, settings: action.payload }
+    }
     default:
       return state;
   }
