@@ -30,6 +30,7 @@ import LogsList from "../LogsList/LogsList";
 import LogHourPage from "../LogHour/LogHourPage";
 import LoginPage from "../Login/LoginPage";
 import EditHourPage from "../../pages/EditHour/EditHourPage";
+import SettingPage from "../../pages/Settings/SettingPage";
 
 /* Components */
 import Menu from "../../components/Menu/Menu";
@@ -42,7 +43,8 @@ import {
   LOGS_EDIT_URL_CONFIG,
   LOGS_LIST_URL_CONFIG,
   LOGS_LOGIN_URL_CONFIG,
-  LOGS_NEW_URL_CONFIG
+  LOGS_NEW_URL_CONFIG,
+  LOGS_SETTINGS_URL_CONFIG
 } from "../../utils/constants";
 
 const App: React.FC = () => {
@@ -96,6 +98,11 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route
+              path={LOGS_SETTINGS_URL_CONFIG.path}
+              component={SettingPage}
+              exact={true}
+            />
+            <Route
               path={LOGS_LOGIN_URL_CONFIG.path}
               component={LoginPage}
               exact={true}
@@ -116,7 +123,7 @@ const App: React.FC = () => {
             <Route
               path="/"
               render={() => (
-                <Redirect to={LOGS_LOGIN_URL_CONFIG.path} exact={true} />
+                <Redirect to={LOGS_SETTINGS_URL_CONFIG.path} exact={true} />
               )}
             />
           </IonRouterOutlet>
