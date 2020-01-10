@@ -29,7 +29,11 @@ import {
 } from "@ionic/core";
 import { isEmptyString, isValidNumber } from "../../utils/utils";
 import { AppContext } from "../../store/Store";
-import { HOUR_FORMAT } from "../../utils/constants";
+import {
+  HOUR_FORMAT,
+  DATE_FORMAT,
+  VALID_HOUR_VALUES
+} from "../../utils/constants";
 
 interface OnButtonClickEventFunction extends Function {
   (body: LogHourForm): void;
@@ -182,7 +186,7 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
             name="currentDate"
             className="input__datetime"
             color="identity"
-            displayFormat="MM/DD/YYYY"
+            displayFormat={DATE_FORMAT}
             value={currentDate}
             onIonChange={handleInputDatetime(setCurrentDate)}
             placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_DATE_TEXT}
@@ -196,7 +200,7 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
             display-format={HOUR_FORMAT}
             picker-format={HOUR_FORMAT}
             name="hour"
-            hourValues="0,1,2,3,4,5,6,7,8"
+            hourValues={VALID_HOUR_VALUES}
             className="input__datetime"
             value={hours}
             onIonChange={validateSpentTime}
