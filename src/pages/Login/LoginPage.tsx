@@ -12,6 +12,9 @@ import { loginUser } from "../../utils/api";
 import {
   IonPage,
   IonContent,
+  IonToolbar,
+  IonButtons,
+  IonMenuButton,
   useIonViewDidEnter
 } from '@ionic/react';
 import { Plugins } from "@capacitor/core";
@@ -61,6 +64,11 @@ const LoginPage: FunctionComponent<LoginPageHistory> = ({ history }) => {
 
   return (
     <IonPage>
+    <IonToolbar color="tertiary">
+      <IonButtons>
+        <IonMenuButton className="menu__button" />
+      </IonButtons>
+    </IonToolbar>
       <IonContent color="tertiary">
         <LoginForm onClickLogin={onClickLogin}/>
       </IonContent>
