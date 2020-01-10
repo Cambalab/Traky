@@ -17,7 +17,14 @@ import {
 import React, {useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import {AppContext} from "../../store/Store";
-import { LOG_LIST_MENU_OPTION, LOGIN_MENU_OPTION, LOGOUT_MENU_OPTION, NEW_LOG_MENU_OPTION, USER_OPTION } from "./constants";
+import {
+  LOG_LIST_MENU_OPTION,
+  LOGIN_MENU_OPTION,
+  LOGOUT_MENU_OPTION,
+  NEW_LOG_MENU_OPTION,
+  USER_OPTION,
+  SETTINGS_MENU_OPTION
+} from "./constants";
 import { LOGS_LOGIN_URL_CONFIG } from "../../utils/constants";
 import {History} from "history";
 
@@ -44,6 +51,14 @@ const Menu: React.FunctionComponent<Menu> = ({ history }) => {
             </IonHeader>
             <IonContent>
                 <IonList>
+                    {
+                      <IonMenuToggle autoHide={false}>
+                        <IonItem routerLink={SETTINGS_MENU_OPTION.url} routerDirection="none">
+                          <IonIcon slot="start" icon={SETTINGS_MENU_OPTION.icon} />
+                          <IonLabel>{SETTINGS_MENU_OPTION.title}</IonLabel>
+                        </IonItem>
+                      </IonMenuToggle>
+                    }
                     {!isLoged &&
                         <IonMenuToggle autoHide={false}>
                             <IonItem routerLink={LOGIN_MENU_OPTION.url} routerDirection="none">

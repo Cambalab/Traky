@@ -1,5 +1,11 @@
-import { LOGS_LIST_URL_CONFIG, LOGS_LOGIN_URL_CONFIG, LOGS_LOGOUT_URL_CONFIG, LOGS_NEW_URL_CONFIG } from "../../utils/constants";
-import { list, logIn, logOut, timer, person } from "ionicons/icons";
+import {
+  LOGS_LIST_URL_CONFIG,
+  LOGS_LOGIN_URL_CONFIG,
+  LOGS_LOGOUT_URL_CONFIG,
+  LOGS_NEW_URL_CONFIG,
+  LOGS_SETTINGS_URL_CONFIG
+} from "../../utils/constants";
+import { list, logIn, logOut, timer, person, settings } from "ionicons/icons";
 
 export interface MenuOption {
     url: string;
@@ -30,3 +36,8 @@ export const LOG_LIST_MENU_OPTION: MenuOption = {
 export const USER_OPTION = {
   icon: person
 }
+export const SETTINGS_MENU_OPTION: MenuOption = {
+  title: LOGS_SETTINGS_URL_CONFIG.name,
+  url: LOGS_SETTINGS_URL_CONFIG.path,
+  icon: settings
+};
