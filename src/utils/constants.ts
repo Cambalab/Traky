@@ -45,32 +45,36 @@ export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_NEW_URL_CONFIG,
   LOGS_LOGIN_URL_CONFIG,
   LOGS_EDIT_URL_CONFIG,
-  LOGS_LOGOUT_URL_CONFIG,
+  LOGS_LOGOUT_URL_CONFIG
 };
 
 export const NOTIFICATION_MESSAGES = {
-  AUTH_ERROR_HEADER: 'Authentication Error',
-  AUTH_ERROR_BODY: 'Username or Password are wrong',
-  NEW_HOUR_ERROR_HEADER: 'Save Error',
-  NEW_HOUR_ERROR_BODY: 'Verify that each data is Ok',
-  EDIT_HOUR_ERROR_HEADER: 'Edit Error',
+  AUTH_ERROR_HEADER: "Authentication Error",
+  AUTH_ERROR_BODY: "Username or Password are wrong",
+  NEW_HOUR_ERROR_HEADER: "Save Error",
+  NEW_HOUR_ERROR_BODY: "Verify that each data is Ok",
+  EDIT_HOUR_ERROR_HEADER: "Edit Error",
   EDIT_HOUR_ERROR_BODY: "Can't edit hour",
-  DELETE_HOUR_ERROR_HEADER: 'Delete Error',
+  DELETE_HOUR_ERROR_HEADER: "Delete Error",
   DELETE_HOUR_ERROR_BODY: "Can't delete hour",
   FETCH_HOURS_ERROR_HEADER: "Fetch Error",
   FETCH_HOURS_ERROR_BODY: "Don't fetch data from server",
-  NEW_HOUR_SUCCESS_HEADER: 'Save Success',
-  NEW_HOUR_SUCCESS_BODY: 'The hour has been saved successfuly',
-  EDIT_HOUR_SUCCESS_HEADER: 'Edit Success',
-  EDIT_HOUR_SUCCESS_BODY: 'The hour has been edited successfuly',
-  DELETE_HOUR_SUCCESS_HEADER: 'Delete Success',
-  DELETE_HOUR_SUCCESS_BODY: 'The hour has been deleted successfuly'
-}
+  NEW_HOUR_SUCCESS_HEADER: "Save Success",
+  NEW_HOUR_SUCCESS_BODY: "The hour has been saved successfuly",
+  EDIT_HOUR_SUCCESS_HEADER: "Edit Success",
+  EDIT_HOUR_SUCCESS_BODY: "The hour has been edited successfuly",
+  DELETE_HOUR_SUCCESS_HEADER: "Delete Success",
+  DELETE_HOUR_SUCCESS_BODY: "The hour has been deleted successfuly"
+};
 
 export const NOTIFICATION_TYPE = {
-  ERROR: 'danger',
-  SUCCESS: 'success',
-  WARNING: 'warning'
-}
+  ERROR: "danger",
+  SUCCESS: "success",
+  WARNING: "warning"
+};
 
 export const DATE_FORMAT = "MM/DD/YYYY";
+export const DATE_FORMAT_COMPLETE = "YYYY-MM-DDTHH:mm:ss.SSSZ";
+export const HOUR_FORMAT = "H:mm";
+export const HOUR_FORMAT_DOUBLE_NUMBER = "HH:mm";
+export const VALID_HOUR_VALUES = "0,1,2,3,4,5,6,7,8";

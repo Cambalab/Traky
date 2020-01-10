@@ -14,73 +14,66 @@
   "hours": [
     {
       "userId": 1,
-      "groupId": 1,
-      "description": "Cooperative management work and go for a walk and then start to sign in the shower and go for an ice-cream.",
-      "spent_time": 5,
-      "timestamp": "11/5/2019",
-      "id": 1
-    },
-    {
-      "id": 2,
-      "groupId": 1,
-      "userId": 1,
-      "description": "Work on development",
-      "spent_time": 5,
-      "timestamp": "11/9/2019"
+      "description": "",
+      "spent_time": "2019-12-17T14:53:17.083-03:00",
+      "timestamp": "12/17/2019",
+      "id": 24
     },
     {
       "userId": 1,
-      "groupId": 1,
-      "description": "Cooperative management wwwwwwwork and go for a walk ",
-      "spent_time": 2,
-      "timestamp": "11/5/2019",
-      "id": 3
-    },
-    {
-      "id": 4,
-      "groupId": 1,
-      "userId": 1,
-      "description": "Work on development",
-      "spent_time": 4,
-      "timestamp": "11/10/2019"
-    },
-    {
-      "id": 5,
-      "groupId": 1,
-      "userId": 1,
-      "description": "Work on development with shisus",
-      "spent_time": 3,
-      "timestamp": "11/14/2019"
-    },
-    {
-      "id": 6,
-      "groupId": 1,
-      "userId": 1,
-      "description": "Work on development from home",
-      "spent_time": 7,
-      "timestamp": "12/2/2019"
+      "description": "Prepare presentation",
+      "spent_time": "2019-12-17T15:00:40.772-03:00",
+      "timestamp": "12/17/2019",
+      "id": 25
     },
     {
       "userId": 1,
-      "groupId": 1,
-      "description": "Cooperative management work and go for a walk and then start to sign in the shower and go for an ice-cream.",
-      "spent_time": 1,
-      "timestamp": "11/5/2019",
-      "id": 7
+      "description": "Work on android deploy",
+      "spent_time": "2019-12-17T15:00:40.772-03:00",
+      "timestamp": "12/17/2019",
+      "id": 26
     },
     {
       "userId": 1,
       "groupId": 1,
       "description": "Work on development",
-      "spent_time": 4,
-      "timestamp": "11/9/2019",
-      "id": 8
+      "spent_time": "2019-12-17T14:02:56.791-03:00",
+      "timestamp": "12/17/2019",
+      "id": 27
+    },
+    {
+      "userId": 1,
+      "groupId": 1,
+      "description": "Work on deploy",
+      "spent_time": "2019-12-17T04:21:38.829-03:00",
+      "timestamp": "12/17/2019",
+      "id": 28
+    },
+    {
+      "userId": 57,
+      "groupId": 1,
+      "description": "Daily meeting",
+      "spent_time": "2019-12-17T03:30:13.607-03:00",
+      "timestamp": "12/17/2019",
+      "id": 30
+    },
+    {
+      "userId": 73,
+      "groupId": 1,
+      "description": "Work on documentation of deploy.",
+      "spent_time": "2019-12-17T02:20:12.809-03:00",
+      "timestamp": "12/17/2019",
+      "id": 40
     }
   ],
   "groups": [
     {
       "id": 1,
       "name": "Group Example"
+    },
+   {
+      "id": 2,
+      "name": "Traky"
     }
   ]
 }

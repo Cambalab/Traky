@@ -30,7 +30,7 @@ export interface ILogs {
   id: number;
   description: string;
   timestamp: Date;
-  spent_time: number;
+  spent_time: Date;
   groupId: number;
 }
 
