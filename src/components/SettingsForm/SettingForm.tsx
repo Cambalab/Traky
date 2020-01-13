@@ -16,6 +16,9 @@ import {
   IonImg,
   useIonViewDidEnter
 } from '@ionic/react';
+import { Plugins } from '@capacitor/core';
+
+const { Storage } = Plugins;
 
 const IMAGE_URL = "/assets/icon/favicon.png"
 
@@ -44,15 +47,24 @@ const SettingForm: FunctionComponent<SettingFormProps> = ({
   onClickSave
 }) => {
 
-  const { state } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
   const [serverAddress, setServerAddress] = useState(initialServerAddress);
   const [key, setKey] = useState(initialKey);
   const [database, setDatabase] = useState(initialDatabase);
 
-  useIonViewDidEnter(() => {
-    setServerAddress(state.settings.serverAddress);
-    setDatabase(state.settings.database);
-    setKey(state.settings.key)
+  useIonViewDidEnter(async() => {
+    const { value } = await Storage.get({key: "tryton-settings"})
+    let settings
+    if(value) {
+      settings = JSON.parse(value)
+      setServerAddress(settings.serverAddress);
+      setDatabase(settings.database);
+      setKey(settings.key)
+      dispatch({
+        type: "SET_SETTINGS",
+        payload: settings
+      })
+    }
   })
 
   const saveData = (event: any) => {

@@ -90,7 +90,6 @@ const App: React.FC = () => {
     getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
     getGroups(currentUser.id, onSuccessGetGroups);
   }, []);
-
   return (
     <IonApp>
       <IonReactRouter>

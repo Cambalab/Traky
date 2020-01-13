@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router";
 import { AppContext } from "../../store/Store";
-import { LOGS_SETTINGS_URL_CONFIG } from "../../utils/constants";
+import { LOGS_LOGIN_URL_CONFIG } from "../../utils/constants";
 
 interface AuthProviderProps {
   Component: React.FunctionComponent<any>;
@@ -13,7 +13,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ Component, ...props }) => {
   return state.isLoged ? (
     <Component {...props} />
   ) : (
-    <Redirect to={LOGS_SETTINGS_URL_CONFIG.path} />
+    <Redirect to={LOGS_LOGIN_URL_CONFIG.path} />
   );
 };
 

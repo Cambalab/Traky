@@ -1,11 +1,24 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { IContext, INotificationOptions } from "../utils/declarations";
+import { IContext, INotificationOptions, ISettings } from "../utils/declarations";
 import { reducer } from "./reducer";
+import { Plugins } from '@capacitor/core';
+
+const { Storage } = Plugins;
 
 const AppContext = createContext<IContext>({} as IContext);
 
 function useAppContext() {
   return useContext(AppContext);
+}
+
+async function toCheckSettings() {
+  const { value } = await Storage.get({key: "tryton-settings"});
+  let settings: ISettings = { serverAddress: "", database: "", key: "" };
+  if(value) {
+    settings = JSON.parse(value);
+    reducer(initialState, {type: "SET_SETTINGS", payload: settings});
+  }
+  return settings;
 }
 
 const initialNotification: INotificationOptions = {
@@ -28,7 +41,8 @@ const initialState = {
   showNotification: false,
   notificationOptions: initialNotification,
   groups: [],
-  settings: { serverAddress: '', database: '', key: '' }
+  settings: toCheckSettings().then((settings :ISettings) => settings),
+  isSettings: false
 };
 
 const AppContextProvider = (props: any) => {

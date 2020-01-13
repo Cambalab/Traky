@@ -62,7 +62,8 @@ export type OverviewState = {
   showNotification: boolean;
   notificationOptions: INotificationOptions;
   groups: IGroup[] | [];
-  settings: ISettings | { serverAddress: '', database: '', key: '' };
+  settings: ISettings | Promise<ISettings>;
+  isSettings: boolean;
 };
 
 export type IContext = {
