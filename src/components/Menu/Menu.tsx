@@ -25,10 +25,10 @@ import {
   SETTINGS_MENU_OPTION
 } from "./constants";
 import { LOGS_LOGIN_URL_CONFIG } from "../../utils/constants";
-import {History} from "history";
+import { History } from "history";
 
 interface Menu {
-    history: History
+  history: History;
 }
 const Menu: React.FunctionComponent<Menu> = ({ history }) => {
     const { state, dispatch } = useAppContext();

@@ -27,6 +27,12 @@ export const LOGS_NEW_URL_CONFIG: URL_CONFIG = {
   name: "New log",
   path: "/new"
 };
+
+export const KEY_VALIDATION_URL_CONFIG: URL_CONFIG = {
+  name: "Key validation",
+  path: "/mykey"
+};
+
 export const LOGS_LOGIN_URL_CONFIG: URL_CONFIG = {
   name: "Login",
   path: "/login"
@@ -51,6 +57,7 @@ export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_EDIT_URL_CONFIG,
   LOGS_LOGOUT_URL_CONFIG,
   LOGS_SETTINGS_URL_CONFIG,
+  KEY_VALIDATION_URL_CONFIG
 };
 
 export const NOTIFICATION_MESSAGES = {
@@ -85,3 +92,7 @@ export const DATE_FORMAT_COMPLETE = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 export const HOUR_FORMAT = "H:mm";
 export const HOUR_FORMAT_DOUBLE_NUMBER = "HH:mm";
 export const VALID_HOUR_VALUES = "0,1,2,3,4,5,6,7,8";
+
+export const APPLICATION_NAME = {
+  TIMESHEET: "timesheet"
+};
