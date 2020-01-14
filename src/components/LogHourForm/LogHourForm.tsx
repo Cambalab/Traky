@@ -12,7 +12,10 @@ import {
   IonText,
   useIonViewDidEnter
 } from "@ionic/react";
-import React, { FunctionComponent, useContext, useState } from "react";
+import React, {
+  FunctionComponent,
+  useState
+} from "react";
 import "./LogHourForm.css";
 import { IGroup } from "../../utils/declarations";
 import {
@@ -27,8 +30,7 @@ import {
   SelectChangeEventDetail,
   DatetimeChangeEventDetail
 } from "@ionic/core";
-import { isEmptyString, isValidNumber } from "../../utils/utils";
-import { AppContext } from "../../store/Store";
+import { isEmptyString, isValidNumber, compareGroups } from "../../utils/utils";
 import {
   HOUR_FORMAT,
   DATE_FORMAT,
@@ -46,6 +48,8 @@ interface LogHourFormProps {
   initialHours?: string;
   onClickSave: OnButtonClickEventFunction;
   onClickCancel: OnButtonClickEventFunction;
+  userId: number;
+  groups: IGroup[]
 }
 
 interface LogHourForm {
@@ -63,10 +67,10 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
   initialCurrentDate = formatDate(new Date()),
   initialHours = "",
   onClickSave,
-  onClickCancel
+  onClickCancel,
+  userId,
+  groups
 }) => {
-  const { state } = useContext(AppContext);
-
   const [description, setDescription] = useState<string>(initialDescription);
   const [selectedGroup, setSelectedGroup] = useState<number | undefined>(
     initialSelectedGroup
@@ -74,9 +78,6 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
   const [currentDate, setCurrentDate] = useState<string>(initialCurrentDate);
   const [hours, setHours] = useState<string>(initialHours);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const currentUser = state.user;
-
-  const groups: IGroup[] = state.groups;
 
   useIonViewDidEnter(() => {
     clearData();
@@ -92,7 +93,7 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
 
   const getLogForm = () => {
     return {
-      userId: currentUser.id,
+      userId: userId,
       groupId: selectedGroup,
       description,
       spent_time: hours,
@@ -123,16 +124,6 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
 
     setIsDisabled(disabled);
     handleInput(setSelectedGroup)(e);
-  };
-
-  const compareGroups = (group1: IGroup, group2: IGroup): boolean => {
-    if (group1 && group2) {
-      if (group1.id && group2.id) {
-        return group1.id === group2.id;
-      }
-      return group1 === group2;
-    }
-    return false;
   };
 
   return (
@@ -205,7 +196,7 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
             value={hours}
             onIonChange={validateSpentTime}
             placeholder={LOG_HOUR_FORM_TEXTS.INPUT_PLACEHOLDER_SPENT_TIME_TEXT}
-          ></IonDatetime>
+          />
         </IonItem>
       </IonList>
       <IonFooter>

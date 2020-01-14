@@ -18,7 +18,7 @@ import {
   useIonViewDidEnter
 } from '@ionic/react';
 import { Plugins } from "@capacitor/core";
-const CapApp = Plugins.App
+const CapApp = Plugins.App;
 
 interface LoginPageHistory {
   history: History
@@ -32,19 +32,19 @@ const LoginPage: FunctionComponent<LoginPageHistory> = ({ history }) => {
     CapApp.addListener("backButton", () => {
       history.goBack()
     })
-  })
+  });
 
   const onClickLogin = async (body: LoginForm) => {
     const onSuccess = (res: any) => {
       dispatch({
         type: 'SET_USER',
         payload: {id: res.id, name: body.username}
-      })
+      });
       dispatch({
         type: 'LOGIN'
-      })
+      });
       history.push(LOGS_LIST_URL_CONFIG.path)
-    }
+    };
     const onError = () => {
       dispatch({
         type: 'NOTIFICATION',
@@ -53,14 +53,14 @@ const LoginPage: FunctionComponent<LoginPageHistory> = ({ history }) => {
           message: NOTIFICATION_MESSAGES.AUTH_ERROR_BODY,
           color: NOTIFICATION_TYPE.ERROR
         }
-      })
+      });
       dispatch({
         type: "SHOW_NOTIFICATION",
         payload: true
       })
-    }
+    };
     await loginUser(body, onSuccess, onError) // llamada a api
-  }
+  };
 
   return (
     <IonPage>

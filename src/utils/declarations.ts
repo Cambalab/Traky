@@ -54,15 +54,15 @@ export interface INotificationOptions {
 }
 
 export type OverviewState = {
-  loggedHours: ILogs[] | [];
+  loggedHours: ILogs[];
   isLoading: boolean;
   hasError: boolean;
-  isLoged: boolean;
-  user: IUser | { id: null; name: "" };
+  isLogged: boolean;
+  user: IUser;
   showNotification: boolean;
   notificationOptions: INotificationOptions;
-  groups: IGroup[] | [];
-  settings: ISettings | Promise<ISettings>;
+  groups: IGroup[];
+  settings: ISettings;
   isSettings: boolean;
 };
 
@@ -73,4 +73,4 @@ export type IContext = {
 
 export interface IMatchParams {
   data: string;
-};
+}

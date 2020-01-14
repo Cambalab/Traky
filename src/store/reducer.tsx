@@ -14,10 +14,10 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return { ...state, hasError: action.payload };
     }
     case "LOGIN": {
-      return { ...state, isLoged: true };
+      return { ...state, isLogged: true };
     }
     case "LOGOUT": {
-      return { ...state, isLoged: false };
+      return { ...state, isLogged: false };
     }
     case "SET_USER": {
       return {
