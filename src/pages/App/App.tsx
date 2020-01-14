@@ -1,9 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { ILogs, IGroup } from "../../utils/declarations";
-import { getCurrentUser, getHours, getGroups } from "../../utils/api";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -48,48 +46,9 @@ import {
 } from "../../utils/constants";
 
 const App: React.FC = () => {
-  const currentUser = getCurrentUser();
-
-  const { state, dispatch } = useContext(AppContext);
+  const { state } = useContext(AppContext);
   const { showNotification } = state;
 
-  const onSuccessGetGroups = (res: IGroup[]) => {
-    dispatch({
-      type: "UPDATE_GROUPS",
-      payload: res
-    });
-  };
-  const onSuccessGetHours = (res: ILogs[]) => {
-    dispatch({
-      type: "UPDATE_LIST",
-      payload: res
-    });
-    dispatch({
-      type: "UPDATE_LOADING",
-      payload: false
-    });
-  };
-
-  const onErrorGetHours = () => {
-    dispatch({
-      type: "UPDATE_ERROR",
-      payload: true
-    });
-    dispatch({
-      type: "UPDATE_LOADING",
-      payload: false
-    });
-  };
-
-  useEffect(() => {
-    dispatch({
-      type: "UPDATE_LOADING",
-      payload: true
-    });
-
-    getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
-    getGroups(currentUser.id, onSuccessGetGroups);
-  }, []);
   return (
     <IonApp>
       <IonReactRouter>
