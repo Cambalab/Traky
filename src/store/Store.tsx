@@ -1,25 +1,54 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { IContext, INotificationOptions, ISettings } from "../utils/declarations";
+import { IContext, INotificationOptions, ISettings, IUser, OverviewState } from "../utils/declarations";
 import { reducer } from "./reducer";
 import { Plugins } from '@capacitor/core';
+import { getStoringSettingsName } from "../utils/utils";
+import SettingForm from "../components/SettingsForm/SettingForm";
 
 const { Storage } = Plugins;
 
 const AppContext = createContext<IContext>({} as IContext);
 
-function useAppContext() {
-  return useContext(AppContext);
-}
+const useAppContext = () => (
+  useContext(AppContext)
+);
 
-async function toCheckSettings() {
-  const { value } = await Storage.get({key: "tryton-settings"});
-  let settings: ISettings = { serverAddress: "", database: "", key: "" };
+const initialSettings: ISettings = {
+  serverAddress: "",
+  database: "",
+  key: ""
+};
+
+export const getStoredSettings = async (): Promise<ISettings | null> => {
+  const storingSettingsName = getStoringSettingsName();
+  const { value } = await Storage.get({ key: storingSettingsName });
+
   if(value) {
-    settings = JSON.parse(value);
-    reducer(initialState, {type: "SET_SETTINGS", payload: settings});
+    return JSON.parse(value);
   }
-  return settings;
-}
+  return null;
+};
+
+export const storeSettings = async (body: SettingForm) => {
+    const storingSettingsName = getStoringSettingsName();
+    await Storage.set({
+        key: storingSettingsName,
+        value: JSON.stringify({
+            serverAddress: body.serverAddress,
+            database: body.database,
+            key: body.key
+        })
+    });
+};
+
+const getInitialSettings = () => initialSettings;
+
+const initialUser: IUser = {
+  id: null,
+  name: ""
+};
+
+const getInitialUser = () => initialUser;
 
 const initialNotification: INotificationOptions = {
   message: "",
@@ -31,38 +60,37 @@ const initialNotification: INotificationOptions = {
   mode: "md",
   header: ""
 };
+const getInitialNotification = () => initialNotification;
 
-const initialState = {
-  isLoged: false,
-  user: { id: null, name: "" },
-  loggedHours: [],
-  isLoading: false,
-  hasError: false,
-  showNotification: false,
-  notificationOptions: initialNotification,
-  groups: [],
-  settings: toCheckSettings().then((settings :ISettings) => settings),
-  isSettings: false
-};
+const getInitialState = (): OverviewState => ({
+    isLogged: false,
+    user: getInitialUser(),
+    loggedHours: [],
+    isLoading: false,
+    hasError: false,
+    showNotification: false,
+    notificationOptions: getInitialNotification(),
+    groups: [],
+    settings: getInitialSettings(),
+    isSettings: false
+});
 
 const AppContextProvider = (props: any) => {
-  const fullInitialState = {
-    ...initialState
-  };
+    const initialState: OverviewState = getInitialState();
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const value = { state, dispatch };
 
-  const [state, dispatch] = useReducer(reducer, fullInitialState);
-  const value = { state, dispatch };
-  return (
-    <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
-  );
+    return (
+        <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
+    );
 };
 
 let AppContextConsumer = AppContext.Consumer;
 
 export {
-  AppContext,
-  reducer,
-  useAppContext,
-  AppContextProvider,
-  AppContextConsumer
+    AppContext,
+    reducer,
+    useAppContext,
+    AppContextProvider,
+    AppContextConsumer
 };
