@@ -10,7 +10,7 @@ interface AuthProviderProps {
 const AuthProvider: React.FC<AuthProviderProps> = ({ Component, ...props }) => {
   const { state } = useContext(AppContext);
 
-  return state.isLoged ? (
+  return state.isLogged ? (
     <Component {...props} />
   ) : (
     <Redirect to={LOGS_LOGIN_URL_CONFIG.path} />

@@ -39,13 +39,18 @@ export const LOGS_LOGOUT_URL_CONFIG: URL_CONFIG = {
   name: "Log Out",
   path: "/"
 };
+export const LOGS_SETTINGS_URL_CONFIG: URL_CONFIG = {
+  name: "Login Settings",
+  path: "/login"
+};
 
 export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_LIST_URL_CONFIG,
   LOGS_NEW_URL_CONFIG,
   LOGS_LOGIN_URL_CONFIG,
   LOGS_EDIT_URL_CONFIG,
-  LOGS_LOGOUT_URL_CONFIG
+  LOGS_LOGOUT_URL_CONFIG,
+  LOGS_SETTINGS_URL_CONFIG,
 };
 
 export const NOTIFICATION_MESSAGES = {
@@ -60,11 +65,13 @@ export const NOTIFICATION_MESSAGES = {
   FETCH_HOURS_ERROR_HEADER: "Fetch Error",
   FETCH_HOURS_ERROR_BODY: "Don't fetch data from server",
   NEW_HOUR_SUCCESS_HEADER: "Save Success",
-  NEW_HOUR_SUCCESS_BODY: "The hour has been saved successfuly",
+  NEW_HOUR_SUCCESS_BODY: "The hour has been saved successfully",
   EDIT_HOUR_SUCCESS_HEADER: "Edit Success",
-  EDIT_HOUR_SUCCESS_BODY: "The hour has been edited successfuly",
+  EDIT_HOUR_SUCCESS_BODY: "The hour has been edited successfully",
   DELETE_HOUR_SUCCESS_HEADER: "Delete Success",
-  DELETE_HOUR_SUCCESS_BODY: "The hour has been deleted successfuly"
+  DELETE_HOUR_SUCCESS_BODY: "The hour has been deleted successfully",
+  SAVE_SETTINGS_SUCCESS_HEADER: "Save Success",
+  SAVE_SETTINGS_SUCCESS_BODY: "The data has been saved successfully"
 };
 
 export const NOTIFICATION_TYPE = {

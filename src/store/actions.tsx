@@ -2,43 +2,69 @@ import {
   ILogs,
   IUser,
   INotificationOptions,
-  IGroup
+  IGroup,
+  ILoginSettings
 } from "../utils/declarations";
+import { SAVE_LOGIN_SETTINGS_ACTION } from "../pages/LoginSettings/constants";
+
+export type UPDATE_LIST_ACTION = {
+  type: "UPDATE_LIST",
+  payload: ILogs[]
+}
+
+export type UPDATE_LOADING = {
+  type: "UPDATE_LOADING",
+  payload: boolean
+}
+
+export type LOGIN = {
+  type: "LOGIN",
+  payload?: boolean
+}
+
+export type LOGOUT = {
+  type: "LOGOUT";
+  payload?: boolean;
+}
+
+export type UPDATE_ERROR = {
+  type: "UPDATE_ERROR",
+  payload: boolean
+}
+
+export type SET_USER = {
+  type: "SET_USER";
+  payload: IUser;
+}
+
+export type NOTIFICATION = {
+  type: "NOTIFICATION";
+  payload: INotificationOptions;
+}
+
+export type SHOW_NOTIFICATION = {
+  type: "SHOW_NOTIFICATION";
+  payload: boolean;
+}
+
+export type UPDATE_GROUPS = {
+  type: "UPDATE_GROUPS";
+  payload: IGroup[];
+}
+export type SET_SETTINGS = {
+  type: "SET_SETTINGS";
+  payload: ILoginSettings;
+}
 
 export type Action =
-  | {
-      type: "UPDATE_LIST";
-      payload: ILogs[];
-    }
-  | {
-      type: "UPDATE_LOADING";
-      payload: boolean;
-    }
-  | {
-      type: "UPDATE_ERROR";
-      payload: boolean;
-    }
-  | {
-      type: "LOGIN";
-      payload?: boolean;
-    }
-  | {
-      type: "LOGOUT";
-      payload?: boolean;
-    }
-  | {
-      type: "SET_USER";
-      payload: IUser;
-    }
-  | {
-      type: "NOTIFICATION";
-      payload: INotificationOptions;
-    }
-  | {
-      type: "SHOW_NOTIFICATION";
-      payload: boolean;
-    }
-  | {
-      type: "UPDATE_GROUPS";
-      payload: IGroup[];
-    }
+  | UPDATE_LIST_ACTION
+  | UPDATE_LOADING
+  | LOGIN
+  | LOGOUT
+  | UPDATE_ERROR
+  | SET_USER
+  | NOTIFICATION
+  | SHOW_NOTIFICATION
+  | UPDATE_GROUPS
+  | SET_SETTINGS
+  | SAVE_LOGIN_SETTINGS_ACTION

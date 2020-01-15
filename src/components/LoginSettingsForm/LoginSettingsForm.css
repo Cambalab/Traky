@@ -1,0 +1,24 @@
+.settings-form {
+  width: 15em;
+}
+
+.settings-img {
+  width: 60%;
+  margin: 0px auto;
+  margin-top: 4em;
+  margin-bottom: 3em;
+}
+
+.settings-input {
+  margin: 10px 0px 10px 0px;
+}
+
+.settings-button {
+  width: 100%;
+  margin-top: 1em;
+}
+
+.error {
+  border: 3px solid red;
+  color: red;
+}

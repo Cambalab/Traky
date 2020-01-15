@@ -29,35 +29,39 @@ import {
 } from "../../utils/constants";
 import { TEXTS, NEW_HOUR_BUTTON_OPTION } from "./constants";
 
-import { removeHours, getHours } from "../../utils/api";
+import { removeHours, getHours, getGroups } from "../../utils/api";
 
 interface LogsPageHistory {
   history: History;
 }
 
+
+const removeHour = (loggedHours: ILogs[], removingHour: ILogs) => {
+  return loggedHours.filter(hour => hour.id !== removingHour.id);
+};
+
+const groupName = (groups: IGroup[], id: Number) => {
+  const group = groups.find((g: IGroup) => g.id === id);
+  return group ? group.name : null;
+};
+
 const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
-  const loggedHours: ILogs[] = state.loggedHours;
-  const groups: IGroup[] = state.groups;
-  const currentUser = state.user;
-  const isLoading: boolean = state.isLoading;
-  const hasError: boolean = state.hasError;
+  const { groups, loggedHours, user, isLoading, hasError } = state;
 
   const showEditView = (loggedHourId: number) => () => {
     history.push(`/edit/${loggedHourId}`);
   };
 
-  const removeHour = (loggedHours: ILogs[], removingHour: ILogs) => {
-    return loggedHours.filter(hour => hour.id !== removingHour.id);
-  };
-
-  const groupName = (id: Number) => {
-    const group = groups.find((g: IGroup) => g.id === id);
-    return group ? group.name : null;
+  const onSuccessGetGroups = (res: IGroup[]) => {
+    dispatch({
+      type: "UPDATE_GROUPS",
+      payload: res
+    });
   };
 
   useIonViewDidEnter(() => {
-    if (currentUser.id !== null && loggedHours.length === 0) {
+    if (user.id !== null && loggedHours.length === 0) {
       const onSuccessGetHours = (res: ILogs[]) => {
         dispatch({
           type: "UPDATE_LIST",
@@ -95,7 +99,8 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         type: "UPDATE_LOADING",
         payload: true
       });
-      getHours(currentUser.id, onSuccessGetHours, onErrorGetHours);
+      getGroups(user.id, onSuccessGetGroups);
+      getHours(user.id, onSuccessGetHours, onErrorGetHours);
     }
   });
 
@@ -151,7 +156,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       payload: true
     });
 
-    await removeHours(currentUser, logHour, onSuccess, onError);
+    await removeHours(user, logHour, onSuccess, onError);
   };
 
   const renderList = () =>
@@ -163,7 +168,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
             logHour={loggedHour}
             onEditClick={showEditView(loggedHour.id)}
             onDeleteClick={onDelete(loggedHour)}
-            group={groupName(loggedHour.groupId)}
+            group={groupName(groups, loggedHour.groupId)}
           />
         );
       })

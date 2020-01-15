@@ -26,6 +26,12 @@ export interface IUser {
   name?: string;
 }
 
+export interface ILoginSettings {
+  serverAddress: string,
+  database: string,
+  username: string
+}
+
 export interface ILogs {
   id: number;
   description: string;
@@ -48,14 +54,16 @@ export interface INotificationOptions {
 }
 
 export type OverviewState = {
-  loggedHours: ILogs[] | [];
+  loggedHours: ILogs[];
   isLoading: boolean;
   hasError: boolean;
-  isLoged: boolean;
-  user: IUser | { id: null; name: "" };
+  isLogged: boolean;
+  user: IUser;
   showNotification: boolean;
   notificationOptions: INotificationOptions;
-  groups: IGroup[] | [];
+  groups: IGroup[];
+  settings: ILoginSettings;
+  isSettings: boolean;
 };
 
 export type IContext = {
@@ -65,4 +73,4 @@ export type IContext = {
 
 export interface IMatchParams {
   data: string;
-};
+}

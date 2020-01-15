@@ -1,6 +1,7 @@
 import { OverviewState } from "../utils/declarations";
 import { Action } from "./actions";
-import {sortByDate} from "../utils/utils";
+import { sortByDate } from "../utils/utils";
+import { LOGIN_SETTINGS_TYPE } from "../pages/LoginSettings/constants";
 
 export function reducer(state: OverviewState, action: Action): OverviewState {
   switch (action.type) {
@@ -14,10 +15,10 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return { ...state, hasError: action.payload };
     }
     case "LOGIN": {
-      return { ...state, isLoged: true };
+      return { ...state, isLogged: true };
     }
     case "LOGOUT": {
-      return { ...state, isLoged: false };
+      return { ...state, isLogged: false };
     }
     case "SET_USER": {
       return {
@@ -33,6 +34,17 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
     }
     case "SHOW_NOTIFICATION": {
       return { ...state, showNotification: action.payload }
+    }
+    case "SET_SETTINGS": {
+      return { ...state, settings: action.payload, isSettings: true }
+    }
+    case LOGIN_SETTINGS_TYPE.SAVE_LOGIN_SETTINGS_ACTION: {
+      return {
+        ...state,
+        settings: action.payload.loginSettings,
+        notificationOptions: action.payload.notificationOptions,
+        showNotification: true
+      }
     }
     default:
       return state;

@@ -11,7 +11,6 @@ import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
 import { logHours } from "../../utils/api";
 import { History } from "history";
-import { IUser } from "../../utils/declarations";
 import {
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
@@ -20,20 +19,19 @@ import {
 import { LOG_HOUR_PAGE_TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
 
-interface LogHourPageHistory {
+interface LogHourPage {
   history: History;
 }
 
-const LogHourPage: FunctionComponent<LogHourPageHistory> = ({ history }) => {
+const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
-
-  const currentUser: IUser = state.user;
+  const { user, loggedHours, groups } = state;
 
   const onClickSave = async (body: LogHourForm) => {
     const onSuccess = (res: any) => {
       dispatch({
         type: "UPDATE_LIST",
-        payload: state.loggedHours.concat(res)
+        payload: loggedHours.concat(res)
       });
       dispatch({
         type: "NOTIFICATION",
@@ -42,11 +40,11 @@ const LogHourPage: FunctionComponent<LogHourPageHistory> = ({ history }) => {
           message: NOTIFICATION_MESSAGES.NEW_HOUR_SUCCESS_BODY,
           color: NOTIFICATION_TYPE.SUCCESS
         }
-      })
+      });
       dispatch({
         type: "SHOW_NOTIFICATION",
         payload: true
-      })
+      });
       history.push(LOGS_LIST_URL_CONFIG.path);
     };
 
@@ -58,14 +56,14 @@ const LogHourPage: FunctionComponent<LogHourPageHistory> = ({ history }) => {
           message: NOTIFICATION_MESSAGES.NEW_HOUR_ERROR_BODY,
           color: NOTIFICATION_TYPE.ERROR
         }
-      })
+      });
       dispatch({
         type: "SHOW_NOTIFICATION",
         payload: true
       })
-    }
+    };
 
-    await logHours(currentUser.id, body, onSuccess, onError);
+    await logHours(user.id, body, onSuccess, onError);
   };
 
   const onClickCancel = async () => {
@@ -84,7 +82,7 @@ const LogHourPage: FunctionComponent<LogHourPageHistory> = ({ history }) => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <LogHourForm onClickSave={onClickSave} onClickCancel={onClickCancel} />
+      <LogHourForm onClickSave={onClickSave} onClickCancel={onClickCancel} userId={user.id} groups={groups} />
     </IonPage>
   );
 };
