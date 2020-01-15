@@ -17,3 +17,33 @@
   width: 100%;
   margin-top: 1em;
 }
+
+.key-badge__text {
+  max-width: 20ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.key-list__item {
+  --background: var(--ion-color-tertiary);
+  color: white;
+}
+
+.key-list {
+  background: var(--ion-color-tertiary);
+}
+
+.key__col {
+  display: flex;
+  align-self: center;
+}
+
+.key__row {
+  display: flex;
+  align-self: center;
+}
+
+.key__title {
+  font-weight: 300;
+}
