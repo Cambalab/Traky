@@ -28,7 +28,7 @@ import LogsList from "../LogsList/LogsList";
 import LogHourPage from "../LogHour/LogHourPage";
 import LoginPage from "../Login/LoginPage";
 import EditHourPage from "../../pages/EditHour/EditHourPage";
-import SettingPage from "../../pages/Settings/SettingPage";
+import SettingPage from "../../pages/Setting/SettingPage";
 
 /* Components */
 import Menu from "../../components/Menu/Menu";

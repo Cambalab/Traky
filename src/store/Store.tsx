@@ -3,7 +3,7 @@ import { IContext, INotificationOptions, ISettings, IUser, OverviewState } from 
 import { reducer } from "./reducer";
 import { Plugins } from '@capacitor/core';
 import { getStoringSettingsName } from "../utils/utils";
-import SettingForm from "../components/SettingsForm/SettingForm";
+import SettingForm from "../components/SettingForm/SettingForm";
 
 const { Storage } = Plugins;
 

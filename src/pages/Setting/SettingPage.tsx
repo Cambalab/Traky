@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { getStoredSettings, storeSettings, useAppContext } from "../../store/Store";
 import { History } from "history";
-import SettingForm from "../../components/SettingsForm/SettingForm";
+import SettingForm from "../../components/SettingForm/SettingForm";
 import "./SettingPage.css";
 import {
   NOTIFICATION_MESSAGES,
