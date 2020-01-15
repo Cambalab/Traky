@@ -1,6 +1,7 @@
 import { OverviewState } from "../utils/declarations";
 import { Action } from "./actions";
-import {sortByDate} from "../utils/utils";
+import { sortByDate } from "../utils/utils";
+import { LOGIN_SETTINGS_TYPE } from "../pages/LoginSettings/constants";
 
 export function reducer(state: OverviewState, action: Action): OverviewState {
   switch (action.type) {
@@ -36,6 +37,14 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
     }
     case "SET_SETTINGS": {
       return { ...state, settings: action.payload, isSettings: true }
+    }
+    case LOGIN_SETTINGS_TYPE.SAVE_LOGIN_SETTINGS_ACTION: {
+      return {
+        ...state,
+        settings: action.payload.loginSettings,
+        notificationOptions: action.payload.notificationOptions,
+        showNotification: true
+      }
     }
     default:
       return state;

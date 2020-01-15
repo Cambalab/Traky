@@ -3,8 +3,9 @@ import {
   IUser,
   INotificationOptions,
   IGroup,
-  ISettings
+  ILoginSettings
 } from "../utils/declarations";
+import { SAVE_LOGIN_SETTINGS_ACTION } from "../pages/LoginSettings/constants";
 
 export type UPDATE_LIST_ACTION = {
   type: "UPDATE_LIST",
@@ -52,7 +53,7 @@ export type UPDATE_GROUPS = {
 }
 export type SET_SETTINGS = {
   type: "SET_SETTINGS";
-  payload: ISettings;
+  payload: ILoginSettings;
 }
 
 export type Action =
@@ -66,3 +67,4 @@ export type Action =
   | SHOW_NOTIFICATION
   | UPDATE_GROUPS
   | SET_SETTINGS
+  | SAVE_LOGIN_SETTINGS_ACTION
