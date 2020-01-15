@@ -1,12 +1,12 @@
 export interface SettingsPageTexts {
   URL: string,
-  KEY: string,
+  USERNAME: string,
   DATABASE: string,
   SAVE_BUTTON: string
 }
 export const SETTINGS_PAGE_TEXTS: SettingsPageTexts = {
   URL: "Server Address",
-  KEY: "Key",
+  USERNAME: "Username",
   DATABASE: "Database",
   SAVE_BUTTON: "Save Settings"
 };

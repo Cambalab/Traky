@@ -40,9 +40,9 @@ export const LOGS_LOGOUT_URL_CONFIG: URL_CONFIG = {
   path: "/"
 };
 export const LOGS_SETTINGS_URL_CONFIG: URL_CONFIG = {
-  name: "Settings",
-  path: "/settings"
-}
+  name: "Login Settings",
+  path: "/login"
+};
 
 export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_LIST_URL_CONFIG,
@@ -72,7 +72,7 @@ export const NOTIFICATION_MESSAGES = {
   DELETE_HOUR_SUCCESS_BODY: "The hour has been deleted successfully",
   SAVE_SETTINGS_SUCCESS_HEADER: "Save Success",
   SAVE_SETTINGS_SUCCESS_BODY: "The data has been saved successfully"
-}
+};
 
 export const NOTIFICATION_TYPE = {
   ERROR: "danger",

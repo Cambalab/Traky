@@ -26,9 +26,8 @@ import "../../styles/global.css";
 /* Pages */
 import LogsList from "../LogsList/LogsList";
 import LogHourPage from "../LogHour/LogHourPage";
-import LoginPage from "../Login/LoginPage";
 import EditHourPage from "../../pages/EditHour/EditHourPage";
-import SettingPage from "../../pages/Setting/SettingPage";
+import LoginSettingsPage from "../LoginSettings/LoginSettingsPage";
 
 /* Components */
 import Menu from "../../components/Menu/Menu";
@@ -40,7 +39,6 @@ import { AppContext } from "../../store/Store";
 import {
   LOGS_EDIT_URL_CONFIG,
   LOGS_LIST_URL_CONFIG,
-  LOGS_LOGIN_URL_CONFIG,
   LOGS_NEW_URL_CONFIG,
   LOGS_SETTINGS_URL_CONFIG
 } from "../../utils/constants";
@@ -57,12 +55,7 @@ const App: React.FC = () => {
           <IonRouterOutlet id="main">
             <Route
               path={LOGS_SETTINGS_URL_CONFIG.path}
-              component={SettingPage}
-              exact={true}
-            />
-            <Route
-              path={LOGS_LOGIN_URL_CONFIG.path}
-              component={LoginPage}
+              component={LoginSettingsPage}
               exact={true}
             />
             <Route

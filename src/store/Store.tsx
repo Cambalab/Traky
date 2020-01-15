@@ -1,9 +1,9 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { IContext, INotificationOptions, ISettings, IUser, OverviewState } from "../utils/declarations";
+import { IContext, INotificationOptions, ILoginSettings, IUser, OverviewState } from "../utils/declarations";
 import { reducer } from "./reducer";
 import { Plugins } from '@capacitor/core';
 import { getStoringSettingsName } from "../utils/utils";
-import SettingForm from "../components/SettingForm/SettingForm";
+import LoginSettingsForm from "../components/LoginSettingsForm/LoginSettingsForm";
 
 const { Storage } = Plugins;
 
@@ -13,13 +13,13 @@ const useAppContext = () => (
   useContext(AppContext)
 );
 
-const initialSettings: ISettings = {
+const initialSettings: ILoginSettings = {
   serverAddress: "",
   database: "",
-  key: ""
+  username: ""
 };
 
-export const getStoredSettings = async (): Promise<ISettings | null> => {
+export const getStoredSettings = async (): Promise<ILoginSettings | null> => {
   const storingSettingsName = getStoringSettingsName();
   const { value } = await Storage.get({ key: storingSettingsName });
 
@@ -29,15 +29,11 @@ export const getStoredSettings = async (): Promise<ISettings | null> => {
   return null;
 };
 
-export const storeSettings = async (body: SettingForm) => {
+export const storeSettings = async (body: LoginSettingsForm) => {
     const storingSettingsName = getStoringSettingsName();
     await Storage.set({
         key: storingSettingsName,
-        value: JSON.stringify({
-            serverAddress: body.serverAddress,
-            database: body.database,
-            key: body.key
-        })
+        value: JSON.stringify(body)
     });
 };
 

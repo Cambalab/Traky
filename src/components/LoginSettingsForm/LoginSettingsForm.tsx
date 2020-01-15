@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from "react";
 import {SETTINGS_PAGE_TEXTS} from "./constants";
-import "./SettingForm.css";
+import "./LoginSettingsForm.css";
 import {
   handleInput
 } from "../../utils/inputHandle";
@@ -18,32 +18,32 @@ import {
 const IMAGE_URL = "/assets/icon/favicon.png";
 
 interface OnButtonClickEventFunction extends Function {
-  (body: SettingForm) : void
+  (body: LoginSettingsForm) : void
 }
 
-interface SettingFormProps {
+interface LoginSettingsFormProps {
   history? : History,
   initialServerAddress? : string,
   initialDatabase? : string,
-  initialKey? : string,
+  initialUsername? : string,
   onClickSave: OnButtonClickEventFunction
 }
 
-interface SettingForm {
+interface LoginSettingsForm {
   serverAddress : string,
   database: string,
-  key : string
+  username : string
 }
 
-const SettingForm: FunctionComponent<SettingFormProps> = ({
+const LoginSettingsForm: FunctionComponent<LoginSettingsFormProps> = ({
   initialServerAddress = "",
   initialDatabase = "",
-  initialKey = "",
+  initialUsername = "",
   onClickSave
 }) => {
   const [serverAddress, setServerAddress] = useState(initialServerAddress);
-  const [key, setKey] = useState(initialKey);
   const [database, setDatabase] = useState(initialDatabase);
+  const [username, setUsername] = useState(initialUsername);
 
   useEffect(() => {
     setServerAddress(initialServerAddress);
@@ -53,6 +53,10 @@ const SettingForm: FunctionComponent<SettingFormProps> = ({
     setDatabase(initialDatabase);
   }, [initialDatabase]);
 
+  useEffect(() => {
+    setUsername(initialUsername);
+  }, [initialUsername]);
+
   const saveData = (event: any) => {
     event.preventDefault();
     onClickSave(getFormData())
@@ -60,9 +64,7 @@ const SettingForm: FunctionComponent<SettingFormProps> = ({
 
   const getFormData = () => {
     return {
-      serverAddress: serverAddress,
-      database: database,
-      key: key
+      serverAddress, database, username
     }
   };
 
@@ -89,11 +91,11 @@ const SettingForm: FunctionComponent<SettingFormProps> = ({
             />
           </IonItem>
           <IonItem className={`settings-input`}>
-            <IonLabel position="floating">{SETTINGS_PAGE_TEXTS.KEY}</IonLabel>
+            <IonLabel position="floating">{SETTINGS_PAGE_TEXTS.USERNAME}</IonLabel>
             <IonInput
-              name="key"
-              value={key}
-              onIonChange={handleInput(setKey)}
+              name="username"
+              value={username}
+              onIonChange={handleInput(setUsername)}
             />
           </IonItem>
           <IonButton
@@ -107,4 +109,4 @@ const SettingForm: FunctionComponent<SettingFormProps> = ({
   )
 };
 
-export default SettingForm;
+export default LoginSettingsForm;

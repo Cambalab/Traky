@@ -26,10 +26,10 @@ export interface IUser {
   name?: string;
 }
 
-export interface ISettings {
+export interface ILoginSettings {
   serverAddress: string,
   database: string,
-  key: string
+  username: string
 }
 
 export interface ILogs {
@@ -62,7 +62,7 @@ export type OverviewState = {
   showNotification: boolean;
   notificationOptions: INotificationOptions;
   groups: IGroup[];
-  settings: ISettings;
+  settings: ILoginSettings;
   isSettings: boolean;
 };
 
