@@ -77,8 +77,10 @@ export const NOTIFICATION_MESSAGES = {
   EDIT_HOUR_SUCCESS_BODY: "The hour has been edited successfully",
   DELETE_HOUR_SUCCESS_HEADER: "Delete Success",
   DELETE_HOUR_SUCCESS_BODY: "The hour has been deleted successfully",
-  SAVE_SETTINGS_SUCCESS_HEADER: "Save Success",
-  SAVE_SETTINGS_SUCCESS_BODY: "The data has been saved successfully"
+  SAVE_SETTINGS_SUCCESS_HEADER: "Key Generated Successfully",
+  SAVE_SETTINGS_SUCCESS_BODY: "Your Application Key was generated successfully, go to validate It",
+  SAVE_SETTINGS_ERROR_HEADER: "Error Generating Key",
+  SAVE_SETTINGS_ERROR_BODY: "There is something wrong with your settings, please change them and try again",
 };
 
 export const NOTIFICATION_TYPE = {

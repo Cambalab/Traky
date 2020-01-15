@@ -9,7 +9,6 @@ import {
 import { reducer } from "./reducer";
 import { Plugins } from "@capacitor/core";
 import { getStoringSettingsName } from "../utils/utils";
-import LoginSettingsForm from "../components/LoginSettingsForm/LoginSettingsForm";
 
 const { Storage } = Plugins;
 
@@ -33,12 +32,12 @@ export const getStoredSettings = async (): Promise<ILoginSettings | null> => {
   return null;
 };
 
-export const storeSettings = async (body: LoginSettingsForm) => {
-  const storingSettingsName = getStoringSettingsName();
-  await Storage.set({
-    key: storingSettingsName,
-    value: JSON.stringify(body)
-  });
+export const storeSettings = async (body: ILoginSettings) => {
+    const storingSettingsName = getStoringSettingsName();
+    await Storage.set({
+        key: storingSettingsName,
+        value: JSON.stringify(body)
+    });
 };
 
 const getInitialSettings = () => initialSettings;
@@ -72,7 +71,8 @@ const getInitialState = (): OverviewState => ({
   notificationOptions: getInitialNotification(),
   groups: [],
   settings: getInitialSettings(),
-  isSettings: false
+  isSettings: false,
+  key: "",
 });
 
 const AppContextProvider = (props: any) => {

@@ -46,6 +46,15 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return {
         ...state,
         settings: action.payload.loginSettings,
+        key: action.payload.key,
+        notificationOptions: action.payload.notificationOptions,
+        showNotification: true,
+        isLogged: true
+      }
+    }
+    case LOGIN_SETTINGS_TYPE.ERROR_LOGIN_SETTINGS_ACTION: {
+      return {
+        ...state,
         notificationOptions: action.payload.notificationOptions,
         showNotification: true,
         isLogged: true

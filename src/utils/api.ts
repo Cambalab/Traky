@@ -18,6 +18,7 @@ const fetchAPI = async ({
   url,
   method,
   body,
+    headers,
   onSuccess,
   onError,
   parse = (x: object) => x
@@ -25,7 +26,7 @@ const fetchAPI = async ({
   try {
     const request: any = {
       method,
-      headers: createHeaders(),
+      headers: headers ? headers : createHeaders(),
       body: JSON.stringify(body)
     };
     const response = await fetch(url, request);
@@ -172,24 +173,31 @@ const removeHours = (
 
 const getUserFromKey = (
   key: string,
+  serverAddress: string,
+  database: string,
   onSuccess: Function,
   onError: Function
 ) => {
-  const trytonURL = `${process.env.REACT_APP_TRYTON_URL}${process.env.REACT_APP_TRYTON_DATABASE}`;
+  const trytonURL = process.env.REACT_APP_PROXY_URL + `${serverAddress}/${database}`;
   const endpoint = `${trytonURL}/timesheet/employees`;
+  const headers = {
+    "Authorization": "bearer " + key
+  };
 
-  return fetchAPI({ url: endpoint, method: "GET", onSuccess, onError });
+  return fetchAPI({ url: endpoint, method: "GET", onSuccess, onError, headers });
 };
 
 const getUserAppKey = (
   user: string,
+  serverAddress: string,
+  database: string,
   onSuccess: Function,
   onError: Function
 ) => {
-  const trytonURL = `${process.env.REACT_APP_TRYTON_URL}${process.env.REACT_APP_TRYTON_DATABASE}`;
+  const trytonURL = process.env.REACT_APP_PROXY_URL +`${serverAddress}${database}`;
   const endpoint = `${trytonURL}/user/application/`;
   const body = {
-    user: user,
+    user,
     application: APPLICATION_NAME.TIMESHEET
   };
 

@@ -11,6 +11,7 @@ export interface FetchInput {
   url: string;
   method: string;
   body?: object;
+  headers?: object;
   onSuccess?: Function;
   onError?: Function;
   parse?: Function;
@@ -64,6 +65,7 @@ export type OverviewState = {
   groups: IGroup[];
   settings: ILoginSettings;
   isSettings: boolean;
+  key: string;
 };
 
 export type IContext = {

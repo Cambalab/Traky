@@ -41,7 +41,8 @@ const KeyValidationPage: FunctionComponent<LoginPageHistory> = ({
   history
 }) => {
   const { state, dispatch } = useContext(AppContext);
-  //const timesheetUserKey = state.key;
+  const { settings, key } = state;
+  const { serverAddress, database } = settings;
 
   useIonViewDidEnter(() => {
     CapApp.addListener("backButton", () => {
@@ -77,7 +78,7 @@ const KeyValidationPage: FunctionComponent<LoginPageHistory> = ({
       });
     };
 
-    getUserFromKey("ddddd21122", onSuccess, onError);
+    getUserFromKey(key, serverAddress, database, onSuccess, onError);
   };
 
   return (
@@ -96,7 +97,7 @@ const KeyValidationPage: FunctionComponent<LoginPageHistory> = ({
             <IonCol className="key__col" size="6">
               <IonBadge>
                 <h5 className="key-badge__text">
-                  222bbb444999k222222222eeeeeee2qqqqqqqqqqqqqqqqk
+                  {key}
                 </h5>
               </IonBadge>
             </IonCol>
@@ -116,7 +117,7 @@ const KeyValidationPage: FunctionComponent<LoginPageHistory> = ({
                 <IonLabel>4. {KEY_VALIDATION_PAGE_TEXTS.FOURTH_STEP}</IonLabel>
               </IonItem>
             </IonList>
-            <button onClick={onClickActivatedKey}></button>
+            <button onClick={onClickActivatedKey}>login</button>
           </IonRow>
         </IonGrid>
       </IonContent>

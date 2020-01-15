@@ -14,11 +14,12 @@ import {
   IonCol,
   IonImg,
 } from '@ionic/react';
+import {ILoginSettings} from "../../utils/declarations";
 
 const IMAGE_URL = "/assets/icon/favicon.png";
 
 interface OnButtonClickEventFunction extends Function {
-  (body: LoginSettingsForm) : void
+  (body: ILoginSettings) : void
 }
 
 interface LoginSettingsFormProps {
@@ -27,12 +28,6 @@ interface LoginSettingsFormProps {
   initialDatabase? : string,
   initialUsername? : string,
   onClickSave: OnButtonClickEventFunction
-}
-
-interface LoginSettingsForm {
-  serverAddress : string,
-  database: string,
-  username : string
 }
 
 const LoginSettingsForm: FunctionComponent<LoginSettingsFormProps> = ({
