@@ -15,10 +15,15 @@ import {
   IonLabel,
   IonList,
   IonChip,
-  IonBadge
+  IonBadge,
+  IonGrid,
+  IonRow,
+  IonIcon
 } from "@ionic/react";
 import { Plugins } from "@capacitor/core";
 import { getUserFromKey } from "../../utils/api";
+import { KEY_VALIDATION_PAGE_TEXTS } from "./constants";
+import { key } from "ionicons/icons";
 const CapApp = Plugins.App;
 
 interface LoginPageHistory {
@@ -69,24 +74,34 @@ const KeyValidationPage: FunctionComponent<LoginPageHistory> = ({
 
   return (
     <IonPage>
-      <IonContent>
-        <IonList>
-          <IonItem>
-            <IonLabel>1.</IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonLabel>2.</IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonLabel>3.</IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonLabel>4.</IonLabel>
-          </IonItem>
-        </IonList>
-        <IonBadge color="tertiary">
-          222bbb444999k222222222eeeeeee2qqqqqqqqqqqqqqqqk
-        </IonBadge>
+      <IonContent color="tertiary">
+        <IonGrid>
+          <IonRow align-items-center>
+            <h3>{KEY_VALIDATION_PAGE_TEXTS.TITLE}</h3>
+          </IonRow>
+          <IonRow align-items-center>
+            <IonIcon size={"large"} icon={key} />
+            <IonBadge>
+              <h5>222bbb444999k222222222eeeeeee2qqqqqqqqqqqqqqqqk</h5>
+            </IonBadge>
+          </IonRow>
+          <IonRow align-items-center>
+            <IonList color="tertiary">
+              <IonItem>
+                <IonLabel>1. {KEY_VALIDATION_PAGE_TEXTS.FIRST_STEP}</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>2. {KEY_VALIDATION_PAGE_TEXTS.SECOND_STEP}</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>3. {KEY_VALIDATION_PAGE_TEXTS.THIRD_STEP}</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>4. {KEY_VALIDATION_PAGE_TEXTS.FOURTH_STEP}</IonLabel>
+              </IonItem>
+            </IonList>
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
