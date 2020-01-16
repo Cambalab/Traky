@@ -71,3 +71,7 @@ export const compareGroups = (group1: IGroup, group2: IGroup): boolean => {
 export const getStoringSettingsName = () => {
   return process.env.REACT_APP_STORING_SETTINGS_NAME || "settings";
 };
+
+export const getStoringKeyName = () => {
+  return process.env.REACT_APP_STORING_KEY_NAME || "key";
+};

@@ -5,7 +5,11 @@ import {
   IGroup,
   ILoginSettings
 } from "../utils/declarations";
-import {ERROR_LOGIN_SETTINGS_ACTION, SAVE_LOGIN_SETTINGS_ACTION} from "../pages/LoginSettings/constants";
+import {
+  ERROR_LOGIN_SETTINGS_ACTION,
+  SAVE_LOGIN_SETTINGS_ACTION,
+  SET_KEY_ACTION
+} from "../pages/LoginSettings/constants";
 
 export type UPDATE_LIST_ACTION = {
   type: "UPDATE_LIST",
@@ -69,3 +73,4 @@ export type Action =
   | SET_SETTINGS
   | SAVE_LOGIN_SETTINGS_ACTION
   | ERROR_LOGIN_SETTINGS_ACTION
+  | SET_KEY_ACTION

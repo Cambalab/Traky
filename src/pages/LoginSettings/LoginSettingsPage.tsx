@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 import {
-  getStoredSettings,
+  getStoredKey,
+  getStoredSettings, storeKey,
   storeSettings,
   useAppContext
 } from "../../store/Store";
@@ -12,7 +13,7 @@ import {
   IonContent,
   useIonViewDidEnter
 } from "@ionic/react";
-import {createErrorLoginSettingsAction, createSaveLoginSettingsAction} from "./constants";
+import {createErrorLoginSettingsAction, createSaveLoginSettingsAction, createSetKeyAction} from "./constants";
 import {KEY_VALIDATION_URL_CONFIG} from "../../utils/constants";
 import {getUserAppKey} from "../../utils/api";
 import {ILoginSettings} from "../../utils/declarations";
@@ -31,6 +32,7 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
 
     const onSuccess = async (generatedKey: string) => {
       await storeSettings(body);
+      await storeKey(generatedKey);
       dispatch(createSaveLoginSettingsAction(body, generatedKey));
       history.push(KEY_VALIDATION_URL_CONFIG.path);
     };
@@ -48,7 +50,14 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
         const fetchedSettings = await getStoredSettings();
 
         if (fetchedSettings) {
+          const key = await getStoredKey();
+
           dispatch({ type: "SET_SETTINGS", payload: fetchedSettings });
+          if (key) {
+            dispatch(createSetKeyAction(key));
+            history.push(KEY_VALIDATION_URL_CONFIG.path);
+          }
+
         }
       }
     };

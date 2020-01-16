@@ -8,7 +8,7 @@ import {
 } from "../utils/declarations";
 import { reducer } from "./reducer";
 import { Plugins } from "@capacitor/core";
-import { getStoringSettingsName } from "../utils/utils";
+import {getStoringKeyName, getStoringSettingsName} from "../utils/utils";
 
 const { Storage } = Plugins;
 
@@ -32,12 +32,27 @@ export const getStoredSettings = async (): Promise<ILoginSettings | null> => {
   return null;
 };
 
+export const getStoredKey = async (): Promise<string | null> => {
+  const storingKeyName = getStoringKeyName();
+  const { value } = await Storage.get({ key: storingKeyName });
+
+  return value ? value : null;
+};
+
 export const storeSettings = async (body: ILoginSettings) => {
     const storingSettingsName = getStoringSettingsName();
     await Storage.set({
         key: storingSettingsName,
         value: JSON.stringify(body)
     });
+};
+
+export const storeKey = async (key: string) => {
+  const storingKeyName = getStoringKeyName();
+  await Storage.set({
+    key: storingKeyName,
+    value: key
+  });
 };
 
 const getInitialSettings = () => initialSettings;
