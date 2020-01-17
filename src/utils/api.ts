@@ -192,7 +192,7 @@ const getUserFromKey = (
   onSuccess: Function,
   onError: Function
 ) => {
-  const trytonURL = process.env.REACT_APP_PROXY_URL + `${serverAddress}/${database}`;
+  const trytonURL = process.env.REACT_APP_PROXY_URL + `${serverAddress}${database}`;
   const endpoint = `${trytonURL}/timesheet/employees`;
   const headers = {
     "Authorization": "bearer " + key
