@@ -11,42 +11,29 @@ import {
   IonPage,
   IonContent,
   useIonViewDidEnter,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonChip,
   IonBadge,
   IonGrid,
   IonRow,
   IonIcon,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonMenuButton,
-  IonTitle,
   IonCol,
   IonButton,
-  IonSlides,
-  IonSlide,
   IonFab,
   IonFabButton
 } from "@ionic/react";
 import { Plugins } from "@capacitor/core";
 import { getUserFromKey } from "../../utils/api";
 import { KEY_VALIDATION_PAGE_TEXTS } from "./constants";
-import { key as keyIcon, arrowDropleft, arrowForward } from "ionicons/icons";
-import { LOGIN_PAGE_TEXTS } from "../../components/LoginForm/constants";
+
 import { InstructionsSlides } from "../../components/InstructionsSlides/Instructions";
+import { copy, arrowForward } from "ionicons/icons";
 const CapApp = Plugins.App;
 const { Clipboard } = Plugins;
 
-interface LoginPageHistory {
+interface PageHistory {
   history: History;
 }
 
-const KeyInstructionsPage: FunctionComponent<LoginPageHistory> = ({
-  history
-}) => {
+const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
   const { settings, key } = state;
   const { serverAddress, database } = settings;
@@ -75,7 +62,6 @@ const KeyInstructionsPage: FunctionComponent<LoginPageHistory> = ({
         type: "LOGIN"
       });
       history.push(LOGS_LIST_URL_CONFIG.path);
-      console.log(res);
     };
     const onError = () => {
       dispatch({
@@ -119,15 +105,16 @@ const KeyInstructionsPage: FunctionComponent<LoginPageHistory> = ({
                 </IonCol>
               </IonRow>
               <IonRow>
-                <IonCol className="key__col" size="2">
-                  <IonIcon
-                    onClick={copyKeyToClipboard}
-                    size={"large"}
-                    icon={keyIcon}
-                    className="item-card__icon"
-                  />
+                <IonCol className="key__col" size="1">
+                  <IonButton className="key__copy-button">
+                    <IonIcon
+                      onClick={copyKeyToClipboard}
+                      size={"large"}
+                      icon={copy}
+                    />
+                  </IonButton>
                 </IonCol>
-                <IonCol className="key__col" size="10">
+                <IonCol className="key__col" offsetXs="2" size="9">
                   <IonBadge color="light">
                     <h5 className="key-badge__text">{key}</h5>
                   </IonBadge>

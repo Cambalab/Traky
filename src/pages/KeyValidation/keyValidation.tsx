@@ -23,16 +23,8 @@ const KeyValidation: React.FC<ValidationProps> = actionButton => (
     <IonGrid>
       <IonRow className="key__row">
         <IonCol className="" sizeXs="8" offsetXs="2" sizeMd="2" offsetMd="10">
-          <IonRow className="key__row--with-padding">
-            <IonList inset className="key-list">
-              <IonItem className="key-list__item">
-                <IonLabel>1. {KEY_VALIDATION_PAGE_TEXTS.FIRST_STEP}</IonLabel>
-              </IonItem>
-              <IonItem className="key-list__item">
-                <IonLabel>2. {KEY_VALIDATION_PAGE_TEXTS.SECOND_STEP}</IonLabel>
-              </IonItem>
-            </IonList>
-          </IonRow>
+          <IonRow className="key__row--with-padding"></IonRow>
+          <h5 className="key__title">{KEY_VALIDATION_PAGE_TEXTS.FINISHING}</h5>
           <IonRow>
             <IonCol>
               <IonButton
