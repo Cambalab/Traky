@@ -33,6 +33,11 @@ export const KEY_VALIDATION_URL_CONFIG: URL_CONFIG = {
   path: "/mykey"
 };
 
+export const KEY_INSTRUCTIONS_URL_CONFIG: URL_CONFIG = {
+  name: "Login instructions",
+  path: "/instructions"
+};
+
 export const LOGS_LOGIN_URL_CONFIG: URL_CONFIG = {
   name: "Login",
   path: "/login"
@@ -57,7 +62,8 @@ export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_EDIT_URL_CONFIG,
   LOGS_LOGOUT_URL_CONFIG,
   LOGS_SETTINGS_URL_CONFIG,
-  KEY_VALIDATION_URL_CONFIG
+  KEY_VALIDATION_URL_CONFIG,
+  KEY_INSTRUCTIONS_URL_CONFIG
 };
 
 export const NOTIFICATION_MESSAGES = {
@@ -78,9 +84,11 @@ export const NOTIFICATION_MESSAGES = {
   DELETE_HOUR_SUCCESS_HEADER: "Delete Success",
   DELETE_HOUR_SUCCESS_BODY: "The hour has been deleted successfully",
   SAVE_SETTINGS_SUCCESS_HEADER: "Key Generated Successfully",
-  SAVE_SETTINGS_SUCCESS_BODY: "Your Application Key was generated successfully, go to validate It",
+  SAVE_SETTINGS_SUCCESS_BODY:
+    "Your Application Key was generated successfully, go to validate It",
   SAVE_SETTINGS_ERROR_HEADER: "Error Generating Key",
-  SAVE_SETTINGS_ERROR_BODY: "There is something wrong with your settings, please change them and try again",
+  SAVE_SETTINGS_ERROR_BODY:
+    "There is something wrong with your settings, please change them and try again"
 };
 
 export const NOTIFICATION_TYPE = {

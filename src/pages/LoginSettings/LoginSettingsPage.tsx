@@ -1,22 +1,24 @@
 import React, { FunctionComponent } from "react";
 import {
   getStoredKey,
-  getStoredSettings, storeKey,
+  getStoredSettings,
+  storeKey,
   storeSettings,
   useAppContext
 } from "../../store/Store";
 import { History } from "history";
 import LoginSettingsForm from "../../components/LoginSettingsForm/LoginSettingsForm";
 import "./LoginSettingsPage.css";
+import { IonPage, IonContent, useIonViewDidEnter } from "@ionic/react";
+
 import {
-  IonPage,
-  IonContent,
-  useIonViewDidEnter
-} from "@ionic/react";
-import {createErrorLoginSettingsAction, createSaveLoginSettingsAction, createSetKeyAction} from "./constants";
-import {KEY_VALIDATION_URL_CONFIG} from "../../utils/constants";
-import {getUserAppKey} from "../../utils/api";
-import {ILoginSettings} from "../../utils/declarations";
+  createErrorLoginSettingsAction,
+  createSaveLoginSettingsAction,
+  createSetKeyAction
+} from "./constants";
+import { KEY_INSTRUCTIONS_URL_CONFIG } from "../../utils/constants";
+import { getUserAppKey } from "../../utils/api";
+import { ILoginSettings } from "../../utils/declarations";
 
 interface LoginSettingsPageProps {
   history: History;
@@ -29,19 +31,24 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
   const { settings } = state;
 
   const onClickSave = async (body: ILoginSettings) => {
-
     const onSuccess = async (generatedKey: string) => {
       await storeSettings(body);
       await storeKey(generatedKey);
       dispatch(createSaveLoginSettingsAction(body, generatedKey));
-      history.push(KEY_VALIDATION_URL_CONFIG.path);
+      history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
     };
 
     const onError = async () => {
       dispatch(createErrorLoginSettingsAction());
     };
 
-    getUserAppKey(body.username, body.serverAddress, body.database, onSuccess, onError);
+    getUserAppKey(
+      body.username,
+      body.serverAddress,
+      body.database,
+      onSuccess,
+      onError
+    );
   };
 
   useIonViewDidEnter(() => {
@@ -55,9 +62,8 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
           dispatch({ type: "SET_SETTINGS", payload: fetchedSettings });
           if (key) {
             dispatch(createSetKeyAction(key));
-            history.push(KEY_VALIDATION_URL_CONFIG.path);
+            history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
           }
-
         }
       }
     };

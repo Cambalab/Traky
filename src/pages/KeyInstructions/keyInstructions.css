@@ -48,8 +48,13 @@
 .key__row--with-padding {
   display: flex;
   align-self: center;
+  margin-top: 30vh;
 }
 
 .key__title {
   font-weight: 300;
+}
+
+.key__fab-button {
+  margin-top: 10vh;
 }

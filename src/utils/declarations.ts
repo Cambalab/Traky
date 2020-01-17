@@ -28,9 +28,9 @@ export interface IUser {
 }
 
 export interface ILoginSettings {
-  serverAddress: string,
-  database: string,
-  username: string
+  serverAddress: string;
+  database: string;
+  username: string;
 }
 
 export interface ILogs {
@@ -76,3 +76,11 @@ export type IContext = {
 export interface IMatchParams {
   data: string;
 }
+
+export type InstructionsProps = {
+  onLastStepAction: Function;
+};
+
+export type ValidationProps = {
+  actionButton: Function;
+};
