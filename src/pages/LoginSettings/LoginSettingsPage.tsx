@@ -1,9 +1,5 @@
 import React, { FunctionComponent } from "react";
 import {
-  getStoredKey,
-  getStoredSettings,
-  storeKey,
-  storeSettings,
   useAppContext
 } from "../../store/Store";
 import { History } from "history";
@@ -19,6 +15,7 @@ import {
 import { KEY_INSTRUCTIONS_URL_CONFIG } from "../../utils/constants";
 import { getUserAppKey } from "../../utils/api";
 import { ILoginSettings } from "../../utils/declarations";
+import {getStoredKey, getStoredSettings, storeKey, storeSettings} from "../../utils/utils";
 
 interface LoginSettingsPageProps {
   history: History;

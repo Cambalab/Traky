@@ -43,6 +43,9 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
     CapApp.addListener("backButton", () => {
       history.goBack();
     });
+    if (key && serverAddress && database) {
+      onClickActivatedKey();
+    }
   });
 
   const copyKeyToClipboard = () => {
@@ -67,8 +70,8 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
       dispatch({
         type: "NOTIFICATION",
         payload: {
-          header: NOTIFICATION_MESSAGES.AUTH_ERROR_HEADER,
-          message: NOTIFICATION_MESSAGES.AUTH_ERROR_BODY,
+          header: "Key Validation Error",
+          message: "You should validate your key",
           color: NOTIFICATION_TYPE.ERROR
         }
       });
@@ -82,7 +85,7 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
   };
 
   const renderInstructions = () => {
-    return <InstructionsSlides onLastStepAction={onClickActivatedKey} />;
+    return <InstructionsSlides settings={settings} onLastStepAction={onClickActivatedKey} />;
   };
 
   const renderKey = () => {

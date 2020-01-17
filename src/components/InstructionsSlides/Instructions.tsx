@@ -23,7 +23,7 @@ const slideOpts = {
   speed: 400
 };
 
-export const InstructionsSlides: React.FC<InstructionsProps> = onLastStepAction => (
+export const InstructionsSlides: React.FC<InstructionsProps> = ({ settings, onLastStepAction }) => (
   <IonContent color="tertiary" fullscreen>
     <IonSlides pager={true} options={slideOpts}>
       <IonSlide className="slide__container">
@@ -54,7 +54,7 @@ export const InstructionsSlides: React.FC<InstructionsProps> = onLastStepAction 
         </h4>
       </IonSlide>
       <IonSlide>
-        <KeyValidation actionButton={() => onLastStepAction} />
+        <KeyValidation settings={settings} actionButton={onLastStepAction} />
       </IonSlide>
     </IonSlides>
   </IonContent>

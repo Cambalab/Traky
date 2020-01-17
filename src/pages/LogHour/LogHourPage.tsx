@@ -25,7 +25,7 @@ interface LogHourPage {
 
 const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
-  const { user, loggedHours, groups } = state;
+  const { user, loggedHours, groups, settings, key } = state;
 
   const onClickSave = async (body: LogHourForm) => {
     const onSuccess = (res: any) => {
@@ -63,7 +63,7 @@ const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
       })
     };
 
-    await logHours(user.id, body, onSuccess, onError);
+    await logHours(user.id, body, settings, key, onSuccess, onError);
   };
 
   const onClickCancel = async () => {

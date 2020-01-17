@@ -79,8 +79,10 @@ export interface IMatchParams {
 
 export type InstructionsProps = {
   onLastStepAction: Function;
+  settings: ILoginSettings;
 };
 
 export type ValidationProps = {
   actionButton: Function;
+  settings: ILoginSettings;
 };

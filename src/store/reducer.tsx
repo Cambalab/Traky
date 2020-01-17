@@ -22,7 +22,7 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return { ...state, isLogged: true };
     }
     case "LOGOUT": {
-      return { ...state, isLogged: false };
+      return { ...state, isLogged: false, key: "", settings: { serverAddress: "", database: "", username: "" } };
     }
     case "SET_USER": {
       return {
@@ -43,7 +43,7 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return { ...state, settings: action.payload, isSettings: true };
     }
     case LOGIN_SETTINGS_TYPE.SET_KEY_ACTION: {
-      return { ...state, key: action.payload, isLogged: true }
+      return { ...state, key: action.payload, isLogged: true };
     }
     case LOGIN_SETTINGS_TYPE.SAVE_LOGIN_SETTINGS_ACTION: {
       return {
@@ -59,8 +59,7 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return {
         ...state,
         notificationOptions: action.payload.notificationOptions,
-        showNotification: true,
-        isLogged: true
+        showNotification: true
       };
     }
     default:

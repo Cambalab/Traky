@@ -7,10 +7,6 @@ import {
   OverviewState
 } from "../utils/declarations";
 import { reducer } from "./reducer";
-import { Plugins } from "@capacitor/core";
-import {getStoringKeyName, getStoringSettingsName} from "../utils/utils";
-
-const { Storage } = Plugins;
 
 const AppContext = createContext<IContext>({} as IContext);
 
@@ -20,39 +16,6 @@ const initialSettings: ILoginSettings = {
   serverAddress: "",
   database: "",
   username: ""
-};
-
-export const getStoredSettings = async (): Promise<ILoginSettings | null> => {
-  const storingSettingsName = getStoringSettingsName();
-  const { value } = await Storage.get({ key: storingSettingsName });
-
-  if (value) {
-    return JSON.parse(value);
-  }
-  return null;
-};
-
-export const getStoredKey = async (): Promise<string | null> => {
-  const storingKeyName = getStoringKeyName();
-  const { value } = await Storage.get({ key: storingKeyName });
-
-  return value ? value : null;
-};
-
-export const storeSettings = async (body: ILoginSettings) => {
-    const storingSettingsName = getStoringSettingsName();
-    await Storage.set({
-        key: storingSettingsName,
-        value: JSON.stringify(body)
-    });
-};
-
-export const storeKey = async (key: string) => {
-  const storingKeyName = getStoringKeyName();
-  await Storage.set({
-    key: storingKeyName,
-    value: key
-  });
 };
 
 const getInitialSettings = () => initialSettings;
