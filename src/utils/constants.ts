@@ -106,3 +106,5 @@ export const VALID_HOUR_VALUES = "0,1,2,3,4,5,6,7,8";
 export const APPLICATION_NAME = {
   TIMESHEET: "timesheet"
 };
+
+export const GENERATE_KEY_MESSAGE = "Generating key...";
