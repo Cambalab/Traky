@@ -12,7 +12,13 @@ import {
   createSaveLoginSettingsAction,
   createSetKeyAction
 } from "./constants";
-import { KEY_INSTRUCTIONS_URL_CONFIG, GENERATE_KEY_MESSAGE, GET_STORAGE_KEY } from "../../utils/constants";
+import {
+  KEY_INSTRUCTIONS_URL_CONFIG,
+  GENERATE_KEY_MESSAGE,
+  GET_STORAGE_KEY,
+  NOTIFICATION_MESSAGES,
+  NOTIFICATION_TYPE
+} from "../../utils/constants";
 import { getUserAppKey } from "../../utils/api";
 import { ILoginSettings } from "../../utils/declarations";
 import {getStoredKey, getStoredSettings, storeKey, storeSettings} from "../../utils/utils";
@@ -75,6 +81,20 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
             dispatch(createSetKeyAction(key));
             history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
           }
+        } else {
+          setGetOfStorage(false);
+          dispatch({
+            type: "NOTIFICATION",
+            payload: {
+              header: NOTIFICATION_MESSAGES.GET_STORAGE_KEY_HEADER,
+              message: NOTIFICATION_MESSAGES.GET_STORAGE_KEY_BODY,
+              color: NOTIFICATION_TYPE.ERROR
+            }
+          });
+          dispatch({
+            type: "SHOW_NOTIFICATION",
+            payload: true
+          });
         }
       }
     };
