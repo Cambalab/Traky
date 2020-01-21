@@ -3,7 +3,6 @@ import "./keyInstructions.css";
 import { AppContext } from "../../store/Store";
 import { History } from "history";
 import {
-  NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
   LOGS_LIST_URL_CONFIG
 } from "../../utils/constants";
@@ -22,7 +21,7 @@ import {
 } from "@ionic/react";
 import { Plugins } from "@capacitor/core";
 import { getUserFromKey } from "../../utils/api";
-import { KEY_VALIDATION_PAGE_TEXTS } from "./constants";
+import {createCopyClipboardAction, KEY_VALIDATION_PAGE_TEXTS} from "./constants";
 
 import { InstructionsSlides } from "../../components/InstructionsSlides/Instructions";
 import { copy, arrowForward } from "ionicons/icons";
@@ -48,10 +47,11 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
     }
   });
 
-  const copyKeyToClipboard = () => {
-    Clipboard.write({
+  const copyKeyToClipboard = async () => {
+    await Clipboard.write({
       string: key
     });
+    dispatch(createCopyClipboardAction());
   };
 
   const onClickActivatedKey = () => {
@@ -109,9 +109,8 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
               </IonRow>
               <IonRow>
                 <IonCol className="key__col" size="1">
-                  <IonButton className="key__copy-button">
+                  <IonButton className="key__copy-button" onClick={copyKeyToClipboard}>
                     <IonIcon
-                      onClick={copyKeyToClipboard}
                       size={"large"}
                       icon={copy}
                     />

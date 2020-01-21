@@ -10,6 +10,7 @@ import {
   SAVE_LOGIN_SETTINGS_ACTION,
   SET_KEY_ACTION
 } from "../pages/LoginSettings/constants";
+import {COPY_CLIPBOARD_ACTION} from "../pages/KeyInstructions/constants";
 
 export type UPDATE_LIST_ACTION = {
   type: "UPDATE_LIST",
@@ -74,3 +75,4 @@ export type Action =
   | SAVE_LOGIN_SETTINGS_ACTION
   | ERROR_LOGIN_SETTINGS_ACTION
   | SET_KEY_ACTION
+  | COPY_CLIPBOARD_ACTION
