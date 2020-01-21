@@ -12,24 +12,27 @@ import {
   createSaveLoginSettingsAction,
   createSetKeyAction
 } from "./constants";
-import { KEY_INSTRUCTIONS_URL_CONFIG, GENERATE_KEY_MESSAGE } from "../../utils/constants";
+import { KEY_INSTRUCTIONS_URL_CONFIG, GENERATE_KEY_MESSAGE, GET_STORAGE_KEY } from "../../utils/constants";
 import { getUserAppKey } from "../../utils/api";
 import { ILoginSettings } from "../../utils/declarations";
 import {getStoredKey, getStoredSettings, storeKey, storeSettings} from "../../utils/utils";
 
 interface LoginSettingsPageProps {
   history: History;
-  initialShowLoading?: boolean
+  initialShowLoading?: boolean,
+  initialgetOfStorage?: boolean
 }
 
 const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
   history,
-  initialShowLoading = false
+  initialShowLoading = false,
+  initialgetOfStorage = false
 }) => {
   const { state, dispatch } = useAppContext();
   const { settings } = state;
 
   const [showLoading, setShowLoading] = useState(initialShowLoading);
+  const [getOfStorage, setGetOfStorage] = useState(initialgetOfStorage);
 
   useEffect(() => {
     setShowLoading(initialShowLoading);
@@ -60,6 +63,8 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
   useIonViewDidEnter(() => {
     const fetchSettings = async () => {
       if (!settings.serverAddress || !settings.database) {
+        setGetOfStorage(true);
+        setShowLoading(true);
         const fetchedSettings = await getStoredSettings();
 
         if (fetchedSettings) {
@@ -84,8 +89,8 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
         showLoading &&
         <IonLoading
         isOpen={showLoading}
-        message={GENERATE_KEY_MESSAGE}
-        duration={2500}
+        message={getOfStorage ? GET_STORAGE_KEY : GENERATE_KEY_MESSAGE}
+        duration={4000}
         onDidDismiss={() => setShowLoading(false)}
         />
       }
@@ -94,7 +99,6 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
           initialServerAddress={settings.serverAddress}
           initialDatabase={settings.database}
           initialUsername={settings.username}
-          showLoading={showLoading}
         />
       </IonContent>
     </IonPage>

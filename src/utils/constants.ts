@@ -108,3 +108,5 @@ export const APPLICATION_NAME = {
 };
 
 export const GENERATE_KEY_MESSAGE = "Generating key...";
+
+export const GET_STORAGE_KEY = "Getting key of the Storage...";
