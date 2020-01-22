@@ -102,6 +102,7 @@ export const DATE_FORMAT_COMPLETE = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 export const HOUR_FORMAT = "H:mm";
 export const HOUR_FORMAT_DOUBLE_NUMBER = "HH:mm";
 export const VALID_HOUR_VALUES = "0,1,2,3,4,5,6,7,8";
+export const TRYTON_LINE_DATE_FORMAT = "YYYY-MM-DD";
 
 export const APPLICATION_NAME = {
   TIMESHEET: "timesheet"

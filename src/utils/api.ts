@@ -1,7 +1,7 @@
 import {FetchInput, ILoginSettings, ILogs} from "./declarations";
 import LogHourForm from "../components/LogHourForm/LogHourForm";
 import LoginForm from "../components/LoginForm/LoginForm";
-import { CONFIG, APPLICATION_NAME } from "./constants";
+import {CONFIG, APPLICATION_NAME, TRYTON_LINE_DATE_FORMAT} from "./constants";
 import { formatDate } from "./inputHandle";
 
 const createHeaders = () => {
@@ -49,8 +49,8 @@ const getCurrentUser = () => {
   return { id: 1 };
 };
 
-const getHours = (userId: any, settings: ILoginSettings, key: string, onSuccess: Function, onError?: Function) => {
-  const current_day = formatDate(new Date(), "YYYY-MM-DD");
+const getHours = (date: string, userId: any, settings: ILoginSettings, key: string, onSuccess: Function, onError?: Function) => {
+  const current_day = formatDate(date, TRYTON_LINE_DATE_FORMAT);
   const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
   const endpoint = `${trytonURL}/timesheet/employee/${userId}/lines/${current_day}`;
   const parseResponse = (groups: any) => {
