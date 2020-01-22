@@ -17,3 +17,10 @@
 .hours_list {
   margin-bottom: 4em;
 }
+
+.hour-card__date {
+  margin: 0 auto;
+  padding: 0px;
+  font-size: 20px;
+  align-self: center;
+}
