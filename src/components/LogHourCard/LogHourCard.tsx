@@ -81,7 +81,6 @@ const LogHourCard: React.FC<LogHourCard> = ({
           <IonRow className="item-card__row">
             <IonBadge color="tertiary">{group}</IonBadge>
           </IonRow>
-
           <IonRow>
             <IonCol className="item-card__col">
               <p className="item-card__description">{logHour.description}</p>

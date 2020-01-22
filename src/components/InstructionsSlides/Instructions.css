@@ -10,35 +10,31 @@
 
 .slider__img {
   margin: 0px auto;
-  position: relative;
+}
+
+.slider__img--desktop {
+  width: 40%;
+  height: 40%;
+}
+
+.img__first-step {
+  margin: 0px auto;
+  width: 85%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .slide__container {
   display: flex;
   flex-direction: column;
+  margin-top: 60px;
 }
 
-.slide__text-1 {
-  position: absolute;
-  margin-top: 42vh;
-  margin-left: 35vw;
-  margin-right: 5vh;
+.slide__text {
   font-weight: 100;
-}
-
-.slide__text-2 {
-  position: absolute;
-  margin-top: 52vh;
-  margin-left: 35vw;
-  margin-right: 10vw;
-  font-weight: 100;
-}
-
-.slide__text-3 {
-  position: absolute;
-  margin-top: 60vh;
-  margin-left: 25vw;
-  font-weight: 100;
+  margin-bottom: 60px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .slide__button {
@@ -46,20 +42,17 @@
   margin-left: 5vw;
 }
 
-.slide__step-1-text {
-  position: absolute;
-  margin-top: 30vh;
-  margin-left: 25vw;
+.swiper-pagination-bullet {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+  color: #fff;
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.2);
 }
-
-.slide__step-2-text {
-  position: absolute;
-  margin-top: 27vh;
-  margin-left: 25vw;
-}
-
-.slide__step-3-text {
-  position: absolute;
-  margin-top: 45vh;
-  margin-left: 25vw;
+.swiper-pagination-bullet-active {
+  color: #fff;
+  background: #00e97c;
 }
