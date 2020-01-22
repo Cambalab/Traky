@@ -21,7 +21,7 @@ import {
 } from "@ionic/react";
 import { Plugins } from "@capacitor/core";
 import { getUserFromKey } from "../../utils/api";
-import {createCopyClipboardAction, KEY_VALIDATION_PAGE_TEXTS} from "./constants";
+import {createCopyClipboardAction, KEY_INSTRUCTIONS_TYPE, KEY_VALIDATION_PAGE_TEXTS} from "./constants";
 
 import { InstructionsSlides } from "../../components/InstructionsSlides/Instructions";
 import { copy, arrowForward } from "ionicons/icons";
@@ -68,10 +68,10 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
     };
     const onError = () => {
       dispatch({
-        type: "NOTIFICATION",
+        type: KEY_INSTRUCTIONS_TYPE.NOTIFICATION,
         payload: {
-          header: "Key Validation Error",
-          message: "You should validate your key",
+          header: KEY_VALIDATION_PAGE_TEXTS.KEY_VALIDATION_ERROR_HEADER,
+          message: KEY_VALIDATION_PAGE_TEXTS.KEY_VALIDATION_ERROR_MESSAGE,
           color: NOTIFICATION_TYPE.ERROR
         }
       });
