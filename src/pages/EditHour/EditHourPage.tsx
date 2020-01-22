@@ -31,7 +31,7 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
   match
 }) => {
   const { state, dispatch } = useContext(AppContext);
-  const { user, groups, loggedHours } = state;
+  const { user, groups, loggedHours, settings } = state;
   const loggedHour = filterLoggedHour(loggedHours, Number(match.params.data));
 
   const onClickSave = async (body: LogHourForm) => {
@@ -70,7 +70,7 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
       })
     };
 
-    await editHours(user.id, match.params.data, body, onSuccess, onError);
+    await editHours(user.id, match.params.data, body, settings, onSuccess, onError);
   };
 
   const onClickCancel = async () => {

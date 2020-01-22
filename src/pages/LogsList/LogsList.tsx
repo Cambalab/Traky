@@ -162,7 +162,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       payload: true
     });
 
-    await removeHours(user, logHour, onSuccess, onError);
+    await removeHours(user, logHour, settings, onSuccess, onError);
   };
 
   const renderList = () =>

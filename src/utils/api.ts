@@ -131,6 +131,7 @@ const editHours = (
   userId: any,
   hourId: any,
   body: LogHourForm,
+  settings: ILoginSettings,
   onSuccess: Function,
   onError: Function
 ) => {
@@ -141,7 +142,7 @@ const editHours = (
     work: body.groupId,
     description: body.description
   };
-  const trytonURL = `${process.env.REACT_APP_TRYTON_URL}${process.env.REACT_APP_TRYTON_DATABASE}`;
+  const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
   const endpoint = `${trytonURL}/timesheet/line/${hourId}`;
 
   const newOnSuccess = ({ id }: any) => {
@@ -176,10 +177,11 @@ const loginUser = (body: LoginForm, onSuccess: Function, onError: Function) => {
 const removeHours = (
   user: object,
   logHour: ILogs,
+  settings: ILoginSettings,
   onSuccess: Function,
   onError: Function
 ) => {
-  const trytonURL = `${process.env.REACT_APP_TRYTON_URL}${process.env.REACT_APP_TRYTON_DATABASE}`;
+  const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
   const endpoint = `${trytonURL}/timesheet/line/${logHour.id}`;
 
   return fetchAPI({ url: endpoint, method: "DELETE", onSuccess, onError });
