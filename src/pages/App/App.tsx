@@ -40,8 +40,12 @@ import {
   LOGS_EDIT_URL_CONFIG,
   LOGS_LIST_URL_CONFIG,
   LOGS_NEW_URL_CONFIG,
-  LOGS_SETTINGS_URL_CONFIG
+  LOGS_SETTINGS_URL_CONFIG,
+  KEY_VALIDATION_URL_CONFIG,
+  KEY_INSTRUCTIONS_URL_CONFIG
 } from "../../utils/constants";
+import KeyValidationPage from "../KeyValidation/keyValidation";
+import KeyInstructionsPage from "../KeyInstructions/keyInstructions";
 
 const App: React.FC = () => {
   const { state } = useContext(AppContext);
@@ -70,6 +74,21 @@ const App: React.FC = () => {
               render={props => <AuthProvider Component={LogsList} {...props} />}
               exact={true}
             />
+            <Route
+              path={KEY_VALIDATION_URL_CONFIG.path}
+              render={props => (
+                <AuthProvider Component={KeyValidationPage} {...props} />
+              )}
+              exact={true}
+            />
+            <Route
+              path={KEY_INSTRUCTIONS_URL_CONFIG.path}
+              render={props => (
+                <AuthProvider Component={KeyInstructionsPage} {...props} />
+              )}
+              exact={true}
+            />
+
             <Route path={LOGS_EDIT_URL_CONFIG.path} component={EditHourPage} />
             <Route
               path="/"

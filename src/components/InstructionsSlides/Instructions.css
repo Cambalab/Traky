@@ -1,0 +1,65 @@
+.key__col {
+  display: flex;
+  align-self: center;
+}
+
+.key__row {
+  display: flex;
+  align-self: center;
+}
+
+.slider__img {
+  margin: 0px auto;
+  position: relative;
+}
+
+.slide__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.slide__text-1 {
+  position: absolute;
+  margin-top: 42vh;
+  margin-left: 35vw;
+  margin-right: 5vh;
+  font-weight: 100;
+}
+
+.slide__text-2 {
+  position: absolute;
+  margin-top: 52vh;
+  margin-left: 35vw;
+  margin-right: 10vw;
+  font-weight: 100;
+}
+
+.slide__text-3 {
+  position: absolute;
+  margin-top: 60vh;
+  margin-left: 25vw;
+  font-weight: 100;
+}
+
+.slide__button {
+  margin-top: 22vh;
+  margin-left: 5vw;
+}
+
+.slide__step-1-text {
+  position: absolute;
+  margin-top: 30vh;
+  margin-left: 25vw;
+}
+
+.slide__step-2-text {
+  position: absolute;
+  margin-top: 27vh;
+  margin-left: 25vw;
+}
+
+.slide__step-3-text {
+  position: absolute;
+  margin-top: 45vh;
+  margin-left: 25vw;
+}

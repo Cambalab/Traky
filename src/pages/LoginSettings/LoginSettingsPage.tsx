@@ -1,27 +1,51 @@
 import React, { FunctionComponent } from "react";
-import { getStoredSettings, storeSettings, useAppContext } from "../../store/Store";
+import {
+  useAppContext
+} from "../../store/Store";
 import { History } from "history";
 import LoginSettingsForm from "../../components/LoginSettingsForm/LoginSettingsForm";
 import "./LoginSettingsPage.css";
+import { IonPage, IonContent, useIonViewDidEnter } from "@ionic/react";
+
 import {
-  IonPage,
-  IonContent,
-  useIonViewDidEnter
-} from "@ionic/react";
-import { createSaveLoginSettingsAction } from "./constants";
+  createErrorLoginSettingsAction,
+  createSaveLoginSettingsAction,
+  createSetKeyAction
+} from "./constants";
+import { KEY_INSTRUCTIONS_URL_CONFIG } from "../../utils/constants";
+import { getUserAppKey } from "../../utils/api";
+import { ILoginSettings } from "../../utils/declarations";
+import {getStoredKey, getStoredSettings, storeKey, storeSettings} from "../../utils/utils";
 
 interface LoginSettingsPageProps {
-  history: History
+  history: History;
 }
 
-const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({ history }) => {
+const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
+  history
+}) => {
   const { state, dispatch } = useAppContext();
   const { settings } = state;
 
-  const onClickSave = async (body: LoginSettingsForm) => {
-    await storeSettings(body);
-    dispatch(createSaveLoginSettingsAction(body));
-    // history.push(KEY_VALIDATION_URL_CONFIG.path) redirect to the key validation page
+  const onClickSave = async (body: ILoginSettings) => {
+    const onSuccess = async (generatedKey: string) => {
+      await storeSettings(body);
+      await storeKey(generatedKey);
+      dispatch(createSaveLoginSettingsAction(body, generatedKey));
+      history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
+    };
+
+    const onError = async () => {
+      dispatch(createErrorLoginSettingsAction());
+    };
+
+    getUserAppKey(
+      body.username,
+      body.serverAddress,
+      body.database,
+      onSuccess,
+      onError
+    );
   };
 
   useIonViewDidEnter(() => {
@@ -30,7 +54,13 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({ history 
         const fetchedSettings = await getStoredSettings();
 
         if (fetchedSettings) {
+          const key = await getStoredKey();
+
           dispatch({ type: "SET_SETTINGS", payload: fetchedSettings });
+          if (key) {
+            dispatch(createSetKeyAction(key));
+            history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
+          }
         }
       }
     };
@@ -42,14 +72,14 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({ history 
     <IonPage>
       <IonContent color="tertiary">
         <LoginSettingsForm
-            onClickSave={onClickSave}
-            initialServerAddress={settings.serverAddress}
-            initialDatabase={settings.database}
-            initialUsername={settings.username}
+          onClickSave={onClickSave}
+          initialServerAddress={settings.serverAddress}
+          initialDatabase={settings.database}
+          initialUsername={settings.username}
         />
       </IonContent>
     </IonPage>
-  )
+  );
 };
 
 export default LoginSettingsPage;

@@ -47,7 +47,7 @@ const groupName = (groups: IGroup[], id: Number) => {
 
 const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
-  const { groups, loggedHours, user, isLoading, hasError } = state;
+  const { groups, loggedHours, user, isLoading, hasError, settings, key } = state;
 
   const showEditView = (loggedHourId: number) => () => {
     history.push(`/edit/${loggedHourId}`);
@@ -99,8 +99,8 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         type: "UPDATE_LOADING",
         payload: true
       });
-      getGroups(user.id, onSuccessGetGroups);
-      getHours(user.id, onSuccessGetHours, onErrorGetHours);
+      getGroups(user.id, settings, key, onSuccessGetGroups);
+      getHours(user.id, settings, key, onSuccessGetHours, onErrorGetHours);
     }
   });
 

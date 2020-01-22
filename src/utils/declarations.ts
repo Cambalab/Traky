@@ -11,6 +11,7 @@ export interface FetchInput {
   url: string;
   method: string;
   body?: object;
+  headers?: object;
   onSuccess?: Function;
   onError?: Function;
   parse?: Function;
@@ -27,9 +28,9 @@ export interface IUser {
 }
 
 export interface ILoginSettings {
-  serverAddress: string,
-  database: string,
-  username: string
+  serverAddress: string;
+  database: string;
+  username: string;
 }
 
 export interface ILogs {
@@ -64,6 +65,7 @@ export type OverviewState = {
   groups: IGroup[];
   settings: ILoginSettings;
   isSettings: boolean;
+  key: string;
 };
 
 export type IContext = {
@@ -74,3 +76,13 @@ export type IContext = {
 export interface IMatchParams {
   data: string;
 }
+
+export type InstructionsProps = {
+  onLastStepAction: Function;
+  settings: ILoginSettings;
+};
+
+export type ValidationProps = {
+  actionButton: Function;
+  settings: ILoginSettings;
+};

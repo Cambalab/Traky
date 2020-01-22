@@ -43,12 +43,12 @@ export const handleInputHour = (fn: Function) => (
   fn(value);
 };
 
-export const formatDate = (date: string | Date): string => {
-  return moment(date).format(DATE_FORMAT);
-};
-
 export const formatHour = (date: string | Date): string => {
   return moment(date, DATE_FORMAT_COMPLETE).format(HOUR_FORMAT_DOUBLE_NUMBER);
+}
+
+export const formatDate = (date: string | Date, date_format = DATE_FORMAT): string => {
+    return moment(date).format(date_format);
 };
 
 export const isValidDate = (date: string | Date): boolean => {

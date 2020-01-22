@@ -1,0 +1,43 @@
+.key-badge__text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.key-list__item {
+  --background: var(--ion-color-tertiary);
+  color: white;
+}
+
+.key-list {
+  background: var(--ion-color-tertiary);
+}
+
+.key__col {
+  display: flex;
+  align-self: center;
+}
+
+.key__row {
+  display: flex;
+  align-self: center;
+}
+
+.key__row--with-padding {
+  display: flex;
+  align-self: center;
+  margin-top: 30vh;
+}
+
+.key__title {
+  font-weight: 300;
+  text-align: center;
+}
+
+.key__fab-button {
+  margin-top: 10vh;
+}
+
+.key__copy-button {
+  height: 55px;
+}

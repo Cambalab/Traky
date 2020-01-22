@@ -1,12 +1,16 @@
-import { OverviewState } from "../utils/declarations";
-import { Action } from "./actions";
-import { sortByDate } from "../utils/utils";
-import { LOGIN_SETTINGS_TYPE } from "../pages/LoginSettings/constants";
+import {OverviewState} from "../utils/declarations";
+import {Action} from "./actions";
+import {sortByDate} from "../utils/utils";
+import {LOGIN_SETTINGS_TYPE} from "../pages/LoginSettings/constants";
 
 export function reducer(state: OverviewState, action: Action): OverviewState {
   switch (action.type) {
     case "UPDATE_LIST": {
-      return { ...state, loggedHours: sortByDate(action.payload), hasError: false };
+      return {
+        ...state,
+        loggedHours: sortByDate(action.payload),
+        hasError: false
+      };
     }
     case "UPDATE_LOADING": {
       return { ...state, isLoading: action.payload, hasError: false };
@@ -18,7 +22,7 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return { ...state, isLogged: true };
     }
     case "LOGOUT": {
-      return { ...state, isLogged: false };
+      return { ...state, isLogged: false, key: "", settings: { serverAddress: "", database: "", username: "" } };
     }
     case "SET_USER": {
       return {
@@ -30,21 +34,33 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return { ...state, groups: action.payload };
     }
     case "NOTIFICATION": {
-      return { ...state, notificationOptions: action.payload }
+      return { ...state, notificationOptions: action.payload };
     }
     case "SHOW_NOTIFICATION": {
-      return { ...state, showNotification: action.payload }
+      return { ...state, showNotification: action.payload };
     }
     case "SET_SETTINGS": {
-      return { ...state, settings: action.payload, isSettings: true }
+      return { ...state, settings: action.payload, isSettings: true };
+    }
+    case LOGIN_SETTINGS_TYPE.SET_KEY_ACTION: {
+      return { ...state, key: action.payload, isLogged: true };
     }
     case LOGIN_SETTINGS_TYPE.SAVE_LOGIN_SETTINGS_ACTION: {
       return {
         ...state,
         settings: action.payload.loginSettings,
+        key: action.payload.key,
+        notificationOptions: action.payload.notificationOptions,
+        showNotification: true,
+        isLogged: true
+      }
+    }
+    case LOGIN_SETTINGS_TYPE.ERROR_LOGIN_SETTINGS_ACTION: {
+      return {
+        ...state,
         notificationOptions: action.payload.notificationOptions,
         showNotification: true
-      }
+      };
     }
     default:
       return state;

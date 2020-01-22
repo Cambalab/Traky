@@ -1,0 +1,32 @@
+.key-list__item {
+  --background: var(--ion-color-tertiary);
+  color: white;
+}
+
+.key-list {
+  background: var(--ion-color-tertiary);
+}
+
+.key__col {
+  display: flex;
+  align-self: center;
+}
+
+.key__row {
+  display: flex;
+  align-self: center;
+}
+
+.key__title {
+  font-weight: 300;
+  text-align: center;
+}
+
+.key__row--with-padding {
+  display: flex;
+  align-self: center;
+}
+
+.key__title {
+  font-weight: 300;
+}

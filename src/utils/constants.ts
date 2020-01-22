@@ -27,6 +27,17 @@ export const LOGS_NEW_URL_CONFIG: URL_CONFIG = {
   name: "New log",
   path: "/new"
 };
+
+export const KEY_VALIDATION_URL_CONFIG: URL_CONFIG = {
+  name: "Key validation",
+  path: "/mykey"
+};
+
+export const KEY_INSTRUCTIONS_URL_CONFIG: URL_CONFIG = {
+  name: "Login instructions",
+  path: "/instructions"
+};
+
 export const LOGS_LOGIN_URL_CONFIG: URL_CONFIG = {
   name: "Login",
   path: "/login"
@@ -51,6 +62,8 @@ export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_EDIT_URL_CONFIG,
   LOGS_LOGOUT_URL_CONFIG,
   LOGS_SETTINGS_URL_CONFIG,
+  KEY_VALIDATION_URL_CONFIG,
+  KEY_INSTRUCTIONS_URL_CONFIG
 };
 
 export const NOTIFICATION_MESSAGES = {
@@ -70,8 +83,12 @@ export const NOTIFICATION_MESSAGES = {
   EDIT_HOUR_SUCCESS_BODY: "The hour has been edited successfully",
   DELETE_HOUR_SUCCESS_HEADER: "Delete Success",
   DELETE_HOUR_SUCCESS_BODY: "The hour has been deleted successfully",
-  SAVE_SETTINGS_SUCCESS_HEADER: "Save Success",
-  SAVE_SETTINGS_SUCCESS_BODY: "The data has been saved successfully"
+  SAVE_SETTINGS_SUCCESS_HEADER: "Key Generated Successfully",
+  SAVE_SETTINGS_SUCCESS_BODY:
+    "Your Application Key was generated successfully, go to validate It",
+  SAVE_SETTINGS_ERROR_HEADER: "Error Generating Key",
+  SAVE_SETTINGS_ERROR_BODY:
+    "There is something wrong with your settings, please change them and try again"
 };
 
 export const NOTIFICATION_TYPE = {
@@ -85,3 +102,7 @@ export const DATE_FORMAT_COMPLETE = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 export const HOUR_FORMAT = "H:mm";
 export const HOUR_FORMAT_DOUBLE_NUMBER = "HH:mm";
 export const VALID_HOUR_VALUES = "0,1,2,3,4,5,6,7,8";
+
+export const APPLICATION_NAME = {
+  TIMESHEET: "timesheet"
+};

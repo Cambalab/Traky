@@ -25,19 +25,26 @@ import {
   SETTINGS_MENU_OPTION
 } from "./constants";
 import { LOGS_LOGIN_URL_CONFIG } from "../../utils/constants";
-import {History} from "history";
+import { History } from "history";
+import {cleanStoredKey, cleanStoredSettings} from "../../utils/utils";
 
 interface Menu {
-    history: History
+  history: History;
 }
 const Menu: React.FunctionComponent<Menu> = ({ history }) => {
     const { state, dispatch } = useAppContext();
     const { isLogged, user } = state;
 
-    const logout = () => {
-        dispatch({ type: 'SET_USER', payload: {} });
-        dispatch({ type: 'LOGOUT' });
-        history.push(LOGS_LOGIN_URL_CONFIG.path)
+    const logout = async () => {
+        Promise.all([
+            cleanStoredSettings(),
+            cleanStoredKey()
+        ])
+        .then(() => {
+            dispatch({ type: 'SET_USER', payload: {} });
+            dispatch({ type: 'LOGOUT' });
+            history.push(LOGS_LOGIN_URL_CONFIG.path);
+        });
     };
 
     return (

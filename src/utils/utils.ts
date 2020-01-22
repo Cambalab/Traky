@@ -1,5 +1,7 @@
 import { getPlatforms } from "@ionic/react";
-import {ILogs, IGroup} from "./declarations";
+import { Plugins } from "@capacitor/core";
+import {ILogs, IGroup, ILoginSettings} from "./declarations";
+const { Storage } = Plugins;
 
 export function isMobile() {
   if (getPlatforms().includes("mobile")) {
@@ -70,4 +72,51 @@ export const compareGroups = (group1: IGroup, group2: IGroup): boolean => {
 
 export const getStoringSettingsName = () => {
   return process.env.REACT_APP_STORING_SETTINGS_NAME || "settings";
+};
+
+export const getStoringKeyName = () => {
+  return process.env.REACT_APP_STORING_KEY_NAME || "key";
+};
+
+export const getStoredSettings = async (): Promise<ILoginSettings | null> => {
+  const storingSettingsName = getStoringSettingsName();
+  const { value } = await Storage.get({ key: storingSettingsName });
+
+  if (value) {
+    return JSON.parse(value);
+  }
+  return null;
+};
+
+export const getStoredKey = async (): Promise<string | null> => {
+  const storingKeyName = getStoringKeyName();
+  const { value } = await Storage.get({ key: storingKeyName });
+
+  return value ? value : null;
+};
+
+export const storeSettings = async (body: ILoginSettings) => {
+  const storingSettingsName = getStoringSettingsName();
+  await Storage.set({
+    key: storingSettingsName,
+    value: JSON.stringify(body)
+  });
+};
+
+export const storeKey = async (key: string) => {
+  const storingKeyName = getStoringKeyName();
+  await Storage.set({
+    key: storingKeyName,
+    value: key
+  });
+};
+
+export const cleanStoredSettings = () => {
+  const storingSettingsName = getStoringSettingsName();
+  return Storage.remove({ key: storingSettingsName });
+};
+
+export const cleanStoredKey = () => {
+  const storingKeyName = getStoringKeyName();
+  return Storage.remove({ key: storingKeyName });
 };
