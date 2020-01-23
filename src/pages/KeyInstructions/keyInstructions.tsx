@@ -2,10 +2,7 @@ import React, { FunctionComponent, useContext, useState } from "react";
 import "./keyInstructions.css";
 import { AppContext } from "../../store/Store";
 import { History } from "history";
-import {
-  NOTIFICATION_TYPE,
-  LOGS_LIST_URL_CONFIG
-} from "../../utils/constants";
+import { copy, arrowForward } from "ionicons/icons";
 import {
   IonPage,
   IonContent,
@@ -19,12 +16,17 @@ import {
   IonFab,
   IonFabButton
 } from "@ionic/react";
+import { NOTIFICATION_TYPE, LOGS_LIST_URL_CONFIG } from "../../utils/constants";
 import { Plugins } from "@capacitor/core";
-import { getUserFromKey } from "../../utils/api";
-import {createCopyClipboardAction, KEY_INSTRUCTIONS_TYPE, KEY_VALIDATION_PAGE_TEXTS} from "./constants";
 
+import { getUserFromKey } from "../../utils/api";
+import {
+  KEY_VALIDATION_PAGE_TEXTS,
+  createCopyClipboardAction,
+  KEY_INSTRUCTIONS_TYPE
+} from "./constants";
 import { InstructionsSlides } from "../../components/InstructionsSlides/Instructions";
-import { copy, arrowForward } from "ionicons/icons";
+
 const CapApp = Plugins.App;
 const { Clipboard } = Plugins;
 
@@ -85,7 +87,13 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
   };
 
   const renderInstructions = () => {
-    return <InstructionsSlides settings={settings} onLastStepAction={onClickActivatedKey} />;
+    return (
+      <InstructionsSlides
+        userKey={key}
+        serverAddressLink={serverAddress}
+        onLastStepAction={onClickActivatedKey}
+      />
+    );
   };
 
   const renderKey = () => {
@@ -93,13 +101,7 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
       <IonContent color="tertiary">
         <IonGrid>
           <IonRow className="key__row">
-            <IonCol
-              className=""
-              sizeXs="10"
-              offsetXs="1"
-              sizeMd="4"
-              offsetMd="4"
-            >
+            <IonCol sizeXs="10" offsetXs="1" sizeMd="4" offsetMd="4">
               <IonRow className="key__row--with-padding">
                 <IonCol className="key__col">
                   <h4 className="key__title">
@@ -109,11 +111,11 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
               </IonRow>
               <IonRow>
                 <IonCol className="key__col" size="1">
-                  <IonButton className="key__copy-button" onClick={copyKeyToClipboard}>
-                    <IonIcon
-                      size={"large"}
-                      icon={copy}
-                    />
+                  <IonButton
+                    className="key__copy-button"
+                    onClick={copyKeyToClipboard}
+                  >
+                    <IonIcon size={"large"} icon={copy} />
                   </IonButton>
                 </IonCol>
                 <IonCol className="key__col" offsetXs="2" size="9">

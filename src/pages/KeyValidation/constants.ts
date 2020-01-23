@@ -1,16 +1,19 @@
-export interface KeyValidationPageTexts {
-  HEADER_TITLE: string;
-  FIRST_STEP: string;
-  SECOND_STEP: string;
-  THIRD_STEP: string;
-  FOURTH_STEP: string;
-  TITLE: string;
+export interface LastStepsPageTexts {
+  TRYTON_BUTTON: string;
+  BUTTON_FIRST_STEP: string;
+  BUTTON_SECOND_STEP: string;
+  BUTTON_THIRD_STEP: string;
+  TEXT_FIRST_STEP: string;
+  TEXT_SECOND_STEP: string;
+  TEXT_THIRD_STEP: string;
 }
-export const KEY_VALIDATION_PAGE_TEXTS: KeyValidationPageTexts = {
-  HEADER_TITLE: "Validate your key",
-  TITLE: "This is your new key",
-  FIRST_STEP: "Sign into your Tryton dashboard",
-  SECOND_STEP: "Go to Timesheet application",
-  THIRD_STEP: "Look for this new generated key and validate it",
-  FOURTH_STEP: "Press this button and lets start log your hours:)"
+export const LAST_STEPS_TEXTS: LastStepsPageTexts = {
+  BUTTON_FIRST_STEP: "Copy your key",
+  BUTTON_SECOND_STEP: "Go to Tryton",
+  BUTTON_THIRD_STEP: "START USING TRAKY !",
+  TEXT_FIRST_STEP: "1. Click on the button to copy your key",
+  TEXT_SECOND_STEP: "2. Click on the button to login to your tryton account",
+  TEXT_THIRD_STEP:
+    "3. Once you validate the key, click the button start to log your hours",
+  TRYTON_BUTTON: "Tryton"
 };

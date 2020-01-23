@@ -86,3 +86,7 @@ export type ValidationProps = {
   actionButton: Function;
   settings: ILoginSettings;
 };
+
+export interface OnHandleClickEventFunction extends Function {
+  (): void;
+}
