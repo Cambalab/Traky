@@ -1,5 +1,5 @@
-import {INotificationOptions} from "../../utils/declarations";
-import {NOTIFICATION_TYPE} from "../../utils/constants";
+import { INotificationOptions } from "../../utils/declarations";
+import { NOTIFICATION_TYPE } from "../../utils/constants";
 
 export interface KeyValidationPageTexts {
   KEY_VALIDATION_ERROR_MESSAGE: string;
@@ -46,8 +46,8 @@ export interface IKeyInstructionsAction {
 }
 
 export interface COPY_CLIPBOARD_ACTION extends IKeyInstructionsAction {
-  type: KEY_INSTRUCTIONS_TYPE.COPY_CLIPBOARD_ACTION,
-  payload: INotificationOptions
+  type: KEY_INSTRUCTIONS_TYPE.COPY_CLIPBOARD_ACTION;
+  payload: INotificationOptions;
 }
 
 export const createCopyClipboardAction = (): COPY_CLIPBOARD_ACTION => ({

@@ -16,15 +16,15 @@ import {
   IonFab,
   IonFabButton
 } from "@ionic/react";
-import {
-  NOTIFICATION_MESSAGES,
-  NOTIFICATION_TYPE,
-  LOGS_LIST_URL_CONFIG
-} from "../../utils/constants";
+import { NOTIFICATION_TYPE, LOGS_LIST_URL_CONFIG } from "../../utils/constants";
 import { Plugins } from "@capacitor/core";
 
 import { getUserFromKey } from "../../utils/api";
-import { KEY_VALIDATION_PAGE_TEXTS } from "./constants";
+import {
+  KEY_VALIDATION_PAGE_TEXTS,
+  createCopyClipboardAction,
+  KEY_INSTRUCTIONS_TYPE
+} from "./constants";
 import { InstructionsSlides } from "../../components/InstructionsSlides/Instructions";
 
 const CapApp = Plugins.App;
@@ -87,7 +87,13 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
   };
 
   const renderInstructions = () => {
-    return <InstructionsSlides />;
+    return (
+      <InstructionsSlides
+        userKey={key}
+        serverAddressLink={serverAddress}
+        onLastStepAction={onClickActivatedKey}
+      />
+    );
   };
 
   const renderKey = () => {

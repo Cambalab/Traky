@@ -1,61 +1,37 @@
-<<<<<<< HEAD
 import React from "react";
-=======
-import React, { useContext } from "react";
 import { LAST_STEPS_TEXTS } from "./constants";
->>>>>>> Implement workflow design for validate user key
 import "./KeyValidation.css";
-import { AppContext } from "../../store/Store";
 import {
   IonGrid,
   IonRow,
-<<<<<<< HEAD
-  IonCol,
-  IonButton
-=======
   IonButton,
   IonList,
   IonItem,
   IonCol
->>>>>>> Implement workflow design for validate user key
 } from "@ionic/react";
 import { Plugins } from "@capacitor/core";
+import { isMobile } from "../../utils/utils";
+import { OnHandleClickEventFunction } from "../../utils/declarations";
 const { Clipboard } = Plugins;
 
-const KeyValidation: React.FC = () => {
+type KeyValidationProps = {
+  loginFunction: OnHandleClickEventFunction;
+  serverAddressLink: string;
+  authKey: string;
+};
+
+const KeyValidation: React.FC<KeyValidationProps> = ({
+  authKey,
+  serverAddressLink,
+  loginFunction
+}) => {
   const copyKeyToClipboard = () => {
     Clipboard.write({
-      string: key
+      string: authKey
     });
-    document.execCommand(key);
+    document.execCommand(authKey);
   };
 
-  const { state } = useContext(AppContext);
-  const { key, settings } = state;
-  const { serverAddress } = settings;
-
-<<<<<<< HEAD
-const KeyValidation: React.FC<ValidationProps> = ({ actionButton }) => (
-  <div>
-    <IonGrid>
-      <IonRow className="key__row">
-        <IonCol className="" sizeXs="8" offsetXs="2" sizeMd="2" offsetMd="10">
-          <IonRow className="key__row--with-padding"/>
-          <h5 className="key__title">{KEY_VALIDATION_PAGE_TEXTS.FINISHING}</h5>
-          <IonRow>
-            <IonCol>
-              <IonButton
-                color="secondary"
-                className="login-button"
-                onClick={() => actionButton()}
-              >
-                {LOGIN_PAGE_TEXTS.LOGIN_BUTTON}
-              </IonButton>
-            </IonCol>
-          </IonRow>
-        </IonCol>
-      </IonRow>
-=======
   return (
     <IonGrid className="key__container">
       <IonCol
@@ -65,7 +41,10 @@ const KeyValidation: React.FC<ValidationProps> = ({ actionButton }) => (
         offsetXs="0"
         className="key__col"
       >
-        <IonList inset className="key-list">
+        <IonList
+          inset
+          className={isMobile() ? "key__list" : "key__list--desktop"}
+        >
           <IonItem className="key-list__item">
             <IonRow className="key__row">
               <IonCol size="12" className="key__col">
@@ -91,7 +70,7 @@ const KeyValidation: React.FC<ValidationProps> = ({ actionButton }) => (
                 <IonButton
                   color="secondary"
                   className="key__button"
-                  href={serverAddress}
+                  href={serverAddressLink}
                 >
                   {LAST_STEPS_TEXTS.BUTTON_SECOND_STEP}
                 </IonButton>
@@ -106,7 +85,7 @@ const KeyValidation: React.FC<ValidationProps> = ({ actionButton }) => (
                 </h4>
               </IonCol>
               <IonCol size="12" className="key__col">
-                <IonButton className="key__button" href={serverAddress}>
+                <IonButton onClick={loginFunction} className="key__button">
                   {LAST_STEPS_TEXTS.BUTTON_THIRD_STEP}
                 </IonButton>
               </IonCol>
@@ -114,7 +93,6 @@ const KeyValidation: React.FC<ValidationProps> = ({ actionButton }) => (
           </IonItem>
         </IonList>
       </IonCol>
->>>>>>> Implement workflow design for validate user key
     </IonGrid>
   );
 };

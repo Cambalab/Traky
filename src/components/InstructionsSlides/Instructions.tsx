@@ -36,7 +36,17 @@ const slideOpts = {
   }
 };
 
-export const InstructionsSlides: React.FC = () => (
+type InstructionsSlidesProps = {
+  onLastStepAction: () => void;
+  serverAddressLink: string;
+  userKey: string;
+};
+
+export const InstructionsSlides: React.FC<InstructionsSlidesProps> = ({
+  userKey,
+  serverAddressLink,
+  onLastStepAction
+}) => (
   <IonContent color="tertiary" fullscreen>
     <IonSlides pager={true} options={slideOpts}>
       <IonSlide className="slide__container">
@@ -79,7 +89,11 @@ export const InstructionsSlides: React.FC = () => (
         <h4 className="slide__text">{KEY_VALIDATION_PAGE_TEXTS.THIRD_STEP}</h4>
       </IonSlide>
       <IonSlide className="slide__container">
-        <KeyValidation />
+        <KeyValidation
+          authKey={userKey}
+          serverAddressLink={serverAddressLink}
+          loginFunction={onLastStepAction}
+        />
       </IonSlide>
     </IonSlides>
   </IonContent>

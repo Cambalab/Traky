@@ -7,6 +7,11 @@
   background: var(--ion-color-tertiary);
 }
 
+.key__list--desktop {
+  background: var(--ion-color-tertiary);
+  width: 80%;
+}
+
 .key__row {
   display: flex;
   align-self: center;
