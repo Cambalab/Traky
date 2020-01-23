@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useContext, useState} from "react";
 import { History } from "history";
 
 import {
@@ -15,7 +15,9 @@ import {
   IonMenuButton,
   IonFab,
   IonFabButton,
-  IonIcon
+  IonIcon,
+  IonItem,
+  IonDatetime
 } from "@ionic/react";
 
 import { AppContext } from "../../store/Store";
@@ -25,16 +27,18 @@ import LogHourCard from "../../components/LogHourCard/LogHourCard";
 import {
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
-  LOGS_LIST_URL_CONFIG
+  LOGS_LIST_URL_CONFIG,
 } from "../../utils/constants";
 import { TEXTS, NEW_HOUR_BUTTON_OPTION } from "./constants";
+import { calendar } from "ionicons/icons";
 
 import { removeHours, getHours, getGroups } from "../../utils/api";
+import {formatDate, handleInputDatetime} from "../../utils/inputHandle";
+import { DatetimeChangeEventDetail } from "@ionic/core";
 
 interface LogsPageHistory {
   history: History;
 }
-
 
 const removeHour = (loggedHours: ILogs[], removingHour: ILogs) => {
   return loggedHours.filter(hour => hour.id !== removingHour.id);
@@ -48,6 +52,7 @@ const groupName = (groups: IGroup[], id: Number) => {
 const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
   const { groups, loggedHours, user, isLoading, hasError, settings, key } = state;
+  const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
 
   const showEditView = (loggedHourId: number) => () => {
     history.push(`/edit/${loggedHourId}`);
@@ -60,47 +65,48 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
     });
   };
 
+  const onSuccessGetHours = (res: ILogs[]) => {
+    dispatch({
+      type: "UPDATE_LIST",
+      payload: res
+    });
+    dispatch({
+      type: "UPDATE_LOADING",
+      payload: false
+    });
+  };
+
+  const onErrorGetHours = () => {
+    dispatch({
+      type: "UPDATE_ERROR",
+      payload: true
+    });
+    dispatch({
+      type: "UPDATE_LOADING",
+      payload: false
+    });
+    dispatch({
+      type: "NOTIFICATION",
+      payload: {
+        header: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_HEADER,
+        message: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_BODY,
+        color: NOTIFICATION_TYPE.ERROR
+      }
+    });
+    dispatch({
+      type: "SHOW_NOTIFICATION",
+      payload: true
+    });
+  };
+
   useIonViewDidEnter(() => {
     if (user.id !== null && loggedHours.length === 0) {
-      const onSuccessGetHours = (res: ILogs[]) => {
-        dispatch({
-          type: "UPDATE_LIST",
-          payload: res
-        });
-        dispatch({
-          type: "UPDATE_LOADING",
-          payload: false
-        });
-      };
-
-      const onErrorGetHours = () => {
-        dispatch({
-          type: "UPDATE_ERROR",
-          payload: true
-        });
-        dispatch({
-          type: "UPDATE_LOADING",
-          payload: false
-        });
-        dispatch({
-          type: "NOTIFICATION",
-          payload: {
-            header: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_HEADER,
-            message: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_BODY,
-            color: NOTIFICATION_TYPE.ERROR
-          }
-        });
-        dispatch({
-          type: "SHOW_NOTIFICATION",
-          payload: true
-        });
-      };
       dispatch({
         type: "UPDATE_LOADING",
         payload: true
       });
       getGroups(user.id, settings, key, onSuccessGetGroups);
-      getHours(user.id, settings, key, onSuccessGetHours, onErrorGetHours);
+      getHours(currentDate, user.id, settings, key, onSuccessGetHours, onErrorGetHours);
     }
   });
 
@@ -156,7 +162,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       payload: true
     });
 
-    await removeHours(user, logHour, onSuccess, onError);
+    await removeHours(user, logHour, settings, onSuccess, onError);
   };
 
   const renderList = () =>
@@ -181,13 +187,37 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       </div>
     );
 
+  const updateLoggedHoursPerDay = (e: CustomEvent<DatetimeChangeEventDetail>) => {
+    handleInputDatetime(setCurrentDate)(e);
+    const getUpdated = (updatedDate: string) => {
+      dispatch({
+        type: "UPDATE_LOADING",
+        payload: true
+      });
+      getHours(updatedDate, user.id, settings, key, onSuccessGetHours, onErrorGetHours)
+    };
+    handleInputDatetime(getUpdated)(e);
+  };
+
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="#00c79a" className="header__toolbar">
+        <IonToolbar color="tertiary" className="header__toolbar">
           <IonButtons>
             <IonMenuButton className="menu__button" />
-            <IonTitle className="header__title">{TEXTS.LIST_TITLE}</IonTitle>
+            <IonTitle>
+              <IonItem color="tertiary">
+                <IonDatetime
+                    name="currentDate"
+                    className="hour-card__date"
+                    displayFormat="YYYY, MMMM DD"
+                    color="light"
+                    value={currentDate}
+                    onIonChange={updateLoggedHoursPerDay}
+                />
+                <IonIcon slot="end" icon={calendar}/>
+              </IonItem>
+            </IonTitle>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
