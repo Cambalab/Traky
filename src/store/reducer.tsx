@@ -2,6 +2,7 @@ import {OverviewState} from "../utils/declarations";
 import {Action} from "./actions";
 import {sortByDate} from "../utils/utils";
 import {LOGIN_SETTINGS_TYPE} from "../pages/LoginSettings/constants";
+import {KEY_INSTRUCTIONS_TYPE} from "../pages/KeyInstructions/constants";
 
 export function reducer(state: OverviewState, action: Action): OverviewState {
   switch (action.type) {
@@ -61,6 +62,13 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
         notificationOptions: action.payload.notificationOptions,
         showNotification: true
       };
+    }
+    case KEY_INSTRUCTIONS_TYPE.COPY_CLIPBOARD_ACTION: {
+      return {
+          ...state,
+        notificationOptions: action.payload,
+        showNotification: true
+      }
     }
     default:
       return state;
