@@ -14,6 +14,7 @@ export interface KeyValidationPageTexts {
   FIRST_STEP_TITLE: string;
   SECOND_STEP_TITLE: string;
   THIRD_STEP_TITLE: string;
+  FOURTH_STEP_TITLE: string;
   FINISHING: string;
   COPY_CLIPBOARD_HEADER: string;
   COPY_CLIPBOARD_MESSAGE: string;
@@ -27,11 +28,11 @@ export const KEY_VALIDATION_PAGE_TEXTS: KeyValidationPageTexts = {
   FIRST_STEP_TITLE: "STEP 1",
   SECOND_STEP_TITLE: "STEP 2",
   THIRD_STEP_TITLE: "STEP 3",
+  FOURTH_STEP_TITLE: "STEP 4",
   FIRST_STEP: "Login into your Tryton account",
-  SECOND_STEP:
-    "Go to Preferences, on Tab Application click on marked icon to add your key",
-  THIRD_STEP: "Paste your key and validate it",
-  FOURTH_STEP: "Press this button and lets start log your hours:)",
+  SECOND_STEP: "Go to Preferences",
+  THIRD_STEP: "Press on the marked icon to add your key",
+  FOURTH_STEP: "Paste your key and validate it",
   FINISHING: "Your are ready to start log your hours",
   COPY_CLIPBOARD_HEADER: "Key copied",
   COPY_CLIPBOARD_MESSAGE: "Your key was copied on your clipboard"

@@ -4,6 +4,7 @@ import { IonSlides, IonSlide, IonContent, IonImg } from "@ionic/react";
 import step1 from "../../img/steps/mobile-step-1.png";
 import step2 from "../../img/steps/mobile-step-2.png";
 import step3 from "../../img/steps/mobile-step-3.png";
+import step4 from "../../img/steps/mobile-step-4.png";
 
 import "./Instructions.css";
 
@@ -78,15 +79,27 @@ export const InstructionsSlides: React.FC<InstructionsSlidesProps> = ({
       </IonSlide>
       <IonSlide className="slide__container">
         <IonImg
-          className={
-            isMobile() ? "slider__img" : "slider__img slider__img--desktop"
-          }
-          src={step3}
+            className={
+              isMobile() ? "slider__img" : "slider__img slider__img--desktop"
+            }
+            src={step3}
         ></IonImg>
         <h3 className="slide__step-title">
           {KEY_VALIDATION_PAGE_TEXTS.THIRD_STEP_TITLE}
         </h3>
         <h4 className="slide__text">{KEY_VALIDATION_PAGE_TEXTS.THIRD_STEP}</h4>
+      </IonSlide>
+      <IonSlide className="slide__container">
+        <IonImg
+          className={
+            isMobile() ? "slider__img" : "slider__img slider__img--desktop"
+          }
+          src={step4}
+        ></IonImg>
+        <h3 className="slide__step-title">
+          {KEY_VALIDATION_PAGE_TEXTS.FOURTH_STEP_TITLE}
+        </h3>
+        <h4 className="slide__text">{KEY_VALIDATION_PAGE_TEXTS.FOURTH_STEP}</h4>
       </IonSlide>
       <IonSlide className="slide__container">
         <KeyValidation
