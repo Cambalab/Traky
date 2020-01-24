@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { History } from "history";
 
 import {
@@ -27,14 +27,15 @@ import LogHourCard from "../../components/LogHourCard/LogHourCard";
 import {
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
-  LOGS_LIST_URL_CONFIG,
+  LOGS_LIST_URL_CONFIG
 } from "../../utils/constants";
 import { TEXTS, NEW_HOUR_BUTTON_OPTION } from "./constants";
 import { calendar } from "ionicons/icons";
 
 import { removeHours, getHours, getGroups } from "../../utils/api";
-import {formatDate, handleInputDatetime} from "../../utils/inputHandle";
+import { formatDate, handleInputDatetime } from "../../utils/inputHandle";
 import { DatetimeChangeEventDetail } from "@ionic/core";
+import { filterActiveGroups } from "../../utils/utils";
 
 interface LogsPageHistory {
   history: History;
@@ -51,7 +52,15 @@ const groupName = (groups: IGroup[], id: Number) => {
 
 const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
-  const { groups, loggedHours, user, isLoading, hasError, settings, key } = state;
+  const {
+    groups,
+    loggedHours,
+    user,
+    isLoading,
+    hasError,
+    settings,
+    key
+  } = state;
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
 
   const showEditView = (loggedHourId: number) => () => {
@@ -59,9 +68,10 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   };
 
   const onSuccessGetGroups = (res: IGroup[]) => {
+    const activeGroups = filterActiveGroups(res);
     dispatch({
       type: "UPDATE_GROUPS",
-      payload: res
+      payload: activeGroups
     });
   };
 
@@ -106,7 +116,14 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         payload: true
       });
       getGroups(user.id, settings, key, onSuccessGetGroups);
-      getHours(currentDate, user.id, settings, key, onSuccessGetHours, onErrorGetHours);
+      getHours(
+        currentDate,
+        user.id,
+        settings,
+        key,
+        onSuccessGetHours,
+        onErrorGetHours
+      );
     }
   });
 
@@ -187,14 +204,23 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       </div>
     );
 
-  const updateLoggedHoursPerDay = (e: CustomEvent<DatetimeChangeEventDetail>) => {
+  const updateLoggedHoursPerDay = (
+    e: CustomEvent<DatetimeChangeEventDetail>
+  ) => {
     handleInputDatetime(setCurrentDate)(e);
     const getUpdated = (updatedDate: string) => {
       dispatch({
         type: "UPDATE_LOADING",
         payload: true
       });
-      getHours(updatedDate, user.id, settings, key, onSuccessGetHours, onErrorGetHours)
+      getHours(
+        updatedDate,
+        user.id,
+        settings,
+        key,
+        onSuccessGetHours,
+        onErrorGetHours
+      );
     };
     handleInputDatetime(getUpdated)(e);
   };
@@ -208,35 +234,39 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
             <IonTitle>
               <IonItem color="tertiary">
                 <IonDatetime
-                    name="currentDate"
-                    className="hour-card__date"
-                    displayFormat="YYYY, MMMM DD"
-                    color="light"
-                    value={currentDate}
-                    onIonChange={updateLoggedHoursPerDay}
+                  name="currentDate"
+                  className="hour-card__date"
+                  displayFormat="YYYY, MMMM DD"
+                  color="light"
+                  value={currentDate}
+                  onIonChange={updateLoggedHoursPerDay}
                 />
-                <IonIcon slot="end" icon={calendar}/>
+                <IonIcon slot="end" icon={calendar} />
               </IonItem>
             </IonTitle>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-          {/*-- List of logged hours --*/}
-          {isLoading ? (
-            <IonSpinner className="content__spinner" name="crescent" color="primary" />
-          ) : hasError ? (
-            <div className="content___message">
-              <p>{TEXTS.LIST_ERROR_MSG}</p>
-            </div>
-          ) : (
-            <IonList className="hours_list">{renderList()}</IonList>
-          )}
-          <IonFab horizontal="end" vertical="bottom" slot="fixed">
-            <IonFabButton color="primary" routerLink={NEW_HOUR_BUTTON_OPTION.url} >
-              <IonIcon icon={NEW_HOUR_BUTTON_OPTION.icon} />
-            </IonFabButton>
-          </IonFab>
+        {/*-- List of logged hours --*/}
+        {isLoading ? (
+          <IonSpinner
+            className="content__spinner"
+            name="crescent"
+            color="primary"
+          />
+        ) : hasError ? (
+          <div className="content___message">
+            <p>{TEXTS.LIST_ERROR_MSG}</p>
+          </div>
+        ) : (
+          <IonList className="hours_list">{renderList()}</IonList>
+        )}
+        <IonFab horizontal="end" vertical="bottom" slot="fixed">
+          <IonFabButton color="primary" routerLink={NEW_HOUR_BUTTON_OPTION.url}>
+            <IonIcon icon={NEW_HOUR_BUTTON_OPTION.icon} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

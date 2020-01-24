@@ -18,8 +18,10 @@ export interface FetchInput {
 }
 
 export interface IGroup {
+  end: any;
   id: any;
   name: string;
+  start: any;
 }
 
 export interface IUser {
