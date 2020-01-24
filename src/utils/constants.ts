@@ -88,7 +88,9 @@ export const NOTIFICATION_MESSAGES = {
     "Your Application Key was generated successfully, go to validate It",
   SAVE_SETTINGS_ERROR_HEADER: "Error Generating Key",
   SAVE_SETTINGS_ERROR_BODY:
-    "There is something wrong with your settings, please change them and try again"
+    "There is something wrong with your settings, please change them and try again",
+  GET_STORAGE_KEY_HEADER: "Error Getting Key",
+  GET_STORAGE_KEY_BODY: "There is none key in the Storage. Please generate a new key."
 };
 
 export const NOTIFICATION_TYPE = {
@@ -107,3 +109,7 @@ export const TRYTON_LINE_DATE_FORMAT = "YYYY-MM-DD";
 export const APPLICATION_NAME = {
   TIMESHEET: "timesheet"
 };
+
+export const GENERATE_KEY_MESSAGE = "Generating key...";
+
+export const GET_STORAGE_KEY = "Getting key of the Storage...";
