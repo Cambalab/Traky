@@ -18,6 +18,7 @@ const slideOpts = {
   centeredSlides: true,
   watchSlidesProgress: true,
   watchSlidesVisibility: true,
+  preloadImages: true,
   navigation: {
     nextEl: ".swiper-button-next",
     prevEl: ".swiper-button-prev"
