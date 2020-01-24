@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { LAST_STEPS_TEXTS } from "./constants";
 import "./KeyValidation.css";
 import {
@@ -12,7 +12,9 @@ import {
 import { Plugins } from "@capacitor/core";
 import { isMobile } from "../../utils/utils";
 import { OnHandleClickEventFunction } from "../../utils/declarations";
-const { Clipboard } = Plugins;
+import { createCopyClipboardAction } from "../KeyInstructions/constants";
+import { AppContext } from "../../store/Store";
+const { Clipboard, Browser } = Plugins;
 
 type KeyValidationProps = {
   loginFunction: OnHandleClickEventFunction;
@@ -25,11 +27,19 @@ const KeyValidation: React.FC<KeyValidationProps> = ({
   serverAddressLink,
   loginFunction
 }) => {
-  const copyKeyToClipboard = () => {
-    Clipboard.write({
+  const { dispatch } = useContext(AppContext);
+
+  const copyKeyToClipboard = async () => {
+    await Clipboard.write({
       string: authKey
     });
     document.execCommand(authKey);
+
+    dispatch(createCopyClipboardAction());
+  };
+
+  const openServerAddressBrowser = async () => {
+    await Browser.open({ url: serverAddressLink });
   };
 
   return (
@@ -43,7 +53,7 @@ const KeyValidation: React.FC<KeyValidationProps> = ({
       >
         <IonList
           inset
-          className={isMobile() ? "key__list" : "key__list--desktop"}
+          className={isMobile() ? "key-list" : "key-list--desktop"}
         >
           <IonItem className="key-list__item">
             <IonRow className="key__row">
@@ -68,9 +78,9 @@ const KeyValidation: React.FC<KeyValidationProps> = ({
               </IonCol>
               <IonCol size="12" className="key__col">
                 <IonButton
+                  onClick={openServerAddressBrowser}
                   color="secondary"
                   className="key__button"
-                  href={serverAddressLink}
                 >
                   {LAST_STEPS_TEXTS.BUTTON_SECOND_STEP}
                 </IonButton>
