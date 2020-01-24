@@ -26,19 +26,19 @@ import {getStoredKey, getStoredSettings, storeKey, storeSettings} from "../../ut
 interface LoginSettingsPageProps {
   history: History;
   initialShowLoading?: boolean,
-  initialgetOfStorage?: boolean
+  initialIsFetchingSettingsFromStorage?: boolean
 }
 
 const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
   history,
   initialShowLoading = false,
-  initialgetOfStorage = false
+  initialIsFetchingSettingsFromStorage = false
 }) => {
   const { state, dispatch } = useAppContext();
   const { settings } = state;
 
   const [showLoading, setShowLoading] = useState(initialShowLoading);
-  const [getOfStorage, setGetOfStorage] = useState(initialgetOfStorage);
+  const [isFetchingSettingsFromStorage, setIsFetchingSettingsFromStorage] = useState(initialIsFetchingSettingsFromStorage);
 
   useEffect(() => {
     setShowLoading(initialShowLoading);
@@ -69,7 +69,7 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
   useIonViewDidEnter(() => {
     const fetchSettings = async () => {
       if (!settings.serverAddress || !settings.database) {
-        setGetOfStorage(true);
+        setIsFetchingSettingsFromStorage(true);
         setShowLoading(true);
         const fetchedSettings = await getStoredSettings();
 
@@ -82,7 +82,7 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
             history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
           }
         } else {
-          setGetOfStorage(false);
+          setIsFetchingSettingsFromStorage(false);
           dispatch({
             type: "NOTIFICATION",
             payload: {
@@ -109,8 +109,8 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
         showLoading &&
         <IonLoading
         isOpen={showLoading}
-        message={getOfStorage ? GET_STORAGE_KEY : GENERATE_KEY_MESSAGE}
-        duration={4000}
+        message={isFetchingSettingsFromStorage ? GET_STORAGE_KEY : GENERATE_KEY_MESSAGE}
+        duration={1000}
         onDidDismiss={() => setShowLoading(false)}
         />
       }
