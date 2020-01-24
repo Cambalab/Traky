@@ -3,6 +3,7 @@ import LogHourForm from "../components/LogHourForm/LogHourForm";
 import LoginForm from "../components/LoginForm/LoginForm";
 import {CONFIG, APPLICATION_NAME, TRYTON_LINE_DATE_FORMAT} from "./constants";
 import { formatDate } from "./inputHandle";
+import moment from "moment";
 
 const createHeaders = () => {
   const headers: HeadersInit = new Headers();
@@ -58,7 +59,7 @@ const getHours = (date: string, userId: any, settings: ILoginSettings, key: stri
       return {
         id: g.id,
         description: g.description,
-        spent_time: g.duration,
+        spent_time: new Date(g.duration),
         groupId: g.work,
         timestamp: current_day
       };
@@ -96,7 +97,7 @@ const logHours = (
 ) => {
   const requestBody = {
     date: formatDate(body.timestamp, "YYYY-MM-DD"),
-    duration: new Date(body.spent_time || "0").getTime(),
+    duration: new Date(body.spent_time || "0").valueOf(),
     employee: Number(userId),
     work: body.groupId,
     description: body.description
