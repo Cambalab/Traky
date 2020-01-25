@@ -3,7 +3,6 @@ import LogHourForm from "../components/LogHourForm/LogHourForm";
 import LoginForm from "../components/LoginForm/LoginForm";
 import {CONFIG, APPLICATION_NAME, TRYTON_LINE_DATE_FORMAT} from "./constants";
 import { formatDate } from "./inputHandle";
-import moment from "moment";
 
 const createHeaders = () => {
   const headers: HeadersInit = new Headers();
@@ -44,10 +43,6 @@ const fetchAPI = async ({
     }
     return e;
   }
-};
-
-const getCurrentUser = () => {
-  return { id: 1 };
 };
 
 const getHours = (date: string, userId: any, settings: ILoginSettings, key: string, onSuccess: Function, onError?: Function) => {
@@ -223,7 +218,6 @@ const getUserAppKey = (
 
 export {
   fetchAPI,
-  getCurrentUser,
   logHours,
   getGroups,
   getHours,
