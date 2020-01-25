@@ -11,6 +11,7 @@ import {
   SET_KEY_ACTION
 } from "../pages/LoginSettings/constants";
 import {COPY_CLIPBOARD_ACTION} from "../pages/KeyInstructions/constants";
+import {EDIT_HOUR_SUCCESSFUL_ACTION} from "../pages/EditHour/constants";
 
 export type UPDATE_LIST_ACTION = {
   type: "UPDATE_LIST",
@@ -76,3 +77,4 @@ export type Action =
   | ERROR_LOGIN_SETTINGS_ACTION
   | SET_KEY_ACTION
   | COPY_CLIPBOARD_ACTION
+  | EDIT_HOUR_SUCCESSFUL_ACTION
