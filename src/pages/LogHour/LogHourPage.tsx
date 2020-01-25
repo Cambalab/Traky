@@ -9,7 +9,6 @@ import {
 import React, { FunctionComponent, useContext } from "react";
 import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
-import { logHours } from "../../utils/api";
 import { History } from "history";
 import {
   NOTIFICATION_MESSAGES,
@@ -18,6 +17,8 @@ import {
 } from "../../utils/constants";
 import { LOG_HOUR_PAGE_TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
+import { ILogs } from "../../utils/declarations";
+import { createLog } from "../../utils/api/logs";
 
 interface LogHourPage {
   history: History;
@@ -27,8 +28,8 @@ const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
   const { user, loggedHours, groups, settings, key } = state;
 
-  const onClickSave = async (body: LogHourForm) => {
-    const onSuccess = (res: any) => {
+  const onClickSave = async (body: ILogs) => {
+    const onSuccess = (res: ILogs) => {
       dispatch({
         type: "UPDATE_LIST",
         payload: loggedHours.concat(res)
@@ -63,7 +64,7 @@ const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
       })
     };
 
-    await logHours(user.id, body, settings, key, onSuccess, onError);
+    await createLog({ ...body, userId: user.id }, settings, key, onSuccess, onError);
   };
 
   const onClickCancel = async () => {
@@ -82,7 +83,7 @@ const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <LogHourForm onClickSave={onClickSave} onClickCancel={onClickCancel} userId={user.id} groups={groups} />
+      <LogHourForm onClickSave={onClickSave} onClickCancel={onClickCancel} groups={groups} />
     </IonPage>
   );
 };

@@ -12,6 +12,8 @@ import {
 import { create, timer, trash, calendar } from "ionicons/icons";
 import { ILogs } from "../../utils/declarations";
 import { LOG_HOUR_CARD_TEXTS } from "./constants";
+import { formatDate } from "../../utils/inputHandle";
+import { createStringDateFromNumber } from "../LogHourForm/constants";
 import "./LogHourCard.css";
 
 interface LogHourCard {
@@ -54,7 +56,7 @@ const LogHourCard: React.FC<LogHourCard> = ({
                   className="item-card__hour"
                   readonly={true}
                   displayFormat={LOG_HOUR_CARD_TEXTS.HOUR_DISPLAY_FORMAT}
-                  value={`${logHour.spent_time}`}
+                  value={createStringDateFromNumber(logHour.duration)}
                 />
                 <p className="item-card__hour-text">
                   {LOG_HOUR_CARD_TEXTS.SPENT_TIME_HOURS_TEXT}
@@ -72,7 +74,7 @@ const LogHourCard: React.FC<LogHourCard> = ({
                   readonly={true}
                   className="item-card__date"
                   displayFormat={LOG_HOUR_CARD_TEXTS.DATE_DISPLAY_FORMAT}
-                  value={`${logHour.timestamp}`}
+                  value={formatDate(logHour.timestamp)}
                 />
               </div>
             </IonCol>

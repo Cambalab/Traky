@@ -1,3 +1,4 @@
+
 export interface LogHourFormTexts {
   INPUT_DESCRIPTION_TEXT: string;
   INPUT_PLACEHOLDER_DESCRIPTION_TEXT: string;
@@ -21,4 +22,12 @@ export const LOG_HOUR_FORM_TEXTS: LogHourFormTexts = {
   INPUT_PLACEHOLDER_SPENT_TIME_TEXT: "Enter your spent time",
   BUTTON_SAVE_TEXT: "Save",
   BUTTON_CANCEL_TEXT: "Cancel"
+};
+
+export const createStringDateFromNumber = (duration: number): string => {
+  return String(new Date(duration));
+};
+
+export const createNumberFromStringDate = (date: string): number => {
+  return new Date(date).valueOf();
 };
