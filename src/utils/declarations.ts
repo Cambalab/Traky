@@ -7,16 +7,6 @@ export interface AppPage {
   title: string;
 }
 
-export interface FetchInput {
-  url: string;
-  method: string;
-  body?: object;
-  headers?: object;
-  onSuccess?: Function;
-  onError?: Function;
-  parse?: Function;
-}
-
 export interface IGroup {
   end: any;
   id: any;
@@ -36,11 +26,12 @@ export interface ILoginSettings {
 }
 
 export interface ILogs {
-  id: number;
+  id?: number;
   description: string;
-  timestamp: Date;
-  spent_time: Date;
+  timestamp: string;
+  duration: number;
   groupId: number;
+  userId?: number;
 }
 
 export interface INotificationOptions {
