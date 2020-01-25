@@ -128,18 +128,24 @@ const editHours = (
   hourId: any,
   body: LogHourForm,
   settings: ILoginSettings,
+  key: string,
   onSuccess: Function,
   onError: Function
 ) => {
   const requestBody = {
+    id: hourId,
     date: formatDate(body.timestamp, "YYYY-MM-DD"),
-    duration: body.spent_time,
-    employee: Number(process.env.REACT_APP_TRYTON_USER_ID),
+    duration: new Date(body.spent_time || "0").valueOf(),
+    employee: userId,
     work: body.groupId,
     description: body.description
   };
   const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
   const endpoint = `${trytonURL}/timesheet/line/${hourId}`;
+  const headers = {
+    "Authorization": "bearer " + key,
+    "Content-Type": "application/json"
+  };
 
   const newOnSuccess = ({ id }: any) => {
     return onSuccess({
@@ -155,6 +161,7 @@ const editHours = (
     url: endpoint,
     method: "PUT",
     body: requestBody,
+    headers,
     onSuccess: newOnSuccess,
     onError
   });

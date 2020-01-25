@@ -34,7 +34,7 @@ const EditHourPage: FunctionComponent<EditHourPageProps> = ({
   match
 }) => {
   const { state, dispatch } = useContext(AppContext);
-  const { user, groups, loggedHours, settings } = state;
+  const { user, groups, loggedHours, settings, key } = state;
   const loggedHourId = Number(match.params.id);
   const loggedHour = filterLoggedHour(loggedHours, loggedHourId);
 
@@ -74,7 +74,7 @@ const EditHourPage: FunctionComponent<EditHourPageProps> = ({
       })
     };
 
-    await editHours(user.id, loggedHourId, body, settings, onSuccess, onError);
+    await editHours(user.id, loggedHourId, body, settings, key, onSuccess, onError);
   };
 
   const onClickCancel = async () => {
