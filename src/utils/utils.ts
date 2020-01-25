@@ -1,6 +1,7 @@
 import { getPlatforms } from "@ionic/react";
 import { Plugins } from "@capacitor/core";
 import { ILogs, IGroup, ILoginSettings } from "./declarations";
+import {URL_CONFIG} from "./constants";
 const { Storage } = Plugins;
 
 export function isMobile() {
@@ -148,4 +149,10 @@ export const filterActiveGroups = (groups: IGroup[]) => {
   return groups.filter(
     group => new Date(group.end) > today || group.end == null
   );
+};
+
+export const getUrlFromParams = (urlConfig: URL_CONFIG, id: number) => {
+  const params = urlConfig.params || '';
+
+  return urlConfig.path.replace(params, String(id));
 };

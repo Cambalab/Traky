@@ -27,7 +27,8 @@ import LogHourCard from "../../components/LogHourCard/LogHourCard";
 import {
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
-  LOGS_LIST_URL_CONFIG
+  LOGS_LIST_URL_CONFIG,
+  LOGS_EDIT_URL_CONFIG
 } from "../../utils/constants";
 import { TEXTS, NEW_HOUR_BUTTON_OPTION } from "./constants";
 import { calendar } from "ionicons/icons";
@@ -35,7 +36,7 @@ import { calendar } from "ionicons/icons";
 import { removeHours, getHours, getGroups } from "../../utils/api";
 import { formatDate, handleInputDatetime } from "../../utils/inputHandle";
 import { DatetimeChangeEventDetail } from "@ionic/core";
-import { filterActiveGroups } from "../../utils/utils";
+import { filterActiveGroups, getUrlFromParams } from "../../utils/utils";
 
 interface LogsPageHistory {
   history: History;
@@ -64,7 +65,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
 
   const showEditView = (loggedHourId: number) => () => {
-    history.push(`/edit/${loggedHourId}`);
+    history.push(getUrlFromParams(LOGS_EDIT_URL_CONFIG, loggedHourId));
   };
 
   const onSuccessGetGroups = (res: IGroup[]) => {

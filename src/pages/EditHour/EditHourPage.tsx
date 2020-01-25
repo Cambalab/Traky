@@ -11,12 +11,11 @@ import { AppContext } from "../../store/Store";
 import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
 import { editHours } from "../../utils/api";
-import { ILogs, IMatchParams } from "../../utils/declarations";
-import { NOTIFICATION_MESSAGES, NOTIFICATION_TYPE, LOGS_LIST_URL_CONFIG } from "../../utils/constants";
+import { ILogs } from "../../utils/declarations";
+import {NOTIFICATION_MESSAGES, NOTIFICATION_TYPE, LOGS_LIST_URL_CONFIG} from "../../utils/constants";
 import { EDIT_HOUR_PAGE_TEXTS } from "./constants";
 import { RouteComponentProps } from "react-router-dom";
 import { formatDate } from "../../utils/inputHandle";
-import {transformNumberToString} from "../../utils/utils";
 
 const filterLoggedHour = (loggedHours: ILogs[], id: number) => {
   return loggedHours.find((e: ILogs) => e.id === id);
@@ -26,13 +25,18 @@ const updateLoggedHour = (loggedHours: ILogs[], editedHour: ILogs) => {
   return loggedHours.map((hour) => (hour.id === editedHour.id ? editedHour : hour));
 };
 
-const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
+interface EditHourPageProps extends RouteComponentProps<{
+  id: string;
+}> {}
+
+const EditHourPage: FunctionComponent<EditHourPageProps> = ({
   history,
   match
 }) => {
   const { state, dispatch } = useContext(AppContext);
   const { user, groups, loggedHours, settings } = state;
-  const loggedHour = filterLoggedHour(loggedHours, Number(match.params.data));
+  const loggedHourId = Number(match.params.id);
+  const loggedHour = filterLoggedHour(loggedHours, loggedHourId);
 
   const onClickSave = async (body: LogHourForm) => {
     const onSuccess = (res: any) => {
@@ -70,7 +74,7 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
       })
     };
 
-    await editHours(user.id, match.params.data, body, settings, onSuccess, onError);
+    await editHours(user.id, loggedHourId, body, settings, onSuccess, onError);
   };
 
   const onClickCancel = async () => {
@@ -94,7 +98,7 @@ const EditHourPage: FunctionComponent<RouteComponentProps<IMatchParams>> = ({
           initialDescription={loggedHour.description}
           initialSelectedGroup={loggedHour.groupId}
           initialCurrentDate={formatDate(loggedHour.timestamp)}
-          initialHours={transformNumberToString(loggedHour.spent_time.getTime())}
+          initialHours={String(loggedHour.spent_time)}
           onClickSave={onClickSave}
           onClickCancel={onClickCancel}
           userId={user.id}
