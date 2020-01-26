@@ -7,18 +7,23 @@ import {
   IonToolbar
 } from "@ionic/react";
 import React, { FunctionComponent, useContext } from "react";
-import { RouteComponentProps } from "react-router-dom";
 import { AppContext } from "../../store/Store";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
-import { ILogs } from "../../utils/declarations";
-import { NOTIFICATION_MESSAGES, NOTIFICATION_TYPE, LOGS_LIST_URL_CONFIG } from "../../utils/constants";
-import { createEditSuccessfulAction, EDIT_HOUR_PAGE_TEXTS } from "./constants";
-import { editLog } from "../../utils/api/logs";
-import "./LogHourPage.css";
-
-const filterLoggedHour = (loggedHours: ILogs[], id: number) => {
-  return loggedHours.find((e: ILogs) => e.id === id);
-};
+import { LOGS_LIST_URL_CONFIG } from "../../utils/constants";
+import { EDIT_HOUR_PAGE_TEXTS } from "./constants";
+import {selectUser} from "../../store/selectors/user";
+import {selectGroups} from "../../store/selectors/groups";
+import {selectSettings} from "../../store/selectors/settings";
+import {selectLog} from "../../store/selectors/logs";
+import {
+  createUpdateLogErrorAction,
+  createUpdateLogStartAction,
+  createUpdateLogSuccessfulAction
+} from "../../store/actions/logs";
+import {selectKey} from "../../store/selectors/key";
+import {RouteComponentProps} from "react-router";
+import {editLog} from "../../utils/api/logs";
+import {ILogs} from "../../utils/declarations";
 
 interface EditHourPageProps extends RouteComponentProps<{
   id: string;
@@ -29,31 +34,22 @@ const EditHourPage: FunctionComponent<EditHourPageProps> = ({
   match
 }) => {
   const { state, dispatch } = useContext(AppContext);
-  const { user, groups, loggedHours, settings, key } = state;
-  const loggedHourId = Number(match.params.id);
-  const loggedHour = filterLoggedHour(loggedHours, loggedHourId);
+  const user = selectUser(state);
+  const groups = selectGroups(state);
+  const key = selectKey(state);
+  const settings = selectSettings(state);
+  const log = selectLog(Number(match.params.id), state);
 
   const onClickSave = async (body: ILogs) => {
     const onSuccess = (res: ILogs) => {
-      dispatch(createEditSuccessfulAction(res));
+      dispatch(createUpdateLogSuccessfulAction(res));
       history.push(LOGS_LIST_URL_CONFIG.path);
     };
 
     const onError = () => {
-      dispatch({
-        type: "NOTIFICATION",
-        payload: {
-          header: NOTIFICATION_MESSAGES.EDIT_HOUR_ERROR_HEADER,
-          message: NOTIFICATION_MESSAGES.EDIT_HOUR_ERROR_BODY,
-          color: NOTIFICATION_TYPE.ERROR
-        }
-      });
-      dispatch({
-        type: "SHOW_NOTIFICATION",
-        payload: true
-      })
+      dispatch(createUpdateLogErrorAction());
     };
-
+    dispatch(createUpdateLogStartAction());
     await editLog({...body, userId: user.id}, settings, key, onSuccess, onError);
   };
 
@@ -73,9 +69,9 @@ const EditHourPage: FunctionComponent<EditHourPageProps> = ({
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      {loggedHour && (
+      {log && (
         <LogHourForm
-          logHour={loggedHour}
+          logHour={log}
           onClickSave={onClickSave}
           onClickCancel={onClickCancel}
           groups={groups}

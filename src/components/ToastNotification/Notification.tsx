@@ -2,6 +2,7 @@ import React, { FunctionComponent, useContext } from 'react'
 import { AppContext } from "../../store/Store"
 import { IonToast } from '@ionic/react'
 import { ToastOptions } from '@ionic/core'
+import {createHideNotificationAction} from "../../store/actions/notification";
 
 interface IToastNotification extends ToastOptions {
   isOpen?         : boolean,
@@ -19,14 +20,11 @@ const Notification: FunctionComponent<IToastNotification> = ({
   isOpen = false
 }) => {
 
-  const { dispatch } = useContext(AppContext)
+  const { dispatch } = useContext(AppContext);
 
   const hideNotification = () => {
-    dispatch({
-      type: 'SHOW_NOTIFICATION',
-      payload: false
-    })
-  }
+    dispatch(createHideNotificationAction());
+  };
 
   return (
     <IonToast
@@ -41,6 +39,6 @@ const Notification: FunctionComponent<IToastNotification> = ({
       onDidDismiss={hideNotification}
     />
   )
-}
+};
 
 export default Notification

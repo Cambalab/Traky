@@ -20,19 +20,6 @@ export interface SAVE_LOGIN_SETTINGS_ACTION extends ILoginSettingsAction {
   }
 }
 
-export const createSaveLoginSettingsAction = (body: ILoginSettings, key: string): SAVE_LOGIN_SETTINGS_ACTION => ({
-  type: LOGIN_SETTINGS_TYPE.SAVE_LOGIN_SETTINGS_ACTION,
-  payload: {
-    loginSettings: body,
-    notificationOptions: {
-      header: NOTIFICATION_MESSAGES.SAVE_SETTINGS_SUCCESS_HEADER,
-      message: NOTIFICATION_MESSAGES.SAVE_SETTINGS_SUCCESS_BODY,
-      color: NOTIFICATION_TYPE.SUCCESS
-    },
-    key
-  }
-});
-
 export interface ERROR_LOGIN_SETTINGS_ACTION extends ILoginSettingsAction {
   type: LOGIN_SETTINGS_TYPE.ERROR_LOGIN_SETTINGS_ACTION,
   payload: {

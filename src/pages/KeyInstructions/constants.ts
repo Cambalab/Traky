@@ -1,5 +1,3 @@
-import { INotificationOptions } from "../../utils/declarations";
-import { NOTIFICATION_TYPE } from "../../utils/constants";
 
 export interface KeyValidationPageTexts {
   KEY_VALIDATION_ERROR_MESSAGE: string;
@@ -21,7 +19,7 @@ export interface KeyValidationPageTexts {
 }
 export const KEY_VALIDATION_PAGE_TEXTS: KeyValidationPageTexts = {
   KEY_VALIDATION_ERROR_HEADER: "Invalid Key Error",
-  KEY_VALIDATION_ERROR_MESSAGE: "This key is not validated",
+  KEY_VALIDATION_ERROR_MESSAGE: "Your key needs a validation",
   HEADER_TITLE: "Validate your key",
   TITLE: "Before start, press the button to copy your new key to use later",
   INSTRUCTIONS: "Now, follow the guide to connect with your Tryton account",
@@ -37,25 +35,3 @@ export const KEY_VALIDATION_PAGE_TEXTS: KeyValidationPageTexts = {
   COPY_CLIPBOARD_HEADER: "Key copied",
   COPY_CLIPBOARD_MESSAGE: "Your key was copied on your clipboard"
 };
-
-export enum KEY_INSTRUCTIONS_TYPE {
-  NOTIFICATION = "NOTIFICATION",
-  COPY_CLIPBOARD_ACTION = "COPY_CLIPBOARD_ACTION"
-}
-export interface IKeyInstructionsAction {
-  type: KEY_INSTRUCTIONS_TYPE;
-}
-
-export interface COPY_CLIPBOARD_ACTION extends IKeyInstructionsAction {
-  type: KEY_INSTRUCTIONS_TYPE.COPY_CLIPBOARD_ACTION;
-  payload: INotificationOptions;
-}
-
-export const createCopyClipboardAction = (): COPY_CLIPBOARD_ACTION => ({
-  type: KEY_INSTRUCTIONS_TYPE.COPY_CLIPBOARD_ACTION,
-  payload: {
-    header: KEY_VALIDATION_PAGE_TEXTS.COPY_CLIPBOARD_HEADER,
-    message: KEY_VALIDATION_PAGE_TEXTS.COPY_CLIPBOARD_MESSAGE,
-    color: NOTIFICATION_TYPE.SUCCESS
-  }
-});

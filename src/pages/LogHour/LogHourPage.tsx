@@ -11,14 +11,17 @@ import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
 import { History } from "history";
 import {
-  NOTIFICATION_MESSAGES,
-  NOTIFICATION_TYPE,
   LOGS_LIST_URL_CONFIG
 } from "../../utils/constants";
 import { LOG_HOUR_PAGE_TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
 import { ILogs } from "../../utils/declarations";
 import { createLog } from "../../utils/api/logs";
+import {selectUser} from "../../store/selectors/user";
+import {selectSettings} from "../../store/selectors/settings";
+import {selectKey} from "../../store/selectors/key";
+import {createAddLogErrorAction, createAddLogStartAction, createAddLogSuccessfulAction} from "../../store/actions/logs";
+import {selectGroups} from "../../store/selectors/groups";
 
 interface LogHourPage {
   history: History;
@@ -26,44 +29,22 @@ interface LogHourPage {
 
 const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
-  const { user, loggedHours, groups, settings, key } = state;
+  const user = selectUser(state);
+  const groups = selectGroups(state);
+  const settings = selectSettings(state);
+  const key = selectKey(state);
 
   const onClickSave = async (body: ILogs) => {
     const onSuccess = (res: ILogs) => {
-      dispatch({
-        type: "UPDATE_LIST",
-        payload: loggedHours.concat(res)
-      });
-      dispatch({
-        type: "NOTIFICATION",
-        payload: {
-          header: NOTIFICATION_MESSAGES.NEW_HOUR_SUCCESS_HEADER,
-          message: NOTIFICATION_MESSAGES.NEW_HOUR_SUCCESS_BODY,
-          color: NOTIFICATION_TYPE.SUCCESS
-        }
-      });
-      dispatch({
-        type: "SHOW_NOTIFICATION",
-        payload: true
-      });
+      dispatch(createAddLogSuccessfulAction(res));
       history.push(LOGS_LIST_URL_CONFIG.path);
     };
 
     const onError = () => {
-      dispatch({
-        type: "NOTIFICATION",
-        payload: {
-          header: NOTIFICATION_MESSAGES.NEW_HOUR_ERROR_HEADER,
-          message: NOTIFICATION_MESSAGES.NEW_HOUR_ERROR_BODY,
-          color: NOTIFICATION_TYPE.ERROR
-        }
-      });
-      dispatch({
-        type: "SHOW_NOTIFICATION",
-        payload: true
-      })
+      dispatch(createAddLogErrorAction());
     };
 
+    dispatch(createAddLogStartAction());
     await createLog({ ...body, userId: user.id }, settings, key, onSuccess, onError);
   };
 
