@@ -46,10 +46,12 @@ import {
 } from "../../utils/constants";
 import KeyValidationPage from "../KeyValidation/keyValidation";
 import KeyInstructionsPage from "../KeyInstructions/keyInstructions";
+import {selectNotificationOptions, selectShowNotification} from "../../store/selectors/notification";
 
 const App: React.FC = () => {
   const { state } = useContext(AppContext);
-  const { showNotification } = state;
+  const notificationOptions = selectNotificationOptions(state);
+  const showNotification = selectShowNotification(state);
 
   return (
     <IonApp>
@@ -63,6 +65,16 @@ const App: React.FC = () => {
               exact={true}
             />
             <Route
+                path={KEY_VALIDATION_URL_CONFIG.path}
+                component={KeyValidationPage}
+                exact={true}
+            />
+            <Route
+                path={KEY_INSTRUCTIONS_URL_CONFIG.path}
+                component={KeyInstructionsPage}
+                exact={true}
+            />
+            <Route
               path={LOGS_NEW_URL_CONFIG.path}
               render={props => (
                 <AuthProvider Component={LogHourPage} {...props} />
@@ -74,21 +86,6 @@ const App: React.FC = () => {
               render={props => <AuthProvider Component={LogsList} {...props} />}
               exact={true}
             />
-            <Route
-              path={KEY_VALIDATION_URL_CONFIG.path}
-              render={props => (
-                <AuthProvider Component={KeyValidationPage} {...props} />
-              )}
-              exact={true}
-            />
-            <Route
-              path={KEY_INSTRUCTIONS_URL_CONFIG.path}
-              render={props => (
-                <AuthProvider Component={KeyInstructionsPage} {...props} />
-              )}
-              exact={true}
-            />
-
             <Route path={LOGS_EDIT_URL_CONFIG.path} component={EditHourPage} />
             <Route
               path="/"
@@ -101,13 +98,13 @@ const App: React.FC = () => {
       </IonReactRouter>
       {showNotification && (
         <Notification
-          message={state.notificationOptions.message}
-          duration={state.notificationOptions.duration}
-          color={state.notificationOptions.color}
-          header={state.notificationOptions.header}
-          showCloseButton={state.notificationOptions.showCloseButton}
-          closeButtonText={state.notificationOptions.closeButtonText}
-          position={state.notificationOptions.position}
+          message={notificationOptions.message}
+          duration={notificationOptions.duration}
+          color={notificationOptions.color}
+          header={notificationOptions.header}
+          showCloseButton={notificationOptions.showCloseButton}
+          closeButtonText={notificationOptions.closeButtonText}
+          position={notificationOptions.position}
           isOpen={true}
         />
       )}
