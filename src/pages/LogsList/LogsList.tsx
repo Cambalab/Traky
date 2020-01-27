@@ -21,48 +21,53 @@ import {
 } from "@ionic/react";
 
 import { AppContext } from "../../store/Store";
-import { ILogs, IGroup } from "../../utils/declarations";
+import {ILogs, IGroup, ILoginSettings, IUser} from "../../utils/declarations";
 import "./LogsList.css";
 import LogHourCard from "../../components/LogHourCard/LogHourCard";
 import {
-  NOTIFICATION_MESSAGES,
-  NOTIFICATION_TYPE,
-  LOGS_LIST_URL_CONFIG,
-  LOGS_EDIT_URL_CONFIG
+  LOGS_EDIT_URL_CONFIG,
+  LOGS_LIST_URL_CONFIG
 } from "../../utils/constants";
-import { TEXTS, NEW_HOUR_BUTTON_OPTION } from "./constants";
+import {TEXTS, NEW_HOUR_BUTTON_OPTION} from "./constants";
 import { calendar } from "ionicons/icons";
 
 import { getGroups } from "../../utils/api";
 import { formatDate, handleInputDatetime } from "../../utils/inputHandle";
 import { DatetimeChangeEventDetail } from "@ionic/core";
-import { filterActiveGroups, getUrlFromParams } from "../../utils/utils";
+import { getUrlFromParams } from "../../utils/utils";
 import { getLogs, removeLog } from "../../utils/api/logs";
+import { filterActiveGroups } from "../../utils/utils";
+import {selectGroups} from "../../store/selectors/groups";
+import {selectLogsState} from "../../store/selectors/logs";
+import {selectUser, selectUserIsLogged} from "../../store/selectors/user";
+import {selectSettings} from "../../store/selectors/settings";
+import {createFetchGroupsStartAction, createFetchGroupsSuccessfulAction} from "../../store/actions/groups";
+import {selectKey} from "../../store/selectors/key";
+import {
+  createFetchLogsErrorAction,
+  createFetchLogsStartAction,
+  createFetchLogsSuccessfulAction, createRemoveLogErrorAction, createRemoveLogSuccessfulAction
+} from "../../store/actions/logs";
 
 interface LogsPageHistory {
   history: History;
 }
-
-const filterHour = (loggedHours: ILogs[], removingHour: ILogs) => {
-  return loggedHours.filter(hour => hour.id !== removingHour.id);
-};
 
 const groupName = (groups: IGroup[], id?: number) => {
   const group = groups.find((g: IGroup) => g.id === id);
   return group ? group.name : null;
 };
 
+const isEmpty = (logs: ILogs[]) => (logs.length === 0);
+
 const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
-  const {
-    groups,
-    loggedHours,
-    user,
-    isLoading,
-    hasError,
-    settings,
-    key
-  } = state;
+  const groups = selectGroups(state);
+  const { logs, isLoading, hasError } = selectLogsState(state);
+  const user = selectUser(state);
+  const isLogged = selectUserIsLogged(state);
+  const settings = selectSettings(state);
+  const key = selectKey(state);
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
 
   const showEditView = (logHour: ILogs) => () => {
@@ -73,122 +78,45 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
 
   const onSuccessGetGroups = (res: IGroup[]) => {
     const activeGroups = filterActiveGroups(res);
-    dispatch({
-      type: "UPDATE_GROUPS",
-      payload: activeGroups
-    });
+    dispatch(createFetchGroupsSuccessfulAction(activeGroups));
   };
 
   const onSuccessGetHours = (res: ILogs[]) => {
-    dispatch({
-      type: "UPDATE_LIST",
-      payload: res
-    });
-    dispatch({
-      type: "UPDATE_LOADING",
-      payload: false
-    });
+    dispatch(createFetchLogsSuccessfulAction(res));
   };
 
   const onErrorGetHours = () => {
-    dispatch({
-      type: "UPDATE_ERROR",
-      payload: true
-    });
-    dispatch({
-      type: "UPDATE_LOADING",
-      payload: false
-    });
-    dispatch({
-      type: "NOTIFICATION",
-      payload: {
-        header: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_HEADER,
-        message: NOTIFICATION_MESSAGES.FETCH_HOURS_ERROR_BODY,
-        color: NOTIFICATION_TYPE.ERROR
-      }
-    });
-    dispatch({
-      type: "SHOW_NOTIFICATION",
-      payload: true
-    });
+    dispatch(createFetchLogsErrorAction());
+  };
+
+  const initPage = async (user: IUser, settings: ILoginSettings, key: string) => {
+    dispatch(createFetchLogsStartAction());
+    dispatch(createFetchGroupsStartAction());
+    getGroups(user.id, settings, key, onSuccessGetGroups);
+    getLogs(currentDate, user.id, settings, key, onSuccessGetHours, onErrorGetHours);
   };
 
   useIonViewDidEnter(() => {
-    if (user.id !== null && loggedHours.length === 0) {
-      dispatch({
-        type: "UPDATE_LOADING",
-        payload: true
-      });
-      getGroups(user.id, settings, key, onSuccessGetGroups);
-      getLogs(
-        currentDate,
-        user.id,
-        settings,
-        key,
-        onSuccessGetHours,
-        onErrorGetHours
-      );
+    if (isLogged && isEmpty(logs)) {
+      initPage(user, settings, key);
     }
   });
 
   const onDelete = (logHour: ILogs) => async () => {
     const onSuccess = () => {
+      dispatch(createRemoveLogSuccessfulAction(logHour));
       history.push(LOGS_LIST_URL_CONFIG.path);
-      dispatch({
-        type: "UPDATE_LIST",
-        payload: filterHour(loggedHours, logHour)
-      });
-      dispatch({
-        type: "UPDATE_LOADING",
-        payload: false
-      });
-      dispatch({
-        type: "NOTIFICATION",
-        payload: {
-          header: NOTIFICATION_MESSAGES.DELETE_HOUR_SUCCESS_HEADER,
-          message: NOTIFICATION_MESSAGES.DELETE_HOUR_SUCCESS_BODY,
-          color: NOTIFICATION_TYPE.SUCCESS
-        }
-      });
-      dispatch({
-        type: "SHOW_NOTIFICATION",
-        payload: true
-      });
     };
 
     const onError = () => {
-      dispatch({
-        type: "UPDATE_LOADING",
-        payload: false
-      });
-      dispatch({
-        type: "UPDATE_ERROR",
-        payload: true
-      });
-      dispatch({
-        type: "NOTIFICATION",
-        payload: {
-          header: NOTIFICATION_MESSAGES.DELETE_HOUR_ERROR_HEADER,
-          message: NOTIFICATION_MESSAGES.DELETE_HOUR_ERROR_BODY,
-          color: NOTIFICATION_TYPE.ERROR
-        }
-      });
-      dispatch({
-        type: "SHOW_NOTIFICATION",
-        payload: true
-      });
+      dispatch(createRemoveLogErrorAction());
     };
-    dispatch({
-      type: "UPDATE_LOADING",
-      payload: true
-    });
-
     await removeLog(user, logHour, settings, onSuccess, onError);
   };
 
   const renderList = () =>
-    loggedHours && loggedHours.length >= 1 ? (
-      loggedHours.map(loggedHour => {
+    logs.length >= 1 ? (
+        logs.map(loggedHour => {
         return (
           <LogHourCard
             key={loggedHour.id}
@@ -211,20 +139,17 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const updateLoggedHoursPerDay = (
     e: CustomEvent<DatetimeChangeEventDetail>
   ) => {
-    handleInputDatetime(setCurrentDate)(e);
     const getUpdated = (updatedDate: string) => {
-      dispatch({
-        type: "UPDATE_LOADING",
-        payload: true
-      });
-      getLogs(
-        updatedDate,
-        user.id,
-        settings,
-        key,
-        onSuccessGetHours,
-        onErrorGetHours
-      );
+        dispatch(createFetchLogsStartAction());
+        setCurrentDate(updatedDate);
+        getLogs(
+            updatedDate,
+            user.id,
+            settings,
+            key,
+            onSuccessGetHours,
+            onErrorGetHours
+        );
     };
     handleInputDatetime(getUpdated)(e);
   };

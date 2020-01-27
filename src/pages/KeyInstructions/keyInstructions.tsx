@@ -16,16 +16,18 @@ import {
   IonFab,
   IonFabButton
 } from "@ionic/react";
-import { NOTIFICATION_TYPE, LOGS_LIST_URL_CONFIG } from "../../utils/constants";
+import { LOGS_LIST_URL_CONFIG } from "../../utils/constants";
 import { Plugins } from "@capacitor/core";
 
 import { getUserFromKey } from "../../utils/api";
 import {
-  KEY_VALIDATION_PAGE_TEXTS,
-  createCopyClipboardAction,
-  KEY_INSTRUCTIONS_TYPE
+  KEY_VALIDATION_PAGE_TEXTS
 } from "./constants";
 import { InstructionsSlides } from "../../components/InstructionsSlides/Instructions";
+import {createLoginErrorAction, createLoginStartAction, createLoginSuccessfulAction} from "../../store/actions/user";
+import {createCopyClipboardNotificationAction} from "../../store/actions/notification";
+import {selectSettings} from "../../store/selectors/settings";
+import {selectKey} from "../../store/selectors/key";
 
 const CapApp = Plugins.App;
 const { Clipboard } = Plugins;
@@ -36,7 +38,8 @@ interface PageHistory {
 
 const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
-  const { settings, key } = state;
+  const settings = selectSettings(state);
+  const key = selectKey(state);
   const { serverAddress, database } = settings;
   const [showSlides, setstateshowSlides] = useState(false);
 
@@ -53,36 +56,20 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
     await Clipboard.write({
       string: key
     });
-    dispatch(createCopyClipboardAction());
+    dispatch(createCopyClipboardNotificationAction());
   };
 
   const onClickActivatedKey = () => {
     const onSuccess = (res: any) => {
       const user = res[0];
-      dispatch({
-        type: "SET_USER",
-        payload: { id: user.id, name: user.username }
-      });
-      dispatch({
-        type: "LOGIN"
-      });
+      dispatch(createLoginSuccessfulAction({ id: user.id, name: user.username }));
       history.push(LOGS_LIST_URL_CONFIG.path);
     };
     const onError = () => {
-      dispatch({
-        type: KEY_INSTRUCTIONS_TYPE.NOTIFICATION,
-        payload: {
-          header: KEY_VALIDATION_PAGE_TEXTS.KEY_VALIDATION_ERROR_HEADER,
-          message: KEY_VALIDATION_PAGE_TEXTS.KEY_VALIDATION_ERROR_MESSAGE,
-          color: NOTIFICATION_TYPE.ERROR
-        }
-      });
-      dispatch({
-        type: "SHOW_NOTIFICATION",
-        payload: true
-      });
+      dispatch(createLoginErrorAction());
     };
 
+    dispatch(createLoginStartAction());
     getUserFromKey(key, serverAddress, database, onSuccess, onError);
   };
 

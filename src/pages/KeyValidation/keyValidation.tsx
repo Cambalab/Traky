@@ -12,8 +12,8 @@ import {
 import { Plugins } from "@capacitor/core";
 import { isMobile } from "../../utils/utils";
 import { OnHandleClickEventFunction } from "../../utils/declarations";
-import { createCopyClipboardAction } from "../KeyInstructions/constants";
 import { AppContext } from "../../store/Store";
+import {createCopyClipboardNotificationAction} from "../../store/actions/notification";
 const { Clipboard, Browser } = Plugins;
 
 type KeyValidationProps = {
@@ -34,7 +34,7 @@ const KeyValidation: React.FC<KeyValidationProps> = ({
       string: authKey
     });
 
-    dispatch(createCopyClipboardAction());
+    dispatch(createCopyClipboardNotificationAction());
   };
 
   const openServerAddressBrowser = async () => {

@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, {FunctionComponent, useState, useContext} from "react";
 import {
-  useAppContext
+  AppContext,
 } from "../../store/Store";
 import { History } from "history";
 import LoginSettingsForm from "../../components/LoginSettingsForm/LoginSettingsForm";
@@ -8,20 +8,36 @@ import "./LoginSettingsPage.css";
 import { IonPage, IonContent, IonLoading, useIonViewDidEnter } from "@ionic/react";
 
 import {
-  createErrorLoginSettingsAction,
-  createSaveLoginSettingsAction,
-  createSetKeyAction
-} from "./constants";
-import {
   KEY_INSTRUCTIONS_URL_CONFIG,
   GENERATE_KEY_MESSAGE,
-  GET_STORAGE_KEY,
-  NOTIFICATION_MESSAGES,
-  NOTIFICATION_TYPE
+  GET_STORAGE_KEY, FETCHING_SETTINGS,
 } from "../../utils/constants";
 import { getUserAppKey } from "../../utils/api";
 import { ILoginSettings } from "../../utils/declarations";
-import {getStoredKey, getStoredSettings, storeKey, storeSettings} from "../../utils/utils";
+import {
+  getIsFirstTime,
+  getStoredKey,
+  getStoredSettings,
+  storeIsFirstTime,
+  storeKey,
+  storeSettings
+} from "../../utils/utils";
+import {selectIsLoadingSettings, selectSettings} from "../../store/selectors/settings";
+import {
+  createFetchSettingsErrorAction,
+  createFetchSettingsStartAction,
+  createFetchSettingsSuccessfulAction,
+  createSaveSettingsErrorAction,
+  createSaveSettingsStartAction,
+  createSaveSettingsSuccessfulAction
+} from "../../store/actions/settings";
+import {
+  createFetchKeyErrorAction,
+  createFetchKeyStartAction,
+  createFetchKeySuccessfulAction,
+  createSaveKeySuccessfulAction
+} from "../../store/actions/key";
+import {selectIsLoadingKey} from "../../store/selectors/key";
 
 interface LoginSettingsPageProps {
   history: History;
@@ -29,34 +45,42 @@ interface LoginSettingsPageProps {
   initialIsFetchingSettingsFromStorage?: boolean
 }
 
+const hasSettings = (settings: ILoginSettings) => {
+  return settings.serverAddress && settings.database;
+};
+
 const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
-  history,
-  initialShowLoading = false,
-  initialIsFetchingSettingsFromStorage = false
+  history
 }) => {
-  const { state, dispatch } = useAppContext();
-  const { settings } = state;
+  const { state, dispatch } = useContext(AppContext);
+  const settings = selectSettings(state);
+  const isLoadingSettings = selectIsLoadingSettings(state);
+  const isLoadingKey = selectIsLoadingKey(state);
+  const [isFetchingSettingsFromStorage, setIsFetchingSettingsFromStorage] = useState(isLoadingSettings);
+  // const [isFetchingKeyFromStorage, setIsFetchingKeyFromStorage] = useState(isLoadingKey);
 
-  const [showLoading, setShowLoading] = useState(initialShowLoading);
-  const [isFetchingSettingsFromStorage, setIsFetchingSettingsFromStorage] = useState(initialIsFetchingSettingsFromStorage);
-
-  useEffect(() => {
-    setShowLoading(initialShowLoading);
-  }, [initialShowLoading]);
+  // useEffect(() => {
+  //   setIsFetchingSettingsFromStorage(isLoadingSettings);
+  // }, [isLoadingSettings]);
+  // useEffect(() => {
+  //   setIsFetchingKeyFromStorage(isLoadingKey);
+  // }, [isLoadingKey]);
 
   const onClickSave = async (body: ILoginSettings) => {
-    setShowLoading(true);
     const onSuccess = async (generatedKey: string) => {
       await storeSettings(body);
       await storeKey(generatedKey);
-      dispatch(createSaveLoginSettingsAction(body, generatedKey));
+      await storeIsFirstTime(true);
+      dispatch(createSaveSettingsSuccessfulAction(body));
+      dispatch(createSaveKeySuccessfulAction(generatedKey));
       history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
     };
 
     const onError = async () => {
-      dispatch(createErrorLoginSettingsAction());
+      dispatch(createSaveSettingsErrorAction());
     };
 
+    dispatch(createSaveSettingsStartAction());
     getUserAppKey(
       body.username,
       body.serverAddress,
@@ -68,33 +92,29 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
 
   useIonViewDidEnter(() => {
     const fetchSettings = async () => {
-      if (!settings.serverAddress || !settings.database) {
-        setIsFetchingSettingsFromStorage(true);
-        setShowLoading(true);
-        const fetchedSettings = await getStoredSettings();
+      const isFirstTime = await getIsFirstTime();
 
-        if (fetchedSettings) {
-          const key = await getStoredKey();
-
-          dispatch({ type: "SET_SETTINGS", payload: fetchedSettings });
-          if (key) {
-            dispatch(createSetKeyAction(key));
-            history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
-          }
-        } else {
+      if (!isFirstTime) {
+        if (!hasSettings(settings)) {
+          setIsFetchingSettingsFromStorage(true);
+          dispatch(createFetchSettingsStartAction());
+          const fetchedSettings = await getStoredSettings();
           setIsFetchingSettingsFromStorage(false);
-          dispatch({
-            type: "NOTIFICATION",
-            payload: {
-              header: NOTIFICATION_MESSAGES.GET_STORAGE_KEY_HEADER,
-              message: NOTIFICATION_MESSAGES.GET_STORAGE_KEY_BODY,
-              color: NOTIFICATION_TYPE.ERROR
+          if (fetchedSettings) {
+            dispatch(createFetchSettingsSuccessfulAction(fetchedSettings));
+            dispatch(createFetchKeyStartAction());
+            const key = await getStoredKey();
+            if (key) {
+              dispatch(createFetchKeySuccessfulAction(key));
+              history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
+            } else {
+              // if is not the first time trying to use the key or has never pressed the generate show error
+              dispatch(createFetchKeyErrorAction());
             }
-          });
-          dispatch({
-            type: "SHOW_NOTIFICATION",
-            payload: true
-          });
+          } else {
+            // turn - off notifications
+            dispatch(createFetchSettingsErrorAction());
+          }
         }
       }
     };
@@ -106,13 +126,18 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
     <IonPage>
       <IonContent color="tertiary">
       {
-        showLoading &&
-        <IonLoading
-        isOpen={showLoading}
-        message={isFetchingSettingsFromStorage ? GET_STORAGE_KEY : GENERATE_KEY_MESSAGE}
-        duration={1000}
-        onDidDismiss={() => setShowLoading(false)}
-        />
+        isFetchingSettingsFromStorage ?
+          <IonLoading
+            isOpen={isFetchingSettingsFromStorage}
+            message={isFetchingSettingsFromStorage ? FETCHING_SETTINGS : GENERATE_KEY_MESSAGE}
+            duration={1000}
+          />
+        : isLoadingKey &&
+          <IonLoading
+            isOpen={isLoadingKey}
+            message={GET_STORAGE_KEY}
+            duration={1000}
+          />
       }
         <LoginSettingsForm
           onClickSave={onClickSave}

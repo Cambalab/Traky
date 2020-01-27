@@ -1,5 +1,6 @@
 import { Dispatch } from "react";
 import { Action } from "../store/actions";
+import {OverviewState} from "../store/reducer";
 
 export interface AppPage {
   url: string;
@@ -46,20 +47,6 @@ export interface INotificationOptions {
   position?: "bottom" | "top" | "middle" | undefined;
   mode?: string;
 }
-
-export type OverviewState = {
-  loggedHours: ILogs[];
-  isLoading: boolean;
-  hasError: boolean;
-  isLogged: boolean;
-  user: IUser;
-  showNotification: boolean;
-  notificationOptions: INotificationOptions;
-  groups: IGroup[];
-  settings: ILoginSettings;
-  isSettings: boolean;
-  key: string;
-};
 
 export type IContext = {
   state: OverviewState;

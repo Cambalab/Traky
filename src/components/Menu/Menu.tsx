@@ -26,23 +26,25 @@ import {
 } from "./constants";
 import { LOGS_LOGIN_URL_CONFIG } from "../../utils/constants";
 import { History } from "history";
-import {cleanStoredKey, cleanStoredSettings} from "../../utils/utils";
+import {cleanStoredIsFirstTime, cleanStoredKey, cleanStoredSettings} from "../../utils/utils";
+import {selectUserState} from "../../store/selectors/user";
+import {createLogoutAction} from "../../store/actions/user";
 
 interface Menu {
   history: History;
 }
 const Menu: React.FunctionComponent<Menu> = ({ history }) => {
     const { state, dispatch } = useAppContext();
-    const { isLogged, user } = state;
+    const { isLogged, user } = selectUserState(state);
 
     const logout = async () => {
         Promise.all([
             cleanStoredSettings(),
-            cleanStoredKey()
+            cleanStoredKey(),
+            cleanStoredIsFirstTime()
         ])
         .then(() => {
-            dispatch({ type: 'SET_USER', payload: {} });
-            dispatch({ type: 'LOGOUT' });
+            dispatch(createLogoutAction());
             history.push(LOGS_LOGIN_URL_CONFIG.path);
         });
     };

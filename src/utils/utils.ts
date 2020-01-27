@@ -155,4 +155,28 @@ export const getUrlFromParams = (urlConfig: URL_CONFIG, id: number) => {
   const params = urlConfig.params || '';
 
   return urlConfig.path.replace(params, String(id));
+}
+
+export const getIsFirstTimeName = () => {
+  return process.env.REACT_APP_STORING_FIRST_TIME_NAME || "first-time";
+};
+
+export const getIsFirstTime = async (): Promise<boolean> => {
+  const storingIsFirstTimeName = getIsFirstTimeName();
+  const { value } = await Storage.get({ key: storingIsFirstTimeName });
+
+  return value === null;
+};
+
+export const storeIsFirstTime = async (isFirstTime: boolean) => {
+  const storingIsFirstTimeName = getIsFirstTimeName();
+  await Storage.set({
+    key: storingIsFirstTimeName,
+    value: String(isFirstTime)
+  });
+};
+
+export const cleanStoredIsFirstTime = () => {
+  const storingIsFirstTimeName = getIsFirstTimeName();
+  return Storage.remove({ key: storingIsFirstTimeName });
 };

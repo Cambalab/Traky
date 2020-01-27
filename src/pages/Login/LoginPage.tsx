@@ -4,8 +4,6 @@ import { AppContext } from "../../store/Store";
 import { History } from "history";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import {
-  NOTIFICATION_MESSAGES,
-  NOTIFICATION_TYPE,
   LOGS_LIST_URL_CONFIG
  } from "../../utils/constants";
 import { loginUser } from "../../utils/api";
@@ -18,6 +16,7 @@ import {
   useIonViewDidEnter
 } from '@ionic/react';
 import { Plugins } from "@capacitor/core";
+import {createLoginErrorAction, createLoginSuccessfulAction} from "../../store/actions/user";
 const CapApp = Plugins.App;
 
 interface LoginPageHistory {
@@ -36,28 +35,11 @@ const LoginPage: FunctionComponent<LoginPageHistory> = ({ history }) => {
 
   const onClickLogin = async (body: LoginForm) => {
     const onSuccess = (res: any) => {
-      dispatch({
-        type: 'SET_USER',
-        payload: {id: res.id, name: body.username}
-      });
-      dispatch({
-        type: 'LOGIN'
-      });
+      dispatch(createLoginSuccessfulAction({id: res.id, name: body.username }));
       history.push(LOGS_LIST_URL_CONFIG.path)
     };
     const onError = () => {
-      dispatch({
-        type: 'NOTIFICATION',
-        payload: {
-          header: NOTIFICATION_MESSAGES.AUTH_ERROR_HEADER,
-          message: NOTIFICATION_MESSAGES.AUTH_ERROR_BODY,
-          color: NOTIFICATION_TYPE.ERROR
-        }
-      });
-      dispatch({
-        type: "SHOW_NOTIFICATION",
-        payload: true
-      })
+      dispatch(createLoginErrorAction());
     };
     await loginUser(body, onSuccess, onError) // llamada a api
   };
