@@ -17,6 +17,7 @@ export const CONFIG: AppConfig = {
 export interface URL_CONFIG {
   name: string;
   path: string;
+  params?: string;
 }
 
 export const LOGS_LIST_URL_CONFIG: URL_CONFIG = {
@@ -44,7 +45,8 @@ export const LOGS_LOGIN_URL_CONFIG: URL_CONFIG = {
 };
 export const LOGS_EDIT_URL_CONFIG: URL_CONFIG = {
   name: "Edit",
-  path: "/edit/:data"
+  path: "/edit/:id",
+  params: ":id"
 };
 export const LOGS_LOGOUT_URL_CONFIG: URL_CONFIG = {
   name: "Log Out",

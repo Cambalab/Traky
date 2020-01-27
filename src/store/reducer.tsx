@@ -1,8 +1,13 @@
-import {OverviewState} from "../utils/declarations";
+import {ILogs, OverviewState} from "../utils/declarations";
 import {Action} from "./actions";
 import {sortByDate} from "../utils/utils";
 import {LOGIN_SETTINGS_TYPE} from "../pages/LoginSettings/constants";
 import {KEY_INSTRUCTIONS_TYPE} from "../pages/KeyInstructions/constants";
+import {EDIT_HOUR_TYPE} from "../pages/EditHour/constants";
+
+const updateLoggedHour = (loggedHours: ILogs[], editedHour: ILogs) => {
+  return loggedHours.map((hour) => (hour.id === editedHour.id ? editedHour : hour));
+};
 
 export function reducer(state: OverviewState, action: Action): OverviewState {
   switch (action.type) {
@@ -67,6 +72,14 @@ export function reducer(state: OverviewState, action: Action): OverviewState {
       return {
           ...state,
         notificationOptions: action.payload,
+        showNotification: true
+      }
+    }
+    case EDIT_HOUR_TYPE.SUCCESSFUL_ACTION: {
+      return {
+        ...state,
+        loggedHours: updateLoggedHour(state.loggedHours, action.payload.log),
+        notificationOptions: action.payload.notificationOptions,
         showNotification: true
       }
     }

@@ -27,25 +27,27 @@ import LogHourCard from "../../components/LogHourCard/LogHourCard";
 import {
   NOTIFICATION_MESSAGES,
   NOTIFICATION_TYPE,
-  LOGS_LIST_URL_CONFIG
+  LOGS_LIST_URL_CONFIG,
+  LOGS_EDIT_URL_CONFIG
 } from "../../utils/constants";
 import { TEXTS, NEW_HOUR_BUTTON_OPTION } from "./constants";
 import { calendar } from "ionicons/icons";
 
-import { removeHours, getHours, getGroups } from "../../utils/api";
+import { getGroups } from "../../utils/api";
 import { formatDate, handleInputDatetime } from "../../utils/inputHandle";
 import { DatetimeChangeEventDetail } from "@ionic/core";
-import { filterActiveGroups } from "../../utils/utils";
+import { filterActiveGroups, getUrlFromParams } from "../../utils/utils";
+import { getLogs, removeLog } from "../../utils/api/logs";
 
 interface LogsPageHistory {
   history: History;
 }
 
-const removeHour = (loggedHours: ILogs[], removingHour: ILogs) => {
+const filterHour = (loggedHours: ILogs[], removingHour: ILogs) => {
   return loggedHours.filter(hour => hour.id !== removingHour.id);
 };
 
-const groupName = (groups: IGroup[], id: Number) => {
+const groupName = (groups: IGroup[], id?: number) => {
   const group = groups.find((g: IGroup) => g.id === id);
   return group ? group.name : null;
 };
@@ -63,8 +65,10 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   } = state;
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
 
-  const showEditView = (loggedHourId: number) => () => {
-    history.push(`/edit/${loggedHourId}`);
+  const showEditView = (logHour: ILogs) => () => {
+    if (logHour.id) {
+      history.push(getUrlFromParams(LOGS_EDIT_URL_CONFIG, logHour.id));
+    }
   };
 
   const onSuccessGetGroups = (res: IGroup[]) => {
@@ -116,7 +120,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         payload: true
       });
       getGroups(user.id, settings, key, onSuccessGetGroups);
-      getHours(
+      getLogs(
         currentDate,
         user.id,
         settings,
@@ -132,7 +136,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       history.push(LOGS_LIST_URL_CONFIG.path);
       dispatch({
         type: "UPDATE_LIST",
-        payload: removeHour(loggedHours, logHour)
+        payload: filterHour(loggedHours, logHour)
       });
       dispatch({
         type: "UPDATE_LOADING",
@@ -179,7 +183,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       payload: true
     });
 
-    await removeHours(user, logHour, settings, onSuccess, onError);
+    await removeLog(user, logHour, settings, onSuccess, onError);
   };
 
   const renderList = () =>
@@ -189,7 +193,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
           <LogHourCard
             key={loggedHour.id}
             logHour={loggedHour}
-            onEditClick={showEditView(loggedHour.id)}
+            onEditClick={showEditView(loggedHour)}
             onDeleteClick={onDelete(loggedHour)}
             group={groupName(groups, loggedHour.groupId)}
           />
@@ -213,7 +217,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         type: "UPDATE_LOADING",
         payload: true
       });
-      getHours(
+      getLogs(
         updatedDate,
         user.id,
         settings,

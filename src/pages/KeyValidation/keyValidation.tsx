@@ -33,7 +33,6 @@ const KeyValidation: React.FC<KeyValidationProps> = ({
     await Clipboard.write({
       string: authKey
     });
-    document.execCommand(authKey);
 
     dispatch(createCopyClipboardAction());
   };

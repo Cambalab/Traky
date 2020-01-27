@@ -17,14 +17,14 @@ import React, {
   useState
 } from "react";
 import "./LogHourForm.css";
-import { IGroup } from "../../utils/declarations";
+import { IGroup, ILogs } from "../../utils/declarations";
 import {
   formatDate,
   handleInput,
   handleInputDatetime,
   handleInputHour
 } from "../../utils/inputHandle";
-import { LOG_HOUR_FORM_TEXTS } from "./constants";
+import { createNumberFromStringDate, createStringDateFromNumber, LOG_HOUR_FORM_TEXTS } from "./constants";
 import {
   InputChangeEventDetail,
   SelectChangeEventDetail,
@@ -38,45 +38,34 @@ import {
 } from "../../utils/constants";
 
 interface OnButtonClickEventFunction extends Function {
-  (body: LogHourForm): void;
+  (body: ILogs): void;
 }
 
 interface LogHourFormProps {
-  initialDescription?: string;
-  initialSelectedGroup?: number;
-  initialCurrentDate?: string;
-  initialHours?: string;
   onClickSave: OnButtonClickEventFunction;
-  onClickCancel: OnButtonClickEventFunction;
-  userId: number;
-  groups: IGroup[]
-}
-
-interface LogHourForm {
-  id?: string;
-  userId: number;
-  groupId?: number;
-  description?: string;
-  spent_time?: string;
-  timestamp: string;
+  onClickCancel: Function;
+  groups: IGroup[];
+  logHour?: ILogs
 }
 
 const LogHourForm: FunctionComponent<LogHourFormProps> = ({
-  initialDescription = "",
-  initialSelectedGroup,
-  initialCurrentDate = formatDate(new Date()),
-  initialHours = "",
   onClickSave,
   onClickCancel,
-  userId,
-  groups
+  groups,
+  logHour
 }) => {
+  const initialDescription = logHour ? logHour.description : '';
   const [description, setDescription] = useState<string>(initialDescription);
-  const [selectedGroup, setSelectedGroup] = useState<number | undefined>(
-    initialSelectedGroup
-  );
+
+  const initialSelectedGroup = logHour && logHour.groupId;
+  const [selectedGroup, setSelectedGroup] = useState<number | undefined>(initialSelectedGroup);
+
+  const initialCurrentDate = formatDate(logHour ? logHour.timestamp : new Date());
   const [currentDate, setCurrentDate] = useState<string>(initialCurrentDate);
+
+  const initialHours = logHour ? createStringDateFromNumber(logHour.duration) : '';
   const [hours, setHours] = useState<string>(initialHours);
+
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   useIonViewDidEnter(() => {
@@ -91,22 +80,27 @@ const LogHourForm: FunctionComponent<LogHourFormProps> = ({
     setIsDisabled(isEmptyString(initialHours));
   };
 
-  const getLogForm = () => {
+  const getLogForm = (): ILogs | null => {
+    if (!selectedGroup) {
+      return null;
+    }
     return {
-      userId: userId,
+      ...logHour,
       groupId: selectedGroup,
-      description,
-      spent_time: hours,
-      timestamp: currentDate
+      duration: createNumberFromStringDate(hours),
+      timestamp: currentDate,
+      description
     };
   };
 
   const handleOnClickSave = () => {
-    onClickSave(getLogForm());
+    const logForm = getLogForm();
+
+    logForm && onClickSave(logForm);
   };
 
   const handleOnClickCancel = () => {
-    onClickCancel(getLogForm());
+    onClickCancel();
   };
 
   const validateSpentTime = (e: CustomEvent<DatetimeChangeEventDetail>) => {

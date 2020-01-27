@@ -1,9 +1,6 @@
-import {FetchInput, ILoginSettings, ILogs} from "./declarations";
-import LogHourForm from "../components/LogHourForm/LogHourForm";
+import { ILoginSettings } from "./declarations";
 import LoginForm from "../components/LoginForm/LoginForm";
-import {CONFIG, APPLICATION_NAME, TRYTON_LINE_DATE_FORMAT} from "./constants";
-import { formatDate } from "./inputHandle";
-import moment from "moment";
+import { CONFIG, APPLICATION_NAME } from "./constants";
 
 const createHeaders = () => {
   const headers: HeadersInit = new Headers();
@@ -15,15 +12,29 @@ const createHeaders = () => {
   return headers;
 };
 
-const fetchAPI = async ({
+interface parseFunction<T1, T2> extends Function {
+  (from: T1): T1 | T2;
+}
+
+export interface FetchInput<T1, T2> {
+  url: string;
+  method: string;
+  body?: object;
+  headers?: object;
+  onSuccess?: Function;
+  onError?: Function;
+  parse?: parseFunction<T1, T2>;
+}
+
+const fetchAPI = async <T1, T2>({
   url,
   method,
   body,
-    headers,
+  headers,
   onSuccess,
   onError,
-  parse = (x: object) => x
-}: FetchInput): Promise<object> => {
+  parse = (x: T1) => x
+}: FetchInput<T1, T2>): Promise<T1 | T2> => {
   try {
     const request: any = {
       method,
@@ -46,38 +57,6 @@ const fetchAPI = async ({
   }
 };
 
-const getCurrentUser = () => {
-  return { id: 1 };
-};
-
-const getHours = (date: string, userId: any, settings: ILoginSettings, key: string, onSuccess: Function, onError?: Function) => {
-  const current_day = formatDate(date, TRYTON_LINE_DATE_FORMAT);
-  const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
-  const endpoint = `${trytonURL}/timesheet/employee/${userId}/lines/${current_day}`;
-  const parseResponse = (groups: any) => {
-    return groups.map((g: any) => {
-      return {
-        id: g.id,
-        description: g.description,
-        spent_time: new Date(g.duration),
-        groupId: g.work,
-        timestamp: current_day
-      };
-    });
-  };
-  const headers = {
-    "Authorization": "bearer " + key
-  };
-
-  return fetchAPI({
-    url: endpoint,
-    method: "GET",
-    headers,
-    onSuccess,
-    onError,
-    parse: parseResponse
-  });
-};
 const getGroups = (userId: any, settings: ILoginSettings, key: string, onSuccess: Function) => {
   const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
   const endpoint = `${trytonURL}/timesheet/employee/${userId}/works`;
@@ -86,83 +65,6 @@ const getGroups = (userId: any, settings: ILoginSettings, key: string, onSuccess
   };
 
   return fetchAPI({ url: endpoint, method: "GET", headers, onSuccess });
-};
-const logHours = (
-  userId: any,
-  body: LogHourForm,
-  settings: ILoginSettings,
-  key: string,
-  onSuccess: Function,
-  onError: Function
-) => {
-  const requestBody = {
-    date: formatDate(body.timestamp, "YYYY-MM-DD"),
-    duration: new Date(body.spent_time || "0").valueOf(),
-    employee: Number(userId),
-    work: body.groupId,
-    description: body.description
-  };
-  const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
-  const endpoint = `${trytonURL}/timesheet/line`;
-  const headers = {
-    "Authorization": "bearer " + key,
-    "Content-Type": "application/json"
-  };
-
-  const newOnSuccess = ({ id }: any) => {
-    return onSuccess({
-      id,
-      spent_time: body.spent_time,
-      description: body.description,
-      groupId: body.groupId,
-      timestamp: body.timestamp
-    });
-  };
-
-  return fetchAPI({
-    url: endpoint,
-    method: "POST",
-    body: requestBody,
-    headers,
-    onSuccess: newOnSuccess,
-    onError
-  });
-};
-const editHours = (
-  userId: any,
-  hourId: any,
-  body: LogHourForm,
-  settings: ILoginSettings,
-  onSuccess: Function,
-  onError: Function
-) => {
-  const requestBody = {
-    date: formatDate(body.timestamp, "YYYY-MM-DD"),
-    duration: body.spent_time,
-    employee: Number(process.env.REACT_APP_TRYTON_USER_ID),
-    work: body.groupId,
-    description: body.description
-  };
-  const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
-  const endpoint = `${trytonURL}/timesheet/line/${hourId}`;
-
-  const newOnSuccess = ({ id }: any) => {
-    return onSuccess({
-      id,
-      spent_time: body.spent_time,
-      description: body.description,
-      groupId: body.groupId,
-      timestamp: body.timestamp
-    });
-  };
-
-  return fetchAPI({
-    url: endpoint,
-    method: "PUT",
-    body: requestBody,
-    onSuccess: newOnSuccess,
-    onError
-  });
 };
 
 const loginUser = (body: LoginForm, onSuccess: Function, onError: Function) => {
@@ -173,19 +75,6 @@ const loginUser = (body: LoginForm, onSuccess: Function, onError: Function) => {
     onSuccess,
     onError
   });
-};
-
-const removeHours = (
-  user: object,
-  logHour: ILogs,
-  settings: ILoginSettings,
-  onSuccess: Function,
-  onError: Function
-) => {
-  const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
-  const endpoint = `${trytonURL}/timesheet/line/${logHour.id}`;
-
-  return fetchAPI({ url: endpoint, method: "DELETE", onSuccess, onError });
 };
 
 const getUserFromKey = (
@@ -223,12 +112,7 @@ const getUserAppKey = (
 
 export {
   fetchAPI,
-  getCurrentUser,
-  logHours,
   getGroups,
-  getHours,
-  editHours,
-  removeHours,
   loginUser,
   getUserAppKey,
   getUserFromKey
