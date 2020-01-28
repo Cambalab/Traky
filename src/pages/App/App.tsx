@@ -42,11 +42,16 @@ import {
   LOGS_NEW_URL_CONFIG,
   LOGS_SETTINGS_URL_CONFIG,
   KEY_VALIDATION_URL_CONFIG,
-  KEY_INSTRUCTIONS_URL_CONFIG
+  KEY_INSTRUCTIONS_URL_CONFIG,
+  EDIT_SETTINGS_URL_CONFIG
 } from "../../utils/constants";
 import KeyValidationPage from "../KeyValidation/keyValidation";
 import KeyInstructionsPage from "../KeyInstructions/keyInstructions";
-import {selectNotificationOptions, selectShowNotification} from "../../store/selectors/notification";
+import {
+  selectNotificationOptions,
+  selectShowNotification
+} from "../../store/selectors/notification";
+import EditSettingsPage from "../EditSettings/EditSettingsPage";
 
 const App: React.FC = () => {
   const { state } = useContext(AppContext);
@@ -65,14 +70,21 @@ const App: React.FC = () => {
               exact={true}
             />
             <Route
-                path={KEY_VALIDATION_URL_CONFIG.path}
-                component={KeyValidationPage}
-                exact={true}
+              path={EDIT_SETTINGS_URL_CONFIG.path}
+              render={props => (
+                <AuthProvider Component={EditSettingsPage} {...props} />
+              )}
+              exact={true}
             />
             <Route
-                path={KEY_INSTRUCTIONS_URL_CONFIG.path}
-                component={KeyInstructionsPage}
-                exact={true}
+              path={KEY_VALIDATION_URL_CONFIG.path}
+              component={KeyValidationPage}
+              exact={true}
+            />
+            <Route
+              path={KEY_INSTRUCTIONS_URL_CONFIG.path}
+              component={KeyInstructionsPage}
+              exact={true}
             />
             <Route
               path={LOGS_NEW_URL_CONFIG.path}
