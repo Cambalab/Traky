@@ -25,6 +25,16 @@
   margin: 5px;
 }
 
+.item-card__badge {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge--max-width {
+  max-width: 260px;
+}
+
 .item-card__date {
   padding: 0px;
   font-size: 20px;

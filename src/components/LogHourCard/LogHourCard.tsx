@@ -80,8 +80,10 @@ const LogHourCard: React.FC<LogHourCard> = ({
             </IonCol>
           </IonRow>
           <div className="item-card__dividing-line" />
-          <IonRow className="item-card__row">
-            <IonBadge color="tertiary">{group}</IonBadge>
+          <IonRow className="item-card__row badge--max-width">
+            <IonBadge className="item-card__badge" color="tertiary">
+              {group}
+            </IonBadge>
           </IonRow>
           <IonRow>
             <IonCol className="item-card__col">
