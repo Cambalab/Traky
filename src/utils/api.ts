@@ -12,18 +12,18 @@ const createHeaders = () => {
   return headers;
 };
 
-interface parseFunction<T1, T2> extends Function {
+interface parseFunction<T1, T2, Response> extends Function {
   (from: T1): T1 | T2;
 }
 
-export interface FetchInput<T1, T2> {
+export interface FetchInput<T1, T2, Response> {
   url: string;
   method: string;
   body?: object;
   headers?: object;
   onSuccess?: Function;
   onError?: Function;
-  parse?: parseFunction<T1, T2>;
+  parse?: parseFunction<T1, T2, Response>;
 }
 
 const fetchAPI = async <T1, T2>({
@@ -34,7 +34,7 @@ const fetchAPI = async <T1, T2>({
   onSuccess,
   onError,
   parse = (x: T1) => x
-}: FetchInput<T1, T2>): Promise<T1 | T2> => {
+}: FetchInput<T1, T2, Response>): Promise<T1 | T2 | Response> => {
   try {
     const request: any = {
       method,
@@ -42,13 +42,14 @@ const fetchAPI = async <T1, T2>({
       body: JSON.stringify(body)
     };
     const response = await fetch(url, request);
-    const json = await response.json();
-    const parsed = parse(json);
+
+    const data =
+      response.status === 204 ? response : parse(await response.json());
 
     if (onSuccess) {
-      onSuccess(parsed);
+      onSuccess(data);
     }
-    return parsed;
+    return data;
   } catch (e) {
     if (onError) {
       onError(e);
@@ -57,11 +58,18 @@ const fetchAPI = async <T1, T2>({
   }
 };
 
-const getGroups = (userId: any, settings: ILoginSettings, key: string, onSuccess: Function) => {
-  const trytonURL = process.env.REACT_APP_PROXY_URL + `${settings.serverAddress}${settings.database}`;
+const getGroups = (
+  userId: any,
+  settings: ILoginSettings,
+  key: string,
+  onSuccess: Function
+) => {
+  const trytonURL =
+    process.env.REACT_APP_PROXY_URL +
+    `${settings.serverAddress}${settings.database}`;
   const endpoint = `${trytonURL}/timesheet/employee/${userId}/works`;
   const headers = {
-    "Authorization": "bearer " + key
+    Authorization: "bearer " + key
   };
 
   return fetchAPI({ url: endpoint, method: "GET", headers, onSuccess });
@@ -84,13 +92,20 @@ const getUserFromKey = (
   onSuccess: Function,
   onError: Function
 ) => {
-  const trytonURL = process.env.REACT_APP_PROXY_URL + `${serverAddress}${database}`;
+  const trytonURL =
+    process.env.REACT_APP_PROXY_URL + `${serverAddress}${database}`;
   const endpoint = `${trytonURL}/timesheet/employees`;
   const headers = {
-    "Authorization": "bearer " + key
+    Authorization: "bearer " + key
   };
 
-  return fetchAPI({ url: endpoint, method: "GET", onSuccess, onError, headers });
+  return fetchAPI({
+    url: endpoint,
+    method: "GET",
+    onSuccess,
+    onError,
+    headers
+  });
 };
 
 const getUserAppKey = (
@@ -100,7 +115,8 @@ const getUserAppKey = (
   onSuccess: Function,
   onError: Function
 ) => {
-  const trytonURL = process.env.REACT_APP_PROXY_URL +`${serverAddress}${database}`;
+  const trytonURL =
+    process.env.REACT_APP_PROXY_URL + `${serverAddress}${database}`;
   const endpoint = `${trytonURL}/user/application/`;
   const body = {
     user,
@@ -110,10 +126,4 @@ const getUserAppKey = (
   return fetchAPI({ url: endpoint, body, method: "POST", onSuccess, onError });
 };
 
-export {
-  fetchAPI,
-  getGroups,
-  loginUser,
-  getUserAppKey,
-  getUserFromKey
-};
+export { fetchAPI, getGroups, loginUser, getUserAppKey, getUserFromKey };

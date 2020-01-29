@@ -21,14 +21,14 @@ import {
 } from "@ionic/react";
 
 import { AppContext } from "../../store/Store";
-import {ILogs, IGroup, ILoginSettings, IUser} from "../../utils/declarations";
+import { ILogs, IGroup, ILoginSettings, IUser } from "../../utils/declarations";
 import "./LogsList.css";
 import LogHourCard from "../../components/LogHourCard/LogHourCard";
 import {
   LOGS_EDIT_URL_CONFIG,
   LOGS_LIST_URL_CONFIG
 } from "../../utils/constants";
-import {TEXTS, NEW_HOUR_BUTTON_OPTION} from "./constants";
+import { TEXTS, NEW_HOUR_BUTTON_OPTION } from "./constants";
 import { calendar } from "ionicons/icons";
 
 import { getGroups } from "../../utils/api";
@@ -37,16 +37,21 @@ import { DatetimeChangeEventDetail } from "@ionic/core";
 import { getUrlFromParams } from "../../utils/utils";
 import { getLogs, removeLog } from "../../utils/api/logs";
 import { filterActiveGroups } from "../../utils/utils";
-import {selectGroups} from "../../store/selectors/groups";
-import {selectLogsState} from "../../store/selectors/logs";
-import {selectUser, selectUserIsLogged} from "../../store/selectors/user";
-import {selectSettings} from "../../store/selectors/settings";
-import {createFetchGroupsStartAction, createFetchGroupsSuccessfulAction} from "../../store/actions/groups";
-import {selectKey} from "../../store/selectors/key";
+import { selectGroups } from "../../store/selectors/groups";
+import { selectLogsState } from "../../store/selectors/logs";
+import { selectUser, selectUserIsLogged } from "../../store/selectors/user";
+import { selectSettings } from "../../store/selectors/settings";
+import {
+  createFetchGroupsStartAction,
+  createFetchGroupsSuccessfulAction
+} from "../../store/actions/groups";
+import { selectKey } from "../../store/selectors/key";
 import {
   createFetchLogsErrorAction,
   createFetchLogsStartAction,
-  createFetchLogsSuccessfulAction, createRemoveLogErrorAction, createRemoveLogSuccessfulAction
+  createFetchLogsSuccessfulAction,
+  createRemoveLogErrorAction,
+  createRemoveLogSuccessfulAction
 } from "../../store/actions/logs";
 
 interface LogsPageHistory {
@@ -58,7 +63,7 @@ const groupName = (groups: IGroup[], id?: number) => {
   return group ? group.name : null;
 };
 
-const isEmpty = (logs: ILogs[]) => (logs.length === 0);
+const isEmpty = (logs: ILogs[]) => logs.length === 0;
 
 const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
@@ -89,11 +94,22 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
     dispatch(createFetchLogsErrorAction());
   };
 
-  const initPage = async (user: IUser, settings: ILoginSettings, key: string) => {
+  const initPage = async (
+    user: IUser,
+    settings: ILoginSettings,
+    key: string
+  ) => {
     dispatch(createFetchLogsStartAction());
     dispatch(createFetchGroupsStartAction());
     getGroups(user.id, settings, key, onSuccessGetGroups);
-    getLogs(currentDate, user.id, settings, key, onSuccessGetHours, onErrorGetHours);
+    getLogs(
+      currentDate,
+      user.id,
+      settings,
+      key,
+      onSuccessGetHours,
+      onErrorGetHours
+    );
   };
 
   useIonViewDidEnter(() => {
@@ -108,15 +124,15 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       history.push(LOGS_LIST_URL_CONFIG.path);
     };
 
-    const onError = () => {
+    const onError = (e: any) => {
       dispatch(createRemoveLogErrorAction());
     };
-    await removeLog(user, logHour, settings, onSuccess, onError);
+    await removeLog(key, logHour, settings, onSuccess, onError);
   };
 
   const renderList = () =>
     logs.length >= 1 ? (
-        logs.map(loggedHour => {
+      logs.map(loggedHour => {
         return (
           <LogHourCard
             key={loggedHour.id}
@@ -140,16 +156,16 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
     e: CustomEvent<DatetimeChangeEventDetail>
   ) => {
     const getUpdated = (updatedDate: string) => {
-        dispatch(createFetchLogsStartAction());
-        setCurrentDate(updatedDate);
-        getLogs(
-            updatedDate,
-            user.id,
-            settings,
-            key,
-            onSuccessGetHours,
-            onErrorGetHours
-        );
+      dispatch(createFetchLogsStartAction());
+      setCurrentDate(updatedDate);
+      getLogs(
+        updatedDate,
+        user.id,
+        settings,
+        key,
+        onSuccessGetHours,
+        onErrorGetHours
+      );
     };
     handleInputDatetime(getUpdated)(e);
   };

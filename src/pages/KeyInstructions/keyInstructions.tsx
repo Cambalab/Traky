@@ -20,14 +20,16 @@ import { LOGS_LIST_URL_CONFIG } from "../../utils/constants";
 import { Plugins } from "@capacitor/core";
 
 import { getUserFromKey } from "../../utils/api";
-import {
-  KEY_VALIDATION_PAGE_TEXTS
-} from "./constants";
+import { KEY_VALIDATION_PAGE_TEXTS } from "./constants";
 import { InstructionsSlides } from "../../components/InstructionsSlides/Instructions";
-import {createLoginErrorAction, createLoginStartAction, createLoginSuccessfulAction} from "../../store/actions/user";
-import {createCopyClipboardNotificationAction} from "../../store/actions/notification";
-import {selectSettings} from "../../store/selectors/settings";
-import {selectKey} from "../../store/selectors/key";
+import {
+  createLoginErrorAction,
+  createLoginStartAction,
+  createLoginSuccessfulAction
+} from "../../store/actions/user";
+import { createCopyClipboardNotificationAction } from "../../store/actions/notification";
+import { selectSettings } from "../../store/selectors/settings";
+import { selectKey } from "../../store/selectors/key";
 
 const CapApp = Plugins.App;
 const { Clipboard } = Plugins;
@@ -62,7 +64,8 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
   const onClickActivatedKey = () => {
     const onSuccess = (res: any) => {
       const user = res[0];
-      dispatch(createLoginSuccessfulAction({ id: user.id, name: user.username }));
+      console.log(user);
+      dispatch(createLoginSuccessfulAction({ id: user.id, name: user.name }));
       history.push(LOGS_LIST_URL_CONFIG.path);
     };
     const onError = () => {
