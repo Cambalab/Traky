@@ -30,6 +30,7 @@ import { createSaveKeySuccessfulAction } from "../../store/actions/key";
 import { selectIsLoadingKey } from "../../store/selectors/key";
 
 import { EDIT_SETTINGS_TEXT } from "./constants";
+import { createLogoutAction } from "../../store/actions/user";
 
 interface EditSettingsPageProps {
   history: History;
@@ -49,7 +50,7 @@ const EditSettingsPage: FunctionComponent<EditSettingsPageProps> = ({
     const onSuccess = async (generatedKey: string) => {
       await storeSettings(body);
       await storeKey(generatedKey);
-
+      dispatch(createLogoutAction());
       dispatch(createSaveSettingsSuccessfulAction(body));
       dispatch(createSaveKeySuccessfulAction(generatedKey));
       history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
