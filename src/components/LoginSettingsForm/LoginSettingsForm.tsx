@@ -1,9 +1,7 @@
-import React, {FunctionComponent, useEffect, useState} from "react";
-import {SETTINGS_PAGE_TEXTS} from "./constants";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { SETTINGS_PAGE_TEXTS } from "./constants";
 import "./LoginSettingsForm.css";
-import {
-  handleInput
-} from "../../utils/inputHandle";
+import { handleInput } from "../../utils/inputHandle";
 import {
   IonButton,
   IonItem,
@@ -12,33 +10,34 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonImg,
-} from '@ionic/react';
-import {ILoginSettings} from "../../utils/declarations";
-
-const IMAGE_URL = "/assets/icon/favicon.png";
+  IonImg
+} from "@ionic/react";
+import { ILoginSettings } from "../../utils/declarations";
 
 interface OnButtonClickEventFunction extends Function {
-  (body: ILoginSettings) : void
+  (body: ILoginSettings): void;
 }
 
 interface LoginSettingsFormProps {
-  history? : History,
-  initialServerAddress? : string,
-  initialDatabase? : string,
-  initialUsername? : string,
-  onClickSave: OnButtonClickEventFunction
+  history?: History;
+  initialServerAddress?: string;
+  initialDatabase?: string;
+  initialUsername?: string;
+  onClickSave: OnButtonClickEventFunction;
+  editMode?: boolean;
 }
 
 const LoginSettingsForm: FunctionComponent<LoginSettingsFormProps> = ({
   initialServerAddress = "",
   initialDatabase = "",
   initialUsername = "",
-  onClickSave
+  onClickSave,
+  editMode
 }) => {
   const [serverAddress, setServerAddress] = useState(initialServerAddress);
   const [database, setDatabase] = useState(initialDatabase);
   const [username, setUsername] = useState(initialUsername);
+  const [editEnable, setEditEnable] = useState(editMode);
 
   useEffect(() => {
     setServerAddress(initialServerAddress);
@@ -52,56 +51,71 @@ const LoginSettingsForm: FunctionComponent<LoginSettingsFormProps> = ({
     setUsername(initialUsername);
   }, [initialUsername]);
 
+  useEffect(() => {
+    setEditEnable(editMode);
+  }, [editMode]);
+
   const saveData = (event: any) => {
     event.preventDefault();
-    onClickSave(getFormData())
+    onClickSave(getFormData());
   };
 
   const getFormData = () => {
     return {
-      serverAddress, database, username
-    }
+      serverAddress,
+      database,
+      username
+    };
   };
 
   return (
     <IonGrid>
       <IonRow>
         <IonCol sizeXs="10" offsetXs="1" sizeMd="4" offsetMd="4">
-          <IonImg className="settings-img" src={IMAGE_URL}/>
-          <IonItem className={`settings-input`} >
-            <IonLabel position="floating" >{SETTINGS_PAGE_TEXTS.URL}</IonLabel>
+          <IonItem className={`settings-input`}>
+            <IonLabel position="floating">{SETTINGS_PAGE_TEXTS.URL}</IonLabel>
             <IonInput
               name="serverAddress"
               value={serverAddress}
               onIonChange={handleInput(setServerAddress)}
               autofocus={true}
+              disabled={editEnable}
             />
-            </IonItem>
+          </IonItem>
           <IonItem className={`settings-input`}>
-            <IonLabel position="floating">{SETTINGS_PAGE_TEXTS.DATABASE}</IonLabel>
+            <IonLabel position="floating">
+              {SETTINGS_PAGE_TEXTS.DATABASE}
+            </IonLabel>
             <IonInput
               name="database"
               value={database}
               onIonChange={handleInput(setDatabase)}
+              disabled={editEnable}
             />
           </IonItem>
           <IonItem className={`settings-input`}>
-            <IonLabel position="floating">{SETTINGS_PAGE_TEXTS.USERNAME}</IonLabel>
+            <IonLabel position="floating">
+              {SETTINGS_PAGE_TEXTS.USERNAME}
+            </IonLabel>
             <IonInput
               name="username"
               value={username}
               onIonChange={handleInput(setUsername)}
+              disabled={editEnable}
             />
           </IonItem>
           <IonButton
             color="secondary"
             className="settings-button"
             onClick={saveData}
-          >{SETTINGS_PAGE_TEXTS.SAVE_BUTTON}</IonButton>
+            disabled={editMode}
+          >
+            {SETTINGS_PAGE_TEXTS.SAVE_BUTTON}
+          </IonButton>
         </IonCol>
       </IonRow>
     </IonGrid>
-  )
+  );
 };
 
 export default LoginSettingsForm;

@@ -1,0 +1,14 @@
+.edit-settings__text {
+  font-weight: 100;
+  text-align: center;
+}
+
+.edit-settings__row {
+  margin-top: 60px;
+}
+
+.edit-settings__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

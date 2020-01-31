@@ -56,6 +56,10 @@ export const LOGS_SETTINGS_URL_CONFIG: URL_CONFIG = {
   name: "Login Settings",
   path: "/login"
 };
+export const EDIT_SETTINGS_URL_CONFIG: URL_CONFIG = {
+  name: "Edit Settings",
+  path: "/settings"
+};
 
 export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_LIST_URL_CONFIG,
@@ -65,7 +69,8 @@ export const URL_CONFIG: { [key: string]: URL_CONFIG } = {
   LOGS_LOGOUT_URL_CONFIG,
   LOGS_SETTINGS_URL_CONFIG,
   KEY_VALIDATION_URL_CONFIG,
-  KEY_INSTRUCTIONS_URL_CONFIG
+  KEY_INSTRUCTIONS_URL_CONFIG,
+  EDIT_SETTINGS_URL_CONFIG
 };
 
 export const NOTIFICATION_MESSAGES = {
@@ -92,7 +97,8 @@ export const NOTIFICATION_MESSAGES = {
   SAVE_SETTINGS_ERROR_BODY:
     "There is something wrong with your settings, please change them and try again",
   GET_STORAGE_KEY_HEADER: "Error Getting Key",
-  GET_STORAGE_KEY_BODY: "There is none key in the Storage. Please generate a new key."
+  GET_STORAGE_KEY_BODY:
+    "There is none key in the Storage. Please generate a new key."
 };
 
 export const NOTIFICATION_TYPE = {
