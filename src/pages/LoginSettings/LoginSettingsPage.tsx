@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useContext } from "react";
+import React, { FunctionComponent, useContext } from "react";
 import { AppContext } from "../../store/Store";
 import { History } from "history";
 import LoginSettingsForm from "../../components/LoginSettingsForm/LoginSettingsForm";
@@ -6,7 +6,6 @@ import "./LoginSettingsPage.css";
 import {
   IonPage,
   IonContent,
-  IonLoading,
   useIonViewDidEnter,
   IonImg,
   IonGrid,
@@ -17,8 +16,7 @@ import {
 import {
   KEY_INSTRUCTIONS_URL_CONFIG,
   GENERATE_KEY_MESSAGE,
-  GET_STORAGE_KEY,
-  FETCHING_SETTINGS
+  GET_STORAGE_SETTINGS
 } from "../../utils/constants";
 import { getUserAppKey } from "../../utils/api";
 import { ILoginSettings } from "../../utils/declarations";
@@ -30,10 +28,7 @@ import {
   storeKey,
   storeSettings
 } from "../../utils/utils";
-import {
-  selectIsLoadingSettings,
-  selectSettings
-} from "../../store/selectors/settings";
+import { selectSettings } from "../../store/selectors/settings";
 import {
   createFetchSettingsErrorAction,
   createFetchSettingsStartAction,
@@ -48,7 +43,15 @@ import {
   createFetchKeySuccessfulAction,
   createSaveKeySuccessfulAction
 } from "../../store/actions/key";
-import { selectIsLoadingKey } from "../../store/selectors/key";
+
+import {
+  createLoadingModalAction,
+  createHideLoadingModalAction
+} from "../../store/actions/loadingModal";
+import {
+  selectIsLoadingModal,
+  selectLoadingModalMessage
+} from "../../store/selectors/loadingModal";
 
 interface LoginSettingsPageProps {
   history: History;
@@ -67,20 +70,12 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
 }) => {
   const { state, dispatch } = useContext(AppContext);
   const settings = selectSettings(state);
-  const isLoadingSettings = selectIsLoadingSettings(state);
-  const isLoadingKey = selectIsLoadingKey(state);
-  const [
-    isFetchingSettingsFromStorage,
-    setIsFetchingSettingsFromStorage
-  ] = useState(isLoadingSettings);
-  // const [isFetchingKeyFromStorage, setIsFetchingKeyFromStorage] = useState(isLoadingKey);
 
-  // useEffect(() => {
-  //   setIsFetchingSettingsFromStorage(isLoadingSettings);
-  // }, [isLoadingSettings]);
-  // useEffect(() => {
-  //   setIsFetchingKeyFromStorage(isLoadingKey);
-  // }, [isLoadingKey]);
+  const isLoading = selectIsLoadingModal(state);
+  const loadingMessage = selectLoadingModalMessage(state);
+
+  const STORAGE_MESSAGE = { message: GET_STORAGE_SETTINGS };
+  const GENERATE_MESSAGE = { message: GENERATE_KEY_MESSAGE };
 
   const onClickSave = async (body: ILoginSettings) => {
     const onSuccess = async (generatedKey: string) => {
@@ -90,13 +85,20 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
       dispatch(createSaveSettingsSuccessfulAction(body));
       dispatch(createSaveKeySuccessfulAction(generatedKey));
       history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
+
+      //disparo acción para setear estado global de loading en false
+      dispatch(createHideLoadingModalAction());
     };
 
     const onError = async () => {
+      dispatch(createHideLoadingModalAction());
       dispatch(createSaveSettingsErrorAction());
     };
 
+    //disparo accion para setear mensaje para loading y poner estado global en true
+    dispatch(createLoadingModalAction(GENERATE_MESSAGE));
     dispatch(createSaveSettingsStartAction());
+
     getUserAppKey(
       body.username,
       body.serverAddress,
@@ -112,10 +114,10 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
 
       if (!isFirstTime) {
         if (!hasSettings(settings)) {
-          setIsFetchingSettingsFromStorage(true);
+          dispatch(createLoadingModalAction(STORAGE_MESSAGE));
           dispatch(createFetchSettingsStartAction());
           const fetchedSettings = await getStoredSettings();
-          setIsFetchingSettingsFromStorage(false);
+
           if (fetchedSettings) {
             dispatch(createFetchSettingsSuccessfulAction(fetchedSettings));
             dispatch(createFetchKeyStartAction());
@@ -128,7 +130,6 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
               dispatch(createFetchKeyErrorAction());
             }
           } else {
-            // turn - off notifications
             dispatch(createFetchSettingsErrorAction());
           }
         }
@@ -147,30 +148,13 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
               <IonImg className="settings-img" src={IMAGE_URL} />
             </IonCol>
           </IonRow>
-          {isFetchingSettingsFromStorage ? (
-            <IonLoading
-              isOpen={isFetchingSettingsFromStorage}
-              message={
-                isFetchingSettingsFromStorage
-                  ? FETCHING_SETTINGS
-                  : GENERATE_KEY_MESSAGE
-              }
-              duration={1000}
-            />
-          ) : (
-            isLoadingKey && (
-              <IonLoading
-                isOpen={isLoadingKey}
-                message={GET_STORAGE_KEY}
-                duration={1000}
-              />
-            )
-          )}
           <LoginSettingsForm
             onClickSave={onClickSave}
             initialServerAddress={settings.serverAddress}
             initialDatabase={settings.database}
             initialUsername={settings.username}
+            isLoadingGlobal={isLoading}
+            loadingMessage={loadingMessage}
           />
         </IonGrid>
       </IonContent>

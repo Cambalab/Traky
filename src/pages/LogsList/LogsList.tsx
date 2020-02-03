@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { History } from "history";
 
 import {
@@ -53,6 +53,8 @@ import {
   createRemoveLogErrorAction,
   createRemoveLogSuccessfulAction
 } from "../../store/actions/logs";
+import { createHideLoadingModalAction } from "../../store/actions/loadingModal";
+import { selectIsLoadingModal } from "../../store/selectors/loadingModal";
 
 interface LogsPageHistory {
   history: History;
@@ -73,6 +75,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const isLogged = selectUserIsLogged(state);
   const settings = selectSettings(state);
   const key = selectKey(state);
+  const isLoadingGlobal = selectIsLoadingModal(state);
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
 
   const showEditView = (logHour: ILogs) => () => {
@@ -117,6 +120,12 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
       initPage(user, settings, key);
     }
   });
+
+  useEffect(() => {
+    if (isLoadingGlobal) {
+      dispatch(createHideLoadingModalAction());
+    }
+  }, [isLoadingGlobal]);
 
   const onDelete = (logHour: ILogs) => async () => {
     const onSuccess = () => {

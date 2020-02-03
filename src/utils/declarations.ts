@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { Action } from "../store/actions";
-import {OverviewState} from "../store/reducer";
+import { OverviewState } from "../store/reducer";
 
 export interface AppPage {
   url: string;
@@ -59,7 +59,7 @@ export interface IMatchParams {
 
 export type InstructionsProps = {
   onLastStepAction: Function;
-  settings: ILoginSettings;
+  settings: ILoginSettings | null;
 };
 
 export type ValidationProps = {
@@ -69,4 +69,8 @@ export type ValidationProps = {
 
 export interface OnHandleClickEventFunction extends Function {
   (): void;
+}
+
+export interface ILoadingModal {
+  message: string;
 }
