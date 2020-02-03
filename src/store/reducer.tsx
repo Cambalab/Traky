@@ -5,6 +5,7 @@ import {getInitialUserState, user, UserState} from "./reducers/user";
 import {getInitialSettingsState, settings, SettingsState} from "./reducers/settings";
 import {getInitialGroupsState, groups, GroupsState} from "./reducers/groups";
 import {getInitialKeyState, key, KeyState} from "./reducers/key";
+import {getInitialLoadingModalState, loadingModal, LoadingModalState} from "./reducers/loadingModal";
 
 export type OverviewState = {
   readonly groupsState: GroupsState;
@@ -13,6 +14,7 @@ export type OverviewState = {
   readonly settingsState: SettingsState;
   readonly userState: UserState;
   readonly keyState: KeyState;
+  readonly loadingModalState: LoadingModalState;
 };
 
 export const getInitialState = (): OverviewState => ({
@@ -21,7 +23,8 @@ export const getInitialState = (): OverviewState => ({
   logsState: getInitialLogsState(),
   notificationState: getInitialNotificationState(),
   settingsState: getInitialSettingsState(),
-  userState: getInitialUserState()
+  userState: getInitialUserState(),
+  loadingModalState: getInitialLoadingModalState()
 });
 
 export const mainReducer = (state: OverviewState, action: Action): OverviewState => {
@@ -31,6 +34,7 @@ export const mainReducer = (state: OverviewState, action: Action): OverviewState
     logsState: logs(state.logsState, action),
     notificationState: notification(state.notificationState, action),
     settingsState: settings(state.settingsState, action),
-    userState: user(state.userState, action)
+    userState: user(state.userState, action),
+    loadingModalState: loadingModal(state.loadingModalState, action),
   }
 };

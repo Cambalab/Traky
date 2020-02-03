@@ -6,7 +6,6 @@ import "./EditSettingsPage.css";
 import {
   IonPage,
   IonContent,
-  IonLoading,
   IonGrid,
   IonRow,
   IonCol,
@@ -15,7 +14,7 @@ import {
 
 import {
   KEY_INSTRUCTIONS_URL_CONFIG,
-  GET_STORAGE_KEY
+  GENERATE_KEY_MESSAGE
 } from "../../utils/constants";
 import { getUserAppKey } from "../../utils/api";
 import { ILoginSettings } from "../../utils/declarations";
@@ -27,10 +26,17 @@ import {
   createSaveSettingsSuccessfulAction
 } from "../../store/actions/settings";
 import { createSaveKeySuccessfulAction } from "../../store/actions/key";
-import { selectIsLoadingKey } from "../../store/selectors/key";
 
 import { EDIT_SETTINGS_TEXT } from "./constants";
 import { createLogoutAction } from "../../store/actions/user";
+import {
+  createHideLoadingModalAction,
+  createLoadingModalAction
+} from "../../store/actions/loadingModal";
+import {
+  selectIsLoadingModal,
+  selectLoadingModalMessage
+} from "../../store/selectors/loadingModal";
 
 interface EditSettingsPageProps {
   history: History;
@@ -43,8 +49,11 @@ const EditSettingsPage: FunctionComponent<EditSettingsPageProps> = ({
 }) => {
   const { state, dispatch } = useContext(AppContext);
   const settings = selectSettings(state);
-  const isLoadingKey = selectIsLoadingKey(state);
+  const isLoading = selectIsLoadingModal(state);
+  const loadingMessage = selectLoadingModalMessage(state);
   const [isEditMode, setEditMode] = useState(true);
+
+  const GENERATE_MESSAGE = { message: GENERATE_KEY_MESSAGE };
 
   const onClickSave = async (body: ILoginSettings) => {
     const onSuccess = async (generatedKey: string) => {
@@ -53,13 +62,15 @@ const EditSettingsPage: FunctionComponent<EditSettingsPageProps> = ({
       dispatch(createLogoutAction());
       dispatch(createSaveSettingsSuccessfulAction(body));
       dispatch(createSaveKeySuccessfulAction(generatedKey));
+
       history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
     };
 
     const onError = async () => {
+      dispatch(createHideLoadingModalAction());
       dispatch(createSaveSettingsErrorAction());
     };
-
+    dispatch(createLoadingModalAction(GENERATE_MESSAGE));
     dispatch(createSaveSettingsStartAction());
     getUserAppKey(
       body.username,
@@ -68,6 +79,7 @@ const EditSettingsPage: FunctionComponent<EditSettingsPageProps> = ({
       onSuccess,
       onError
     );
+    dispatch(createHideLoadingModalAction());
   };
 
   return (
@@ -90,13 +102,6 @@ const EditSettingsPage: FunctionComponent<EditSettingsPageProps> = ({
                 onIonChange={() => setEditMode(!isEditMode)}
               />
               {EDIT_SETTINGS_TEXT.TOGGLE}
-              {isLoadingKey && (
-                <IonLoading
-                  isOpen={isLoadingKey}
-                  message={GET_STORAGE_KEY}
-                  duration={1000}
-                />
-              )}
             </IonCol>
             <LoginSettingsForm
               onClickSave={onClickSave}
@@ -104,6 +109,8 @@ const EditSettingsPage: FunctionComponent<EditSettingsPageProps> = ({
               initialDatabase={settings.database}
               initialUsername={settings.username}
               editMode={isEditMode}
+              isLoadingGlobal={isLoading}
+              loadingMessage={loadingMessage}
             />
           </IonRow>
         </IonGrid>

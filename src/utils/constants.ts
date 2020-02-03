@@ -118,6 +118,6 @@ export const APPLICATION_NAME = {
   TIMESHEET: "timesheet"
 };
 
-export const FETCHING_SETTINGS = "Fetching settings...";
+export const LOGIN_MESSAGE = "Log into your account...";
 export const GENERATE_KEY_MESSAGE = "Generating key...";
-export const GET_STORAGE_KEY = "Fetching key from Storage...";
+export const GET_STORAGE_SETTINGS = "Fetching your previous settings...";

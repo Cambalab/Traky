@@ -3,7 +3,6 @@ import {
   LOGS_LOGIN_URL_CONFIG,
   LOGS_LOGOUT_URL_CONFIG,
   LOGS_NEW_URL_CONFIG,
-  LOGS_SETTINGS_URL_CONFIG,
   EDIT_SETTINGS_URL_CONFIG
 } from "../../utils/constants";
 import { list, logIn, logOut, timer, person, settings } from "ionicons/icons";

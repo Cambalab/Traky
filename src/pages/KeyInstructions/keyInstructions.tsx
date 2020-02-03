@@ -16,7 +16,7 @@ import {
   IonFab,
   IonFabButton
 } from "@ionic/react";
-import { LOGS_LIST_URL_CONFIG } from "../../utils/constants";
+import { LOGS_LIST_URL_CONFIG, LOGIN_MESSAGE } from "../../utils/constants";
 import { Plugins } from "@capacitor/core";
 
 import { getUserFromKey } from "../../utils/api";
@@ -30,6 +30,11 @@ import {
 import { createCopyClipboardNotificationAction } from "../../store/actions/notification";
 import { selectSettings } from "../../store/selectors/settings";
 import { selectKey } from "../../store/selectors/key";
+import { selectIsLoadingModal } from "../../store/selectors/loadingModal";
+import {
+  createHideLoadingModalAction,
+  createLoadingModalAction
+} from "../../store/actions/loadingModal";
 
 const CapApp = Plugins.App;
 const { Clipboard } = Plugins;
@@ -44,8 +49,14 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
   const key = selectKey(state);
   const { serverAddress, database } = settings;
   const [showSlides, setstateshowSlides] = useState(false);
+  const isLoadingGlobal = selectIsLoadingModal(state);
+
+  const LOGIN_ACTION = { message: LOGIN_MESSAGE };
 
   useIonViewDidEnter(() => {
+    if (isLoadingGlobal) {
+      dispatch(createHideLoadingModalAction());
+    }
     CapApp.addListener("backButton", () => {
       history.goBack();
     });
@@ -64,14 +75,15 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
   const onClickActivatedKey = () => {
     const onSuccess = (res: any) => {
       const user = res[0];
-      console.log(user);
+
       dispatch(createLoginSuccessfulAction({ id: user.id, name: user.name }));
       history.push(LOGS_LIST_URL_CONFIG.path);
     };
     const onError = () => {
+      dispatch(createHideLoadingModalAction());
       dispatch(createLoginErrorAction());
     };
-
+    dispatch(createLoadingModalAction(LOGIN_ACTION));
     dispatch(createLoginStartAction());
     getUserFromKey(key, serverAddress, database, onSuccess, onError);
   };
