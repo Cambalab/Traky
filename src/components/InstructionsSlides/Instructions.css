@@ -9,7 +9,8 @@
 }
 
 .slider__img {
-  margin: 0px auto;
+  width: 90%;
+  height: 90%;
 }
 
 .slider__img--desktop {
@@ -17,19 +18,19 @@
   height: 40%;
 }
 
-.img__first-step {
-  margin: 0px auto;
-  width: 85%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
 .slide__container {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
+.slide__container--desktop {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 .slide__text {
   font-weight: 100;
   margin-bottom: 60px;

@@ -26,7 +26,7 @@
 .key__row--with-padding {
   display: flex;
   align-self: center;
-  margin-top: 30vh;
+  margin-top: 20vh;
 }
 
 .key__title {
@@ -35,7 +35,7 @@
 }
 
 .key__fab-button {
-  margin-top: 10vh;
+  margin-top: 8vh;
 }
 
 .key__copy-button {
