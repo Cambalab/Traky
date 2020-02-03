@@ -51,12 +51,14 @@ export const InstructionsSlides: React.FC<InstructionsSlidesProps> = ({
 }) => (
   <IonContent color="tertiary" fullscreen>
     <IonSlides pager={true} options={slideOpts}>
-      <IonSlide className="slide__container">
+      <IonSlide
+        className={
+          isMobile() ? "slide__container" : "slide__container--desktop"
+        }
+      >
         <IonImg
           className={
-            isMobile()
-              ? "slider__img img__first-step"
-              : "slider__img slider__img--desktop"
+            isMobile() ? "slider__img" : "slider__img slider__img--desktop"
           }
           src={step1}
         ></IonImg>
@@ -66,7 +68,11 @@ export const InstructionsSlides: React.FC<InstructionsSlidesProps> = ({
         </h3>
         <h4 className="slide__text">{KEY_VALIDATION_PAGE_TEXTS.FIRST_STEP}</h4>
       </IonSlide>
-      <IonSlide className="slide__container">
+      <IonSlide
+        className={
+          isMobile() ? "slide__container" : "slide__container--desktop"
+        }
+      >
         <IonImg
           className={
             isMobile() ? "slider__img" : "slider__img slider__img--desktop"
@@ -78,19 +84,27 @@ export const InstructionsSlides: React.FC<InstructionsSlidesProps> = ({
         </h3>
         <h4 className="slide__text">{KEY_VALIDATION_PAGE_TEXTS.SECOND_STEP}</h4>
       </IonSlide>
-      <IonSlide className="slide__container">
+      <IonSlide
+        className={
+          isMobile() ? "slide__container" : "slide__container--desktop"
+        }
+      >
         <IonImg
-            className={
-              isMobile() ? "slider__img" : "slider__img slider__img--desktop"
-            }
-            src={step3}
+          className={
+            isMobile() ? "slider__img" : "slider__img slider__img--desktop"
+          }
+          src={step3}
         ></IonImg>
         <h3 className="slide__step-title">
           {KEY_VALIDATION_PAGE_TEXTS.THIRD_STEP_TITLE}
         </h3>
         <h4 className="slide__text">{KEY_VALIDATION_PAGE_TEXTS.THIRD_STEP}</h4>
       </IonSlide>
-      <IonSlide className="slide__container">
+      <IonSlide
+        className={
+          isMobile() ? "slide__container" : "slide__container--desktop"
+        }
+      >
         <IonImg
           className={
             isMobile() ? "slider__img" : "slider__img slider__img--desktop"
@@ -102,7 +116,11 @@ export const InstructionsSlides: React.FC<InstructionsSlidesProps> = ({
         </h3>
         <h4 className="slide__text">{KEY_VALIDATION_PAGE_TEXTS.FOURTH_STEP}</h4>
       </IonSlide>
-      <IonSlide className="slide__container">
+      <IonSlide
+        className={
+          isMobile() ? "slide__container" : "slide__container--desktop"
+        }
+      >
         <KeyValidation
           authKey={userKey}
           serverAddressLink={serverAddressLink}

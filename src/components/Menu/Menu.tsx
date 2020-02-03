@@ -61,30 +61,32 @@ const Menu: React.FunctionComponent<Menu> = ({ history }) => {
       </IonHeader>
       <IonContent>
         <IonList>
-          {/* <IonMenuToggle autoHide={false}>
-              <IonItem
-                routerLink={SETTINGS_MENU_OPTION.url}
-                routerDirection="none"
-              >
-                <IonIcon slot="start" icon={SETTINGS_MENU_OPTION.icon} />
-                <IonLabel>{SETTINGS_MENU_OPTION.title}</IonLabel>
-              </IonItem>
-            </IonMenuToggle> */}
-
-          {isLogged && (
+          {
             <IonMenuToggle autoHide={false}>
               <IonItem
                 routerLink={SETTINGS_MENU_OPTION.url}
                 routerDirection="none"
               >
-                <IonIcon slot="start" icon={SETTINGS_MENU_OPTION.icon} />
+                <IonIcon
+                  color="tertiary"
+                  slot="start"
+                  icon={SETTINGS_MENU_OPTION.icon}
+                />
                 <IonLabel>{SETTINGS_MENU_OPTION.title}</IonLabel>
               </IonItem>
+            </IonMenuToggle>
+          }
+          {isLogged && (
+            <IonMenuToggle autoHide={false}>
               <IonItem
                 routerLink={NEW_LOG_MENU_OPTION.url}
                 routerDirection="none"
               >
-                <IonIcon slot="start" icon={NEW_LOG_MENU_OPTION.icon} />
+                <IonIcon
+                  color="tertiary"
+                  slot="start"
+                  icon={NEW_LOG_MENU_OPTION.icon}
+                />
                 <IonLabel>{NEW_LOG_MENU_OPTION.title}</IonLabel>
               </IonItem>
             </IonMenuToggle>
@@ -95,7 +97,11 @@ const Menu: React.FunctionComponent<Menu> = ({ history }) => {
                 routerLink={LOG_LIST_MENU_OPTION.url}
                 routerDirection="none"
               >
-                <IonIcon slot="start" icon={LOG_LIST_MENU_OPTION.icon} />
+                <IonIcon
+                  color="tertiary"
+                  slot="start"
+                  icon={LOG_LIST_MENU_OPTION.icon}
+                />
                 <IonLabel>{LOG_LIST_MENU_OPTION.title}</IonLabel>
               </IonItem>
             </IonMenuToggle>
@@ -105,12 +111,20 @@ const Menu: React.FunctionComponent<Menu> = ({ history }) => {
               <IonItemGroup>
                 <IonItemSliding>
                   <IonItem detail>
-                    <IonIcon slot="start" icon={USER_OPTION.icon} />
+                    <IonIcon
+                      color="tertiary"
+                      slot="start"
+                      icon={USER_OPTION.icon}
+                    />
                     <IonLabel>{user.name}</IonLabel>
                   </IonItem>
                   <IonItemOptions>
                     <IonItemOption type="button" color="light" onClick={logout}>
-                      <IonIcon slot="start" icon={LOGOUT_MENU_OPTION.icon} />
+                      <IonIcon
+                        color="tertiary"
+                        slot="start"
+                        icon={LOGOUT_MENU_OPTION.icon}
+                      />
                       <IonLabel>{LOGOUT_MENU_OPTION.title}</IonLabel>
                     </IonItemOption>
                   </IonItemOptions>

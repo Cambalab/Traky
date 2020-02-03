@@ -4,8 +4,19 @@
   align-items: center;
   color: #989aa2;
   margin-top: 10vh;
+  text-align: center;
+  font-size: 18px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
+.content___error-img--desktop {
+  width: 45%;
+}
+
+.content___error-img {
+  width: 100%;
+}
 .content__spinner {
   display: flex;
   margin: 0 auto;

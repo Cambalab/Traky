@@ -10,18 +10,20 @@ import React, { FunctionComponent, useContext } from "react";
 import "./LogHourPage.css";
 import LogHourForm from "../../components/LogHourForm/LogHourForm";
 import { History } from "history";
-import {
-  LOGS_LIST_URL_CONFIG
-} from "../../utils/constants";
+import { LOGS_LIST_URL_CONFIG } from "../../utils/constants";
 import { LOG_HOUR_PAGE_TEXTS } from "./constants";
 import { AppContext } from "../../store/Store";
 import { ILogs } from "../../utils/declarations";
 import { createLog } from "../../utils/api/logs";
-import {selectUser} from "../../store/selectors/user";
-import {selectSettings} from "../../store/selectors/settings";
-import {selectKey} from "../../store/selectors/key";
-import {createAddLogErrorAction, createAddLogStartAction, createAddLogSuccessfulAction} from "../../store/actions/logs";
-import {selectGroups} from "../../store/selectors/groups";
+import { selectUser } from "../../store/selectors/user";
+import { selectSettings } from "../../store/selectors/settings";
+import { selectKey } from "../../store/selectors/key";
+import {
+  createAddLogErrorAction,
+  createAddLogStartAction,
+  createAddLogSuccessfulAction
+} from "../../store/actions/logs";
+import { selectGroups } from "../../store/selectors/groups";
 
 interface LogHourPage {
   history: History;
@@ -45,7 +47,13 @@ const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
     };
 
     dispatch(createAddLogStartAction());
-    await createLog({ ...body, userId: user.id }, settings, key, onSuccess, onError);
+    await createLog(
+      { ...body, userId: user.id },
+      settings,
+      key,
+      onSuccess,
+      onError
+    );
   };
 
   const onClickCancel = async () => {
@@ -55,7 +63,7 @@ const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
   return (
     <IonPage>
       <IonHeader className="ion-text-center">
-        <IonToolbar className="toolbar--background">
+        <IonToolbar color="tertiary">
           <IonButtons>
             <IonMenuButton className="menu__button" />
             <IonTitle className="header__title">
@@ -64,7 +72,11 @@ const LogHourPage: FunctionComponent<LogHourPage> = ({ history }) => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <LogHourForm onClickSave={onClickSave} onClickCancel={onClickCancel} groups={groups} />
+      <LogHourForm
+        onClickSave={onClickSave}
+        onClickCancel={onClickCancel}
+        groups={groups}
+      />
     </IonPage>
   );
 };

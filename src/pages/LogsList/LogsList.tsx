@@ -17,7 +17,8 @@ import {
   IonFabButton,
   IonIcon,
   IonItem,
-  IonDatetime
+  IonDatetime,
+  IonImg
 } from "@ionic/react";
 
 import { AppContext } from "../../store/Store";
@@ -29,12 +30,11 @@ import {
   LOGS_LIST_URL_CONFIG
 } from "../../utils/constants";
 import { TEXTS, NEW_HOUR_BUTTON_OPTION } from "./constants";
-import { calendar } from "ionicons/icons";
-
+import { calendar, arrowDropdown } from "ionicons/icons";
 import { getGroups } from "../../utils/api";
 import { formatDate, handleInputDatetime } from "../../utils/inputHandle";
 import { DatetimeChangeEventDetail } from "@ionic/core";
-import { getUrlFromParams } from "../../utils/utils";
+import { getUrlFromParams, isMobile } from "../../utils/utils";
 import { getLogs, removeLog } from "../../utils/api/logs";
 import { filterActiveGroups } from "../../utils/utils";
 import { selectGroups } from "../../store/selectors/groups";
@@ -55,6 +55,7 @@ import {
 } from "../../store/actions/logs";
 import { createHideLoadingModalAction } from "../../store/actions/loadingModal";
 import { selectIsLoadingModal } from "../../store/selectors/loadingModal";
+import errorImg from "../../img/errormsg.png";
 
 interface LogsPageHistory {
   history: History;
@@ -187,6 +188,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
             <IonMenuButton className="menu__button" />
             <IonTitle>
               <IonItem color="tertiary">
+                <IonIcon icon={calendar} />
                 <IonDatetime
                   name="currentDate"
                   className="hour-card__date"
@@ -195,7 +197,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
                   value={currentDate}
                   onIonChange={updateLoggedHoursPerDay}
                 />
-                <IonIcon slot="end" icon={calendar} />
+                <IonIcon icon={arrowDropdown}></IonIcon>
               </IonItem>
             </IonTitle>
           </IonButtons>
@@ -212,6 +214,14 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
         ) : hasError ? (
           <div className="content___message">
             <p>{TEXTS.LIST_ERROR_MSG}</p>
+            <IonImg
+              className={
+                isMobile()
+                  ? "content___error-img"
+                  : "content___error-img--desktop"
+              }
+              src={errorImg}
+            ></IonImg>
           </div>
         ) : (
           <IonList className="hours_list">{renderList()}</IonList>
