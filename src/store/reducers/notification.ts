@@ -114,6 +114,17 @@ export const notification = (
         showNotification: true
       };
     }
+    case SETTINGS_TYPES.SAVE_SETTINGS_ERROR_ACTION: {
+      return {
+        ...state,
+        notificationOptions: {
+          header: NOTIFICATION_MESSAGES.SAVE_SETTINGS_ERROR_HEADER,
+          message: NOTIFICATION_MESSAGES.SAVE_SETTINGS_ERROR_BODY,
+          color: NOTIFICATION_TYPE.ERROR
+        },
+        showNotification: true
+      };
+    }
     case USER_TYPES.LOGIN_USER_ERROR_ACTION: {
       return {
         ...state,

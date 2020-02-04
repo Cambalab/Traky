@@ -18,17 +18,20 @@ import {
 } from "../../utils/constants";
 import { getUserAppKey } from "../../utils/api";
 import { ILoginSettings } from "../../utils/declarations";
-import { storeKey, storeSettings } from "../../utils/utils";
+import { storeKey, storeSettings, storeIsFirstTime } from "../../utils/utils";
 import { selectSettings } from "../../store/selectors/settings";
 import {
   createSaveSettingsErrorAction,
   createSaveSettingsStartAction,
   createSaveSettingsSuccessfulAction
 } from "../../store/actions/settings";
-import { createSaveKeySuccessfulAction } from "../../store/actions/key";
+import {
+  createSaveKeySuccessfulAction,
+  createIsNotFirstTimeStateAction
+} from "../../store/actions/key";
 
 import { EDIT_SETTINGS_TEXT } from "./constants";
-import { createLogoutAction } from "../../store/actions/user";
+
 import {
   createHideLoadingModalAction,
   createLoadingModalAction
@@ -37,6 +40,7 @@ import {
   selectIsLoadingModal,
   selectLoadingModalMessage
 } from "../../store/selectors/loadingModal";
+import { createLogoutAction } from "../../store/actions/user";
 
 interface EditSettingsPageProps {
   history: History;
@@ -57,11 +61,14 @@ const EditSettingsPage: FunctionComponent<EditSettingsPageProps> = ({
 
   const onClickSave = async (body: ILoginSettings) => {
     const onSuccess = async (generatedKey: string) => {
+      await storeIsFirstTime(true);
       await storeSettings(body);
       await storeKey(generatedKey);
+
       dispatch(createLogoutAction());
       dispatch(createSaveSettingsSuccessfulAction(body));
       dispatch(createSaveKeySuccessfulAction(generatedKey));
+      dispatch(createIsNotFirstTimeStateAction());
 
       history.push(KEY_INSTRUCTIONS_URL_CONFIG.path);
     };

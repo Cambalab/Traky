@@ -41,7 +41,8 @@ import {
   createFetchKeyErrorAction,
   createFetchKeyStartAction,
   createFetchKeySuccessfulAction,
-  createSaveKeySuccessfulAction
+  createSaveKeySuccessfulAction,
+  createIsNotFirstTimeStateAction
 } from "../../store/actions/key";
 
 import {
@@ -115,8 +116,10 @@ const LoginSettingsPage: FunctionComponent<LoginSettingsPageProps> = ({
       if (!isFirstTime) {
         if (!hasSettings(settings)) {
           dispatch(createLoadingModalAction(STORAGE_MESSAGE));
+
           dispatch(createFetchSettingsStartAction());
           const fetchedSettings = await getStoredSettings();
+          dispatch(createIsNotFirstTimeStateAction());
 
           if (fetchedSettings) {
             dispatch(createFetchSettingsSuccessfulAction(fetchedSettings));

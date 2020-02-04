@@ -29,8 +29,8 @@ import {
 } from "../../store/actions/user";
 import { createCopyClipboardNotificationAction } from "../../store/actions/notification";
 import { selectSettings } from "../../store/selectors/settings";
-import { selectKey } from "../../store/selectors/key";
-import { selectIsLoadingModal } from "../../store/selectors/loadingModal";
+import { selectKey, selectIsFirstTime } from "../../store/selectors/key";
+
 import {
   createHideLoadingModalAction,
   createLoadingModalAction
@@ -47,22 +47,21 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
   const { state, dispatch } = useContext(AppContext);
   const settings = selectSettings(state);
   const key = selectKey(state);
+  const isFirstTime = selectIsFirstTime(state);
   const { serverAddress, database } = settings;
   const [showSlides, setstateshowSlides] = useState(false);
-  const isLoadingGlobal = selectIsLoadingModal(state);
 
   const LOGIN_ACTION = { message: LOGIN_MESSAGE };
 
   useIonViewDidEnter(() => {
-    if (isLoadingGlobal) {
-      dispatch(createHideLoadingModalAction());
+    dispatch(createHideLoadingModalAction());
+
+    if (!isFirstTime && key && serverAddress && database) {
+      onClickActivatedKey();
     }
     CapApp.addListener("backButton", () => {
       history.goBack();
     });
-    if (key && serverAddress && database) {
-      onClickActivatedKey();
-    }
   });
 
   const copyKeyToClipboard = async () => {
