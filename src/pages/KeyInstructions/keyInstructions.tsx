@@ -55,8 +55,7 @@ const KeyInstructionsPage: FunctionComponent<PageHistory> = ({ history }) => {
 
   useIonViewDidEnter(() => {
     dispatch(createHideLoadingModalAction());
-    console.log(!isFirstTime);
-    console.log(isFirstTime);
+
     if (!isFirstTime && key && serverAddress && database) {
       onClickActivatedKey();
     }
