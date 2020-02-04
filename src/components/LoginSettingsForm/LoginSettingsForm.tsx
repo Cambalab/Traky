@@ -72,6 +72,10 @@ const LoginSettingsForm: FunctionComponent<LoginSettingsFormProps> = ({
     };
   };
 
+  const hasSettings = (settings: ILoginSettings) => {
+    return settings.serverAddress && settings.database && settings.username;
+  };
+
   return (
     <IonGrid>
       <IonRow>
@@ -87,6 +91,8 @@ const LoginSettingsForm: FunctionComponent<LoginSettingsFormProps> = ({
                 onIonChange={handleInput(setServerAddress)}
                 autofocus={true}
                 disabled={editEnable}
+                type="url"
+                inputmode="url"
               />
             </IonItem>
             <IonItem className={`settings-input`}>
@@ -98,6 +104,8 @@ const LoginSettingsForm: FunctionComponent<LoginSettingsFormProps> = ({
                 value={database}
                 onIonChange={handleInput(setDatabase)}
                 disabled={editEnable}
+                inputmode="text"
+                type="text"
               />
             </IonItem>
             <IonItem className={`settings-input`}>
@@ -109,13 +117,15 @@ const LoginSettingsForm: FunctionComponent<LoginSettingsFormProps> = ({
                 value={username}
                 onIonChange={handleInput(setUsername)}
                 disabled={editEnable}
+                inputmode="text"
+                type="text"
               />
             </IonItem>
             <IonButton
               color="secondary"
               className="settings-button"
               onClick={saveData}
-              disabled={editMode}
+              disabled={editMode || !hasSettings(getFormData())}
             >
               {SETTINGS_PAGE_TEXTS.SAVE_BUTTON}
             </IonButton>

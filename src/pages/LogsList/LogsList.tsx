@@ -77,6 +77,7 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   const settings = selectSettings(state);
   const key = selectKey(state);
   const isLoadingGlobal = selectIsLoadingModal(state);
+  const [isLoadingModal, setIsLoadingModal] = useState(isLoadingGlobal);
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
 
   const showEditView = (logHour: ILogs) => () => {
@@ -117,16 +118,19 @@ const LogsList: React.FC<LogsPageHistory> = ({ history }) => {
   };
 
   useIonViewDidEnter(() => {
+    dispatch(createHideLoadingModalAction());
     if (isLogged && isEmpty(logs)) {
       initPage(user, settings, key);
     }
   });
 
   useEffect(() => {
-    if (isLoadingGlobal) {
-      dispatch(createHideLoadingModalAction());
-    }
+    setIsLoadingModal(isLoadingGlobal);
   }, [isLoadingGlobal]);
+
+  useEffect(() => {
+    dispatch(createHideLoadingModalAction());
+  }, [isLoadingModal]);
 
   const onDelete = (logHour: ILogs) => async () => {
     const onSuccess = () => {
