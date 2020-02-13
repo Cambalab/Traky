@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "ionic-react-traky-sample",
+  "appName": "Traky",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
