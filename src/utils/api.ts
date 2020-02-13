@@ -3,7 +3,7 @@ import LoginForm from "../components/LoginForm/LoginForm";
 import { APPLICATION_NAME } from "./constants";
 
 export const getBaseUrl = (url: string) => {
-  return (process.env.REACT_APP_PROXY_URL ? process.env.REACT_APP_PROXY_URL : 'http://localhost:3000/api/') + url;
+  return (process.env.REACT_APP_PROXY_URL ? process.env.REACT_APP_PROXY_URL : '') + url;
 };
 
 export  const addContentType = (headers: Headers): Headers => {
