@@ -1,15 +1,23 @@
 import { ILoginSettings } from "./declarations";
 import LoginForm from "../components/LoginForm/LoginForm";
-import { CONFIG, APPLICATION_NAME } from "./constants";
+import { APPLICATION_NAME } from "./constants";
 
-const createHeaders = () => {
-  const headers: HeadersInit = new Headers();
-  headers.set(
-    "Authorization",
-    "bearer " + process.env.REACT_APP_AUTHORIZATION_KEY
-  );
+export const getBaseUrl = (url: string) => {
+  return (process.env.REACT_APP_PROXY_URL ? process.env.REACT_APP_PROXY_URL : 'http://localhost:3000/api/') + url;
+};
+
+export  const addContentType = (headers: Headers): Headers => {
   headers.set("Content-Type", "application/json");
   return headers;
+};
+
+export  const addAuthorization = (headers: Headers, key: string): Headers => {
+  headers.set("Authorization", `bearer ${key}`);
+  return headers;
+};
+
+export const createHeaders = (headers?: Headers) => {
+  return new Headers(headers);
 };
 
 interface parseFunction<T1, T2, Response> extends Function {
@@ -38,7 +46,7 @@ const fetchAPI = async <T1, T2>({
   try {
     const request: any = {
       method,
-      headers: headers ? headers : createHeaders(),
+      headers: headers,
       body: JSON.stringify(body)
     };
     const response = await fetch(url, request);
@@ -64,20 +72,20 @@ const getGroups = (
   key: string,
   onSuccess: Function
 ) => {
-  const trytonURL =
-    process.env.REACT_APP_PROXY_URL +
-    `${settings.serverAddress}${settings.database}`;
-  const endpoint = `${trytonURL}/timesheet/employee/${userId}/works`;
-  const headers = {
-    Authorization: "bearer " + key
-  };
+  const endpoint = `${settings.serverAddress}${settings.database}/timesheet/employee/${userId}/works`;
+  const url = getBaseUrl(endpoint);
+  const headers = createHeaders();
+  addContentType(headers);
+  addAuthorization(headers, key);
 
-  return fetchAPI({ url: endpoint, method: "GET", headers, onSuccess });
+  return fetchAPI({ url, method: "GET", headers, onSuccess });
 };
 
+// @todo: this endpoint is deprecated
 const loginUser = (body: LoginForm, onSuccess: Function, onError: Function) => {
+  const url = getBaseUrl(`login/`);
   return fetchAPI({
-    url: CONFIG.API_ENDPOINT + `login/`,
+    url,
     method: "POST",
     body,
     onSuccess,
@@ -92,15 +100,14 @@ const getUserFromKey = (
   onSuccess: Function,
   onError: Function
 ) => {
-  const trytonURL =
-    process.env.REACT_APP_PROXY_URL + `${serverAddress}${database}`;
-  const endpoint = `${trytonURL}/timesheet/employees`;
-  const headers = {
-    Authorization: "bearer " + key
-  };
+  const endpoint = `${serverAddress}${database}/timesheet/employees`;
+  const url = getBaseUrl(endpoint);
+  let headers = createHeaders();
+  addContentType(headers);
+  addAuthorization(headers, key);
 
   return fetchAPI({
-    url: endpoint,
+    url,
     method: "GET",
     onSuccess,
     onError,
@@ -115,15 +122,16 @@ const getUserAppKey = (
   onSuccess: Function,
   onError: Function
 ) => {
-  const trytonURL =
-    process.env.REACT_APP_PROXY_URL + `${serverAddress}${database}`;
-  const endpoint = `${trytonURL}/user/application/`;
+  const endpoint = `${serverAddress}${database}/user/application/`;
+  const url = getBaseUrl(endpoint);
   const body = {
     user,
     application: APPLICATION_NAME.TIMESHEET
   };
+  let headers = createHeaders();
+  addContentType(headers);
 
-  return fetchAPI({ url: endpoint, body, method: "POST", onSuccess, onError });
+  return fetchAPI({ url, body, headers, method: "POST", onSuccess, onError });
 };
 
 export { fetchAPI, getGroups, loginUser, getUserAppKey, getUserFromKey };
