@@ -1,4 +1,4 @@
-import { fetchAPI } from "../api";
+import { addAuthorization, addContentType, createHeaders, fetchAPI, getBaseUrl } from "../api";
 import { ILoginSettings, ILogs } from "../declarations";
 import { formatDate } from "../inputHandle";
 import { TRYTON_LINE_DATE_FORMAT } from "../constants";
@@ -35,10 +35,10 @@ const createLogFromExternal = (externalLog: IExternalLog): ILogs => {
 };
 
 const createLogsRequestHeaders = (key: string) => {
-  return {
-    Authorization: "bearer " + key,
-    "Content-Type": "application/json"
-  };
+  let headers = createHeaders();
+  addContentType(headers);
+  addAuthorization(headers, key);
+  return headers;
 };
 
 const getLogs = (
@@ -50,10 +50,9 @@ const getLogs = (
   onError?: Function
 ) => {
   const current_day = formatDate(date, TRYTON_LINE_DATE_FORMAT);
-  const trytonURL =
-    process.env.REACT_APP_PROXY_URL +
-    `${settings.serverAddress}${settings.database}`;
-  const endpoint = `${trytonURL}/timesheet/employee/${userId}/lines/${current_day}`;
+  const endpoint = `${settings.serverAddress}${settings.database}/timesheet/employee/${userId}/lines/${current_day}`;
+  const url = getBaseUrl(endpoint);
+
   const parseResponse = (logs: IExternalLog[]): ILogs[] => {
     return logs.map(log => {
       return { ...createLogFromExternal(log), timestamp: date };
@@ -62,7 +61,7 @@ const getLogs = (
   const headers = createLogsRequestHeaders(key);
 
   return fetchAPI<IExternalLog[], ILogs[]>({
-    url: endpoint,
+    url,
     method: "GET",
     headers,
     onSuccess,
@@ -83,9 +82,6 @@ const baseBodyLogRequest = (
   onError: Function
 ) => {
   const body = createExternalLogFromLog(form);
-  const trytonURL =
-    process.env.REACT_APP_PROXY_URL +
-    `${settings.serverAddress}${settings.database}`;
   const headers = createLogsRequestHeaders(key);
   const parse = ({ id }: IExternalLog): ILogs => {
     return {
@@ -93,9 +89,12 @@ const baseBodyLogRequest = (
       id
     };
   };
-  return (endpoint: string, method: string) =>
-    fetchAPI<IExternalLog, ILogs>({
-      url: `${trytonURL}${endpoint}`,
+  return (endpoint: string, method: string) => {
+    const base = `${settings.serverAddress}${settings.database}` + endpoint;
+    const url = getBaseUrl(base);
+
+    return fetchAPI<IExternalLog, ILogs>({
+      url,
       method,
       body,
       headers,
@@ -103,6 +102,7 @@ const baseBodyLogRequest = (
       onError,
       parse
     });
+  }
 };
 
 interface OnCreateSuccessfulFunction extends Function {
@@ -156,15 +156,14 @@ const removeLog = (
   onSuccess: Function,
   onError: Function
 ) => {
-  const trytonURL =
-    process.env.REACT_APP_PROXY_URL +
-    `${settings.serverAddress}${settings.database}`;
-  const endpoint = `${trytonURL}/timesheet/line/${log.id}`;
+  const endpoint = `${settings.serverAddress}${settings.database}/timesheet/line/${log.id}`;
+  const url = getBaseUrl(endpoint);
   const headers = createLogsRequestHeaders(key);
+  const method = "DELETE";
 
   return fetchAPI({
-    url: endpoint,
-    method: "DELETE",
+    url,
+    method,
     headers,
     onSuccess,
     onError
