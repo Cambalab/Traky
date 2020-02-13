@@ -4,16 +4,6 @@
 /* NEW --> Log new hour screen */
 /* EDIT --> Edit logged hour screen */
 
-export interface AppConfig {
-  API_ENDPOINT: string;
-}
-
-export const CONFIG: AppConfig = {
-  API_ENDPOINT: process.env.REACT_APP_BASE_API_URL
-    ? process.env.REACT_APP_BASE_API_URL
-    : "http://localhost:3000/api/"
-};
-
 export interface URL_CONFIG {
   name: string;
   path: string;
