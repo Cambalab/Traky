@@ -39,7 +39,7 @@ Once you have the app running, enter those settings to generate a new API key. T
 
 #### Mobile version
 
-You can download the last android apk from here. Just install it and start to use it.
+You can download the last android apk from [here](https://github.com/Cambalab/Traky/releases/download/v01/Traky.zip). Just install it and start to use it.
 
 #### Browser version
 
