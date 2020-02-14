@@ -1,7 +1,5 @@
 <div align="center">
-  <a target="_blank" rel="noopener noreferrer">
-    <img width="160" src="public/assets/icon/logoReadme.jpg" alt="Traky logo" />
-  </a>
+    <img align="center" width="160" src="docs/images/favicon.png" alt="Traky logo" />
 <h4 align="center">Traky is a time traking mobile app to use with your Tryton account.</h4>
 </div>
 
@@ -15,7 +13,7 @@ So that, we integrated Traky to a module application which Tryton provides to ma
 
 ## About
 
-It is being developed using the Ionic 4 framework in combination with Reactjs. 
+It is being developed using the Ionic 4 framework in combination with Reactjs.
 
 Although we focuced our work in develop a mobile version, you can also use it in its web version.
 
@@ -51,16 +49,15 @@ You will need to setup a Traky web instance in a server and each user would conn
 
 This installation is focused on Linux based Operative Systems as we will be using the command line to facilitate this process.
 
-*Requirements:*
+_Requirements:_
 
 - Node.js v9
 - NPM v6>=
 
-
 Node.js can be installed downloading it from their main [website](https://nodejs.org/en/) depending on the Operative System being used. After installing it, set the node version to 9 using [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md) or [npx](https://www.npmjs.com/package/npx).
 
 Currently, the Tryton API works by require an authorization header, but it can not respond the OPTIONS method, which is necessary to send one.
-We were able to fix that using a Proxy server to *skip* these validation.
+We were able to fix that using a Proxy server to _skip_ these validation.
 
 To configure this proxy, you have to create an .env file based on the example, to add the variable that save the proxy url.
 
@@ -81,19 +78,23 @@ DEVELOPMENT=true
 
 #### Steps:
 
-1) Set the node version with the following command:
+1. Set the node version with the following command:
+
 - `nvm install 9 && nvm use v9`
 
-2) Clone Traky repository
+2. Clone Traky repository
+
 - `git clone https://github.com/Cambalab/traky.git && cd traky/`
 
-3) Install the project's dependencies:
+3. Install the project's dependencies:
+
 - `npm install`
 
-1) Create and add an .env file based on the example to save the proxy variable.
+1. Create and add an .env file based on the example to save the proxy variable.
 
-2) Finally, we can start the application running:
-- `npm run start` 
+2. Finally, we can start the application running:
+
+- `npm run start`
 
 ---
 
@@ -101,11 +102,7 @@ DEVELOPMENT=true
 
 <div align="center">
     <img width="800" height="900" src="docs/images/imagestraky.png" alt="preview traky" />
-    <h4>To see more images of the app, check out the [screenshots directory](/docs/images/)!</h4>
 </div>
-
-
-
 
 ---
 
@@ -120,14 +117,13 @@ Traky supports the following platforms and versions:
 | Firefox  | 64>=    |
 | Safari   | 12>=    |
 
-
 ## Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md)  :tada:
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) :tada:
 
 ## License
 
 [**GNU General Public License version 3**](https://opensource.org/licenses/GPL-3.0)
-
 
 # <Divider>
 
