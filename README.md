@@ -99,11 +99,7 @@ DEVELOPMENT=true
 
 <div align="center">
     <img width="800" height="900" src="docs/images/imagestraky.png" alt="preview traky" />
-    <h4>To see more images of the app, check out the [screenshots directory](/docs/images/)</h4>
 </div>
-
-
-
 
 ---
 
