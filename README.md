@@ -1,7 +1,5 @@
 <div align="center">
-  <a target="_blank" rel="noopener noreferrer">
-    <img width="160" src="public/assets/icon/logoReadme.jpg" alt="Traky logo" />
-  </a>
+    <img align="center" width="160" src="docs/images/favicon.png" alt="Traky logo" />
 <h4 align="center">Traky is a time traking mobile app to use with your Tryton account.</h4>
 </div>
 
@@ -101,7 +99,7 @@ DEVELOPMENT=true
 
 <div align="center">
     <img width="800" height="900" src="docs/images/imagestraky.png" alt="preview traky" />
-    <h4>To see more images of the app, check out the [screenshots directory](/docs/images/)!</h4>
+    <h4>To see more images of the app, check out the [screenshots directory](/docs/images/)</h4>
 </div>
 
 
