@@ -1,6 +1,5 @@
-# CONTRIBUTING - Traky
 
-# Contributing Guide
+# Contributing Guide for Traky
 
 Thank you for taking the time to contribute! :tada::+1:
 
